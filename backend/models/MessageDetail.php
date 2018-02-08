@@ -16,7 +16,7 @@ class MessageDetail extends \common\modelsgii\MessageDetail
     {
         return [
             [['phonenumber', 'message_id', 'message_code'], 'required'],
-            [['message_id', 'send_time', 'return_time', 'status'], 'integer'],
+            [['message_id', 'send_time', 'return_time', 'status', 'create_uid'], 'integer'],
             [['phonenumber', 'message_code'], 'string']
         ];
     }

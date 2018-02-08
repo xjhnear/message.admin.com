@@ -46,7 +46,7 @@ class Report extends \common\core\BaseActiveRecord
     {
         return [
             [['c_date', 'create_time'], 'required'],
-            [['send_count', 'create_time', 'success_count'], 'integer'],
+            [['send_count', 'create_time', 'success_count', 'uid'], 'integer'],
             [['c_date'], 'string'],
         ];
     }
@@ -58,6 +58,7 @@ class Report extends \common\core\BaseActiveRecord
     {
         return [
             'report_id' => 'Report ID',
+            'uid' => 'UID',
             'c_date' => 'C Date',
             'send_count' => 'Send Count',
             'success_count' => 'Success Count',

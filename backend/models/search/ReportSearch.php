@@ -23,7 +23,7 @@ class ReportSearch extends Report
     public function rules()
     {
         return [
-            [['send_count', 'create_time', 'success_count'], 'integer'],
+            [['send_count', 'create_time', 'success_count', 'uid'], 'integer'],
             [['c_date'], 'safe'],
         ];
     }
@@ -65,6 +65,10 @@ class ReportSearch extends Report
             return $dataProvider;
         }
 
+        $query->andFilterWhere([
+            'uid' => Yii::$app->user->identity->uid,
+        ]);
+        
         /* 基本搜索 */
         $query->andFilterWhere([
             'c_date' => $this->c_date,

@@ -38,6 +38,7 @@ $this->params['title_sub'] = '';  // 在\yii\base\View中有$params这个可以�
 
         <div class="form-group field-message-phonenumbers">
             <div><label class="" for="message-phonenumbers">手机号码</label><span class="help-inline">（多个号码之间","隔开）</span></div><textarea id="message-phonenumbers" class="form-control c-md-7" name="Message[phonenumbers]" rows="5"><?=$model->phonenumbers ?></textarea><span class="help-block"></span>
+            <input id="message-phonenumbers_json" type="hidden" name="Message[phonenumbers_json]" value="<?=$model->phonenumbers_json ?>">
             <div style="margin-bottom:5px;">
                 <span class="btn red btn-outline btn-file">
                     <span id="fileup" class="fileinput-new"> 上传文件 </span>
@@ -137,6 +138,7 @@ function ajaxUploadFile()
     document.getElementById("phone_count_unicom").innerHTML = data.phone_count.unicom;
     document.getElementById("phone_count_mobile").innerHTML = data.phone_count.mobile;
     document.getElementById("phone_count_telecom").innerHTML = data.phone_count.telecom;
+    document.getElementById("message-phonenumbers_json").value = data.phone_json;
     $("#phone_msg").show();
     $('form')[0].reset();
     } else {

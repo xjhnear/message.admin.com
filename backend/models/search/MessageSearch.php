@@ -23,8 +23,8 @@ class MessageSearch extends Message
     public function rules()
     {
         return [
-            [['create_time', 'check_time', 'status', 'count'], 'integer'],
-            [['phonenumbers', 'content', 'message_code', 'create_name', 'check_name'], 'string']
+            [['create_time', 'check_time', 'status', 'count', 'create_uid', 'check_uid'], 'integer'],
+            [['phonenumbers', 'phonenumbers_json', 'content', 'message_code', 'create_name', 'check_name'], 'string']
         ];
     }
 
@@ -64,6 +64,10 @@ class MessageSearch extends Message
             // $query->where('0=1');
             return $dataProvider;
         }
+
+        $query->andFilterWhere([
+            'create_uid' => Yii::$app->user->identity->uid,
+        ]);
 
         /* 基本搜索 */
         $query->andFilterWhere([

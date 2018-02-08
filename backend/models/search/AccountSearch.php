@@ -23,7 +23,7 @@ class AccountSearch extends Account
     public function rules()
     {
         return [
-            [['recharge_count', 'create_time', 'consume_count', 'fail_count'], 'integer'],
+            [['recharge_count', 'create_time', 'consume_count', 'fail_count', 'uid'], 'integer'],
             [['c_date'], 'string'],
         ];
     }
@@ -64,6 +64,10 @@ class AccountSearch extends Account
             // $query->where('0=1');
             return $dataProvider;
         }
+
+        $query->andFilterWhere([
+            'uid' => Yii::$app->user->identity->uid,
+        ]);
 
         /* 基本搜索 */
         $query->andFilterWhere([

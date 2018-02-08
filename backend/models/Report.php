@@ -16,7 +16,7 @@ class Report extends \common\modelsgii\Report
     {
         return [
             [['c_date', 'create_time'], 'required'],
-            [['send_count', 'create_time', 'success_count'], 'integer'],
+            [['send_count', 'create_time', 'success_count', 'uid'], 'integer'],
             [['c_date'], 'string'],
         ];
     }

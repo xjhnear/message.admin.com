@@ -33,7 +33,6 @@ $columns = [
         'header' => '批次号',
         'value' => 'message_code',
         'options' => ['width' => '50px;'],
-        'filter' => Html::input('text', 'MessageSearch[message_code]', $searchModel->message_code, ['class'=>'form-control'])
     ],
     [
         'header' => '发送时间',
@@ -42,13 +41,17 @@ $columns = [
         'options' => ['width' => '150px;'],
     ],
     [
+        'header' => '数量',
+        'value' => 'count',
+        'options' => ['width' => '50px;']
+    ],
+    [
         'label' => '状态',
-        'attribute' => 'status',
+        'value' => 'status',
         'options' => ['width' => '80px;'],
         'content' => function($model){
             return Yii::$app->params['send_status'][$model['status']];
         },
-        'filter' => Html::activeDropDownList($searchModel, 'status', [0 => '待审核',1 => '审核通过',2 => '审核拒绝',3 => '发送成功',4 => '发送失败'], ['prompt'=>'全部','class'=>'form-control']),
 
     ],
     [
@@ -60,25 +63,13 @@ $columns = [
     [
         'class' => 'yii\grid\ActionColumn',
         'header' => '操作',
-        'template' => '{view} {edit} {delete}',
-        'options' => ['width' => '200px;'],
+        'template' => '{view}',
+        'options' => ['width' => '100px;'],
         'buttons' => [
             'view' => function ($url, $model, $key) {
                 return Html::a('<i class="fa fa-eye"></i>', ['detail', 'pid'=>$key], [
                     'title' => Yii::t('app', '详细信息'),
                     'class' => 'btn btn-xs blue'
-                ]);
-            },
-            'edit' => function ($url, $model, $key) {
-                return Html::a('<i class="fa fa-edit"></i>', $url, [
-                    'title' => Yii::t('app', '编辑'),
-                    'class' => 'btn btn-xs purple'
-                ]);
-            },
-            'delete' => function ($url, $model, $key) {
-                return Html::a('<i class="fa fa-times"></i>', $url, [
-                    'title' => Yii::t('app', '删除'),
-                    'class' => 'btn btn-xs red ajax-get confirm'
                 ]);
             },
         ],
@@ -96,7 +87,7 @@ $columns = [
         </div>
         <div class="actions">
             <div class="btn-group btn-group-devided">
-                <?=Html::a('清空搜索 <i class="fa fa-times"></i>',['order/index'],['class'=>'btn green','style'=>'margin-right:10px;'])?>
+                <?=Html::a('清空搜索 <i class="fa fa-times"></i>',['message/index'],['class'=>'btn green','style'=>'margin-right:10px;'])?>
             </div>
             <div class="btn-group">
                 <button class="btn blue btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
@@ -114,7 +105,7 @@ $columns = [
     <div class="portlet-body">
         <?php \yii\widgets\Pjax::begin(['options'=>['id'=>'pjax-container']]); ?>
         <div>
-            <?php //echo $this->render('_search', ['model' => $searchModel]); ?> <!-- 条件搜索-->
+            <?php echo $this->render('_search', ['model' => $searchModel]); ?> <!-- 条件搜索-->
         </div>
         <div class="table-container">
             <form class="ids">
@@ -131,10 +122,11 @@ $columns = [
                 /* 配置分页样式 */
                 'pager' => [
                     'options' => ['class'=>'pagination','style'=>'visibility: visible;'],
-                    'nextPageLabel' => '下一页',
-                    'prevPageLabel' => '上一页',
-                    'firstPageLabel' => '第一页',
-                    'lastPageLabel' => '最后页'
+                    'nextPageLabel' => '>>',
+                    'prevPageLabel' => '<<',
+                    'firstPageLabel' => '首页',
+                    'lastPageLabel' => '尾页',
+                    'maxButtonCount'=> 5
                 ],
                 /* 定义列表格式 */
                 'columns' => $columns,

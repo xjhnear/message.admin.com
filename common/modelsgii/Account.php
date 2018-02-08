@@ -46,7 +46,7 @@ class Account extends \common\core\BaseActiveRecord
     {
         return [
             [['c_date', 'create_time'], 'required'],
-            [['recharge_count', 'create_time', 'consume_count', 'fail_count'], 'integer'],
+            [['recharge_count', 'create_time', 'consume_count', 'fail_count', 'uid'], 'integer'],
             [['c_date'], 'string'],
         ];
     }
@@ -58,6 +58,7 @@ class Account extends \common\core\BaseActiveRecord
     {
         return [
             'account_id' => 'Account ID',
+            'uid' => 'UID',
             'c_date' => 'C Date',
             'recharge_count' => 'Recharge Count',
             'consume_count' => 'Consume Count',

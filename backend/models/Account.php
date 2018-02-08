@@ -16,7 +16,7 @@ class Account extends \common\modelsgii\Account
     {
         return [
             [['c_date', 'create_time'], 'required'],
-            [['recharge_count', 'create_time', 'consume_count', 'fail_count'], 'integer'],
+            [['recharge_count', 'create_time', 'consume_count', 'fail_count', 'uid'], 'integer'],
             [['c_date'], 'string'],
         ];
     }
