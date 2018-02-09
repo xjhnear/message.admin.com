@@ -53,16 +53,16 @@ $this->params['title_sub'] = '';  // 在\yii\base\View中有$params这个可以�
                     <col width="150px;">
                 </colgroup>
                 <tbody>
-                    <tr><td style="vertical-align: middle;">联通</td><td style="vertical-align: middle;"><span><?=$model->phonenumbers_json['unicom'] ?></span> 条</td><td><select id="message-status" class="form-control" name="Message[status]" aria-invalid="false" style="width: 50%;"><option value="1">默认通道</option></select></td></tr>
-                    <tr><td style="vertical-align: middle;">移动</td><td style="vertical-align: middle;"><span><?=$model->phonenumbers_json['mobile'] ?></span> 条</td><td><select id="message-status" class="form-control" name="Message[status]" aria-invalid="false" style="width: 50%;"><option value="2">默认通道</option></select></td></tr>
-                    <tr><td style="vertical-align: middle;">电信</td><td style="vertical-align: middle;"><span><?=$model->phonenumbers_json['telecom'] ?></span> 条</td><td><select id="message-status" class="form-control" name="Message[status]" aria-invalid="false" style="width: 50%;"><option value="3">默认通道</option></select></td></tr>
+                    <tr><td style="vertical-align: middle;">联通</td><td style="vertical-align: middle;"><span><?=$model->phonenumbers_json['unicom'] ?></span> 条</td><td><select id="message-status" class="form-control" name="Message[status]" aria-invalid="false" style="width: 30%;"><option value="1">默认通道</option></select></td></tr>
+                    <tr><td style="vertical-align: middle;">移动</td><td style="vertical-align: middle;"><span><?=$model->phonenumbers_json['mobile'] ?></span> 条</td><td><select id="message-status" class="form-control" name="Message[status]" aria-invalid="false" style="width: 30%;"><option value="2">默认通道</option></select></td></tr>
+                    <tr><td style="vertical-align: middle;">电信</td><td style="vertical-align: middle;"><span><?=$model->phonenumbers_json['telecom'] ?></span> 条</td><td><select id="message-status" class="form-control" name="Message[status]" aria-invalid="false" style="width: 30%;"><option value="3">默认通道</option></select></td></tr>
                 </tbody>
             </table>
         </div>
 
         <div class="form-actions">
-            <?= Html::submitButton('<i class="icon-ok"></i> 提交', ['class' => 'btn blue ajax-post','target-form'=>'form-aaa']) ?>
-            <?= Html::button('取消', ['class' => 'btn','onclick'=>'JavaScript:history.go(-1)']) ?>
+            <?= Html::submitButton('<i class="icon-ok"></i> 审核通过', ['class' => 'btn blue ajax-post','target-form'=>'form-aaa']) ?>
+            <?= Html::button('不通过', ['class' => 'btn red','onclick'=>'JavaScript:doReject()']) ?>
         </div>
         
         <?php ActiveForm::end(); ?>
@@ -93,58 +93,10 @@ function checkLen(obj)
     document.getElementById("count").innerHTML = curr.toString();
 }
 
-// 定义的热点被单击则打开文件选择框
-$('#fileup').on('click', function()
+function doReject()
 {
-    UploadFileOnSelect();
-});
-
-// 选需要上载的图片 上载完毕清除 form
-function UploadFileOnSelect()
-{
-    // 打开文件选择框
-    var input = document.getElementById("fileUpload");
-    input.click();
-}
-
-function ajaxUploadFile()
-{
-    // 当 file 框内容改变则提交 form
-    // $('#formUpload').submit();
-
-    var token = "<?php echo \Yii::$app->request->getCsrfToken()?>";
-    //$("#jUploadFormfileUpload").remove();
-    //var type=$("input[name='type']:checked").val();
-    //var formId = 'jUploadForm' + 'fileUpload';  //file为input的id
-    //var test1 = jQuery('#'+formId);
-    //console.log("1:"+test1.prop("outerHTML"));//打印输出
-
-    $.ajaxFileUpload({
-    url: '/message/get-ajax',
-    secureuri: false,
-    cache:false,
-    data:{_csrf: token},
-    fileElementId:'fileUpload',
-    dataType: 'json',
-    success: function (data) {
-    if (data.state) {
-    //上传成功
-    document.getElementById("message-phonenumbers").innerHTML = data.phone;
-    document.getElementById("phone_count").innerHTML = data.phone_count.all;
-    document.getElementById("phone_count_unicom").innerHTML = data.phone_count.unicom;
-    document.getElementById("phone_count_mobile").innerHTML = data.phone_count.mobile;
-    document.getElementById("phone_count_telecom").innerHTML = data.phone_count.telecom;
-    document.getElementById("message-phonenumbers_json").value = data.phone_json;
-    $("#phone_msg").show();
-    $('form')[0].reset();
-    } else {
-    alert(data.msg);
-    }
-    },
-    error: function (data, status, e) {
-    return;
-    }
-    });
+    var id = <?=$model->message_id?>;
+    window.location.href='/check/reject?id='+id;
 }
 
 
