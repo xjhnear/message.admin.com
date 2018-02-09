@@ -65,10 +65,6 @@ class MessageSearch extends Message
             return $dataProvider;
         }
 
-        $query->andFilterWhere([
-            'create_uid' => Yii::$app->user->identity->uid,
-        ]);
-
         /* 基本搜索 */
         $query->andFilterWhere([
             'status' => $this->status,
@@ -90,6 +86,7 @@ class MessageSearch extends Message
         
         /* 排序 */
         $query->orderBy([
+            'message_id' => SORT_ASC,
             'message_id' => SORT_DESC,
         ]);
 
