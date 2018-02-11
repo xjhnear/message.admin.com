@@ -53,9 +53,9 @@ $this->params['title_sub'] = '';  // 在\yii\base\View中有$params这个可以�
                     <col width="150px;">
                 </colgroup>
                 <tbody>
-                    <tr><td style="vertical-align: middle;">联通</td><td style="vertical-align: middle;"><span><?=$model->phonenumbers_json['unicom'] ?></span> 条</td><td><select id="message-status" class="form-control" name="Message[status]" aria-invalid="false" style="width: 30%;"><option value="1">默认通道</option></select></td></tr>
-                    <tr><td style="vertical-align: middle;">移动</td><td style="vertical-align: middle;"><span><?=$model->phonenumbers_json['mobile'] ?></span> 条</td><td><select id="message-status" class="form-control" name="Message[status]" aria-invalid="false" style="width: 30%;"><option value="2">默认通道</option></select></td></tr>
-                    <tr><td style="vertical-align: middle;">电信</td><td style="vertical-align: middle;"><span><?=$model->phonenumbers_json['telecom'] ?></span> 条</td><td><select id="message-status" class="form-control" name="Message[status]" aria-invalid="false" style="width: 30%;"><option value="3">默认通道</option></select></td></tr>
+                    <tr><td style="vertical-align: middle;">联通</td><td style="vertical-align: middle;"><span><?=$model->phonenumbers_json['unicom'] ?></span> 条</td><td><select id="message-status" class="form-control" name="Message[status_unicom]" aria-invalid="false" style="width: 30%;"><option value="1">默认通道</option></select></td></tr>
+                    <tr><td style="vertical-align: middle;">移动</td><td style="vertical-align: middle;"><span><?=$model->phonenumbers_json['mobile'] ?></span> 条</td><td><select id="message-status" class="form-control" name="Message[status_mobile]" aria-invalid="false" style="width: 30%;"><option value="2">默认通道</option></select></td></tr>
+                    <tr><td style="vertical-align: middle;">电信</td><td style="vertical-align: middle;"><span><?=$model->phonenumbers_json['telecom'] ?></span> 条</td><td><select id="message-status" class="form-control" name="Message[status_telecom]" aria-invalid="false" style="width: 30%;"><option value="3">默认通道</option></select></td></tr>
                 </tbody>
             </table>
         </div>

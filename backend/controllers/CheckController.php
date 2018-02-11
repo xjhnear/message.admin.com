@@ -139,7 +139,13 @@ class CheckController extends BaseController
 
         if (Yii::$app->request->isPost) {
             $data = Yii::$app->request->post('Message');//var_dump($data);exit();
-            $data['send_time'] = strtotime($data['send_time']);
+            $status_unicom = $data['status_unicom'];unset($data['status_unicom']);
+            $status_mobile = $data['status_mobile'];unset($data['status_mobile']);
+            $status_telecom = $data['status_telecom'];unset($data['status_telecom']);
+            $data['status'] = 1;
+            $data['check_time'] = time();
+            $data['check_uid'] = Yii::$app->user->identity->uid;
+            $data['check_name'] = Yii::$app->user->identity->username;
             /* 格式化extend值，为空或数组序列化 */
             if (isset($data['extend'])) {
                 $tmp = FuncHelper::parse_field_attr($data['extend']);
@@ -151,6 +157,21 @@ class CheckController extends BaseController
             }
             /* 表单数据加载、验证、数据库操作 */
             if ($this->saveRow($model, $data)) {
+
+                $db = Yii::$app->db;
+                $sql = "UPDATE yii2_message_detail SET channel_id=".$status_unicom." WHERE operator=1 AND message_id=".$id;
+                $command = $db->createCommand($sql);
+                $command->execute();
+                $sql = "UPDATE yii2_message_detail SET channel_id=".$status_mobile." WHERE operator=2 AND message_id=".$id;
+                $command = $db->createCommand($sql);
+                $command->execute();
+                $sql = "UPDATE yii2_message_detail SET channel_id=".$status_telecom." WHERE operator=3 AND message_id=".$id;
+                $command = $db->createCommand($sql);
+                $command->execute();
+                $sql = "UPDATE yii2_message_detail SET status=1 WHERE message_id=".$id;
+                $command = $db->createCommand($sql);
+                $command->execute();
+
                 $this->success('操作成功', $this->getForward());
             } else {
                 $this->error('操作错误');
@@ -164,6 +185,19 @@ class CheckController extends BaseController
         return $this->render('edit', [
             'model' => $model,
         ]);
+    }
+
+    public function actionReject()
+    {
+        $id = Yii::$app->request->get('id', 0);
+        $model = $this->findModel($id);
+        $data['status'] = 2;
+        /* 表单数据加载、验证、数据库操作 */
+        if ($this->saveRow($model, $data)) {
+            $this->success('操作成功', $this->getForward());
+        } else {
+            $this->error('操作错误');
+        }
     }
 
     /**
