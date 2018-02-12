@@ -115,6 +115,32 @@ class CustomerController extends BaseController
         ]);
     }
 
+    public function actionRecharge($uid)
+    {
+        $model = Admin::findOne($uid);
+
+        if (Yii::$app->request->isPost) {
+            /* 表单验证 */
+            $data = Yii::$app->request->post('Recharge');
+            $balance = $model->balance;
+            $balance += $data['balance'];
+            $data['balance'] = $balance;
+            unset($data['count']);
+
+            $model->setAttributes($data);
+            /* 保存用户数据到数据库 */
+            if ($model->save()) {
+                $this->success('操作成功', $this->getForward());
+            } else {
+                $this->error('操作错误');
+            }
+        }
+
+        return $this->render('recharge', [
+            'model' => $model,
+        ]);
+    }
+
     /**
      * ---------------------------------------
      * 删除

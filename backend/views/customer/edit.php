@@ -67,8 +67,8 @@ $this->params['title_sub'] = '';  // 在\yii\base\View中有$params这个可以�
             'class'=>'form-control c-md-3',
             'iconPos' => 'left',
             'iconClass' => 'fa fa-diamond',
-            'placeholder' => '系数'
-        ])->label('系数') ?>
+            'placeholder' => '单位:元/条'
+        ])->label('单价') ?>
 
         <?= $form->field($model, 'status')->radioList(['1'=>'正常','0'=>'隐藏'])->label('用户状态') ?>
         
