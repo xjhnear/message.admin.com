@@ -11,7 +11,7 @@ use common\modelsgii\AuthAssignment;
 /**
  * AdminSearch represents the model behind the search form about `backend\models\Admin`.
  */
-class AdminSearch extends Admin
+class ManagerSearch extends Admin
 {
     /**
      * @inheritdoc
@@ -58,7 +58,11 @@ class AdminSearch extends Admin
             // $query->where('0=1');
             return $dataProvider;
         }
-        
+
+        $query->andFilterWhere([
+            'role' => 3,
+        ]);
+
         $query->andFilterWhere([
             'uid' => $this->uid,
             'reg_time' => $this->reg_time,

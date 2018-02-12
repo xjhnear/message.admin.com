@@ -37,10 +37,10 @@ class Admin extends \common\core\BaseActiveRecord
     {
         return [
             [['username', 'password', 'salt', 'email'], 'required'],
-            [['reg_time', 'reg_ip', 'last_login_time', 'last_login_ip', 'update_time', 'status'], 'integer'],
+            [['reg_time', 'reg_ip', 'last_login_time', 'last_login_ip', 'update_time', 'status', 'role', 'balance'], 'integer'],
             [['username'], 'string', 'max' => 16],
             [['password'], 'string', 'max' => 60],
-            [['salt', 'email'], 'string', 'max' => 32],
+            [['salt', 'email', 'coefficient'], 'string', 'max' => 32],
             [['mobile'], 'string', 'max' => 15],
             [['username'], 'unique'],
             [['email'], 'unique']
@@ -65,6 +65,9 @@ class Admin extends \common\core\BaseActiveRecord
             'last_login_ip' => 'Last Login Ip',
             'update_time' => 'Update Time',
             'status' => 'Status',
+            'role' => 'Role',
+            'coefficient' => 'Coefficient',
+            'balance' => 'Balance',
         ];
     }
 }
