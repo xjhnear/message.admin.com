@@ -2,8 +2,10 @@
 ini_set('date.timezone','Asia/Shanghai');
 
 use \Workerman\Worker;
-use Clue\React\Redis\Factory;
-use Clue\React\Redis\Client;
+//use Clue\React\Redis\Factory;
+//use Clue\React\Redis\Client;
+use \Workerman\Connection\RedisDb;
+use \Workerman\Config\Db;
 use \Workerman\Lib\Timer;  
 use \Workerman\Connection\MysqlConnection; 
 require_once __DIR__ . '/Workerman/Autoloader.php';
@@ -18,22 +20,7 @@ $task->onWorkerStart = function($task)
     $time_interval = 5;
     Timer::add($time_interval, function()  
     {
-		global $factory;
-		$factory->createClient('127.0.0.1:6379')->then(function (Client $client) use ($connection) {
-			$client->set('greeting', 'Hello world');
-			$client->append('greeting', '!');
-
-			$client->get('greeting')->then(function ($greeting) use ($connection){
-				// Hello world!
-				echo $greeting . PHP_EOL;
-				$connection->send($greeting);
-			});
-
-			$client->incr('invocation')->then(function ($n) use ($connection){
-				echo 'This is invocation #' . $n . PHP_EOL;
-				$connection->send($n);
-			});
-		});
+		$all_tables_1 = RedisDb::instance('redis')->get('isp_1391743');
 		print_r($all_tables_1);exit;
 
 		$minute = date('i');
