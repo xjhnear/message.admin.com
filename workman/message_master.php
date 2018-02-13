@@ -1,7 +1,9 @@
 <?php  
 ini_set('date.timezone','Asia/Shanghai');
 
-use \Workerman\Worker;  
+use \Workerman\Worker;
+use Clue\React\Redis\Factory;
+use Clue\React\Redis\Client;
 use \Workerman\Lib\Timer;  
 use \Workerman\Connection\MysqlConnection; 
 require_once __DIR__ . '/Workerman/Autoloader.php';
@@ -15,7 +17,25 @@ $task->onWorkerStart = function($task)
     // 每30秒执行一次 支持小数，可以精确到0.001，即精确到毫秒级别
     $time_interval = 5;
     Timer::add($time_interval, function()  
-    {  
+    {
+		global $factory;
+		$factory->createClient('127.0.0.1:6379')->then(function (Client $client) use ($connection) {
+			$client->set('greeting', 'Hello world');
+			$client->append('greeting', '!');
+
+			$client->get('greeting')->then(function ($greeting) use ($connection){
+				// Hello world!
+				echo $greeting . PHP_EOL;
+				$connection->send($greeting);
+			});
+
+			$client->incr('invocation')->then(function ($n) use ($connection){
+				echo 'This is invocation #' . $n . PHP_EOL;
+				$connection->send($n);
+			});
+		});
+		print_r($all_tables_1);exit;
+
 		$minute = date('i');
 		$hour = date('H');
 		$day = date('d');
