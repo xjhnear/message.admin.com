@@ -1,0 +1,319 @@
+2017-09-22 13:37:58 pid:31690 Workerman[timing_master.php] start in DAEMON mode
+2017-09-22 13:38:28 pid:31693 Worker[31693] process terminated with ERROR: E_ERROR "Class 'Workerman\Connection\MysqlConnection' not found in /opt/lampp/www/workman/timing_master.php on line 27"
+2017-09-22 13:38:28 pid:31692 worker[none:31693] exit with status 65280
+2017-09-22 13:38:58 pid:31695 Worker[31695] process terminated with ERROR: E_ERROR "Class 'Workerman\Connection\MysqlConnection' not found in /opt/lampp/www/workman/timing_master.php on line 27"
+2017-09-22 13:38:58 pid:31692 worker[none:31695] exit with status 65280
+2017-09-22 13:39:28 pid:31700 Worker[31700] process terminated with ERROR: E_ERROR "Class 'Workerman\Connection\MysqlConnection' not found in /opt/lampp/www/workman/timing_master.php on line 27"
+2017-09-22 13:39:28 pid:31692 worker[none:31700] exit with status 65280
+2017-09-22 13:39:43 pid:31704 Workerman[timing_master.php] status 
+2017-09-22 13:39:58 pid:31703 Worker[31703] process terminated with ERROR: E_ERROR "Class 'Workerman\Connection\MysqlConnection' not found in /opt/lampp/www/workman/timing_master.php on line 27"
+2017-09-22 13:39:58 pid:31692 worker[none:31703] exit with status 65280
+2017-09-22 13:40:28 pid:31705 Worker[31705] process terminated with ERROR: E_ERROR "Class 'Workerman\Connection\MysqlConnection' not found in /opt/lampp/www/workman/timing_master.php on line 27"
+2017-09-22 13:40:29 pid:31692 worker[none:31705] exit with status 65280
+2017-09-22 13:40:44 pid:31718 Workerman[timing_master.php] stop 
+2017-09-22 13:40:44 pid:31718 Workerman[timing_master.php] is stoping ...
+2017-09-22 13:40:44 pid:31692 Workerman[timing_master.php] Stopping ...
+2017-09-22 13:40:44 pid:31692 Workerman[timing_master.php] has been stopped
+2017-09-22 13:40:44 pid:31718 Workerman[timing_master.php] stop success
+2017-09-22 13:40:49 pid:31719 Workerman[timing_master.php] status 
+2017-09-22 13:40:49 pid:31719 Workerman[timing_master.php] not run
+2017-09-22 13:46:11 pid:31742 Workerman[timing_master.php] start in DAEMON mode
+2017-09-22 13:46:41 pid:31745 Worker[31745] process terminated with ERROR: E_ERROR "Class 'Workerman\Connection\MysqlConnection' not found in /opt/lampp/www/workman/timing_master.php on line 27"
+2017-09-22 13:46:41 pid:31744 worker[none:31745] exit with status 65280
+2017-09-22 13:47:11 pid:31748 Worker[31748] process terminated with ERROR: E_ERROR "Class 'Workerman\Connection\MysqlConnection' not found in /opt/lampp/www/workman/timing_master.php on line 27"
+2017-09-22 13:47:11 pid:31744 worker[none:31748] exit with status 65280
+2017-09-22 13:47:40 pid:31752 Workerman[timing_master.php] stop 
+2017-09-22 13:47:40 pid:31752 Workerman[timing_master.php] is stoping ...
+2017-09-22 13:47:40 pid:31744 Workerman[timing_master.php] Stopping ...
+2017-09-22 13:47:40 pid:31744 Workerman[timing_master.php] has been stopped
+2017-09-22 13:47:40 pid:31752 Workerman[timing_master.php] stop success
+2017-09-22 13:48:25 pid:31753 Workerman[timing_master.php] start in DAEMON mode
+2017-09-22 13:48:36 pid:31757 Workerman[timing_master.php] stop 
+2017-09-22 13:48:36 pid:31757 Workerman[timing_master.php] is stoping ...
+2017-09-22 13:48:36 pid:31755 Workerman[timing_master.php] Stopping ...
+2017-09-22 13:48:36 pid:31755 Workerman[timing_master.php] has been stopped
+2017-09-22 13:48:36 pid:31757 Workerman[timing_master.php] stop success
+2017-09-22 13:48:39 pid:31758 Workerman[timing_master.php] start in DEBUG mode
+2017-09-22 13:49:09 pid:31759 Worker[31759] process terminated with ERROR: E_ERROR "Class 'Workerman\Connection\MysqlConnection' not found in /opt/lampp/www/workman/timing_master.php on line 27"
+2017-09-22 13:49:09 pid:31758 worker[none:31759] exit with status 65280
+2017-09-22 13:49:24 pid:31758 Workerman[timing_master.php] Stopping ...
+2017-09-22 13:49:24 pid:31758 Workerman[timing_master.php] has been stopped
+2017-09-22 13:51:44 pid:31773 Workerman[timing_master.php] start in DEBUG mode
+2017-09-22 13:51:49 pid:31774 Worker[31774] process terminated
+2017-09-22 13:51:51 pid:31773 Workerman[timing_master.php] Stopping ...
+2017-09-22 13:51:51 pid:31773 Workerman[timing_master.php] has been stopped
+2017-09-22 13:52:53 pid:31781 Workerman[timing_master.php] start in DEBUG mode
+2017-09-22 13:53:00 pid:31781 Workerman[timing_master.php] Stopping ...
+2017-09-22 13:53:00 pid:31781 Workerman[timing_master.php] has been stopped
+2017-09-22 13:53:50 pid:31786 Workerman[timing_master.php] start in DEBUG mode
+2017-09-22 13:53:56 pid:31786 Workerman[timing_master.php] Stopping ...
+2017-09-22 13:53:57 pid:31786 Workerman[timing_master.php] Stopping ...
+2017-09-22 13:53:58 pid:31786 worker[none:31787] exit with status 9
+2017-09-22 13:53:58 pid:31786 Workerman[timing_master.php] has been stopped
+2017-09-22 13:58:00 pid:31815 Workerman[timing_master.php] start in DEBUG mode
+2017-09-22 13:58:06 pid:31815 Workerman[timing_master.php] Stopping ...
+2017-09-22 13:58:07 pid:31815 Workerman[timing_master.php] Stopping ...
+2017-09-22 13:58:07 pid:31815 Workerman[timing_master.php] Stopping ...
+2017-09-22 13:58:07 pid:31815 Workerman[timing_master.php] Stopping ...
+2017-09-22 13:58:07 pid:31815 Workerman[timing_master.php] Stopping ...
+2017-09-22 13:58:08 pid:31815 Workerman[timing_master.php] Stopping ...
+2017-09-22 13:58:08 pid:31815 Workerman[timing_master.php] Stopping ...
+2017-09-22 13:58:08 pid:31815 Workerman[timing_master.php] Stopping ...
+2017-09-22 13:58:08 pid:31815 worker[none:31816] exit with status 9
+2017-09-22 13:58:08 pid:31815 Workerman[timing_master.php] has been stopped
+2017-09-22 13:58:18 pid:31818 Workerman[timing_master.php] start in DEBUG mode
+2017-09-22 13:58:25 pid:31818 Workerman[timing_master.php] Stopping ...
+2017-09-22 13:58:27 pid:31818 worker[none:31819] exit with status 9
+2017-09-22 13:58:27 pid:31818 Workerman[timing_master.php] has been stopped
+2017-09-22 14:07:09 pid:31891 Workerman[timing_master.php] start in DEBUG mode
+2017-09-22 14:07:15 pid:31891 Workerman[timing_master.php] Stopping ...
+2017-09-22 14:07:15 pid:31891 Workerman[timing_master.php] has been stopped
+2017-09-22 14:07:54 pid:31894 Workerman[timing_master.php] start in DEBUG mode
+2017-09-22 14:07:59 pid:31894 Workerman[timing_master.php] Stopping ...
+2017-09-22 14:08:01 pid:31894 worker[none:31895] exit with status 9
+2017-09-22 14:08:01 pid:31894 Workerman[timing_master.php] has been stopped
+2017-09-22 14:43:47 pid:32090 Workerman[timing_master.php] start in DEBUG mode
+2017-09-22 14:43:54 pid:32090 Workerman[timing_master.php] Stopping ...
+2017-09-22 14:43:56 pid:32090 worker[none:32091] exit with status 9
+2017-09-22 14:43:56 pid:32090 Workerman[timing_master.php] has been stopped
+2017-09-22 14:44:52 pid:32370 Workerman[timing_master.php] start in DEBUG mode
+2017-09-22 14:44:58 pid:32370 Workerman[timing_master.php] Stopping ...
+2017-09-22 14:45:00 pid:32370 worker[none:32371] exit with status 9
+2017-09-22 14:45:00 pid:32370 Workerman[timing_master.php] has been stopped
+2017-09-22 14:56:07 pid:32427 Workerman[timing_master.php] start in DEBUG mode
+2017-09-22 14:56:14 pid:32427 Workerman[timing_master.php] Stopping ...
+2017-09-22 14:56:15 pid:32427 Workerman[timing_master.php] Stopping ...
+2017-09-22 14:56:15 pid:32427 Workerman[timing_master.php] Stopping ...
+2017-09-22 14:56:15 pid:32427 Workerman[timing_master.php] Stopping ...
+2017-09-22 14:56:15 pid:32427 Workerman[timing_master.php] Stopping ...
+2017-09-22 14:56:16 pid:32427 Workerman[timing_master.php] Stopping ...
+2017-09-22 14:56:16 pid:32427 Workerman[timing_master.php] Stopping ...
+2017-09-22 14:56:16 pid:32427 Workerman[timing_master.php] Stopping ...
+2017-09-22 14:56:16 pid:32427 Workerman[timing_master.php] Stopping ...
+2017-09-22 14:56:16 pid:32427 worker[none:32428] exit with status 9
+2017-09-22 14:56:16 pid:32427 Workerman[timing_master.php] has been stopped
+2017-09-22 14:57:16 pid:32432 Workerman[timing_master.php] start in DEBUG mode
+2017-09-22 14:57:21 pid:32433 Worker[32433] process terminated
+2017-09-22 14:57:26 pid:32437 Worker[32437] process terminated
+2017-09-22 14:57:31 pid:32439 Worker[32439] process terminated
+2017-09-22 14:57:36 pid:32441 Worker[32441] process terminated
+2017-09-22 14:57:41 pid:32445 Worker[32445] process terminated
+2017-09-22 14:57:46 pid:32449 Worker[32449] process terminated
+2017-09-22 14:58:02 pid:32452 Workerman[timing_master.php] start in DEBUG mode
+2017-09-22 14:58:02 pid:32452 Workerman[timing_master.php] already running
+2017-09-22 14:58:38 pid:32453 Workerman[timing_master.php] start in DEBUG mode
+2017-09-22 14:58:38 pid:32453 Workerman[timing_master.php] already running
+2017-09-22 15:48:55 pid:1033 Workerman[timing_master.php] start in DEBUG mode
+2017-09-22 15:48:55 pid:1033 Workerman[timing_master.php] already running
+2017-09-22 15:49:20 pid:1037 Workerman[timing_master.php] start in DEBUG mode
+2017-09-22 15:49:20 pid:1037 Workerman[timing_master.php] already running
+2017-09-22 15:49:32 pid:1038 Workerman[timing_master.php] stop 
+2017-09-22 15:49:32 pid:1038 Workerman[timing_master.php] is stoping ...
+2017-09-22 15:49:37 pid:1038 Workerman[timing_master.php] stop fail
+2017-09-22 15:50:01 pid:1042 Workerman[timing_master.php] start in DEBUG mode
+2017-09-22 15:50:01 pid:1042 Workerman[timing_master.php] already running
+2017-09-22 15:50:40 pid:1058 Workerman[timing_master.php] status 
+2017-09-22 15:52:31 pid:1074 Workerman[timing_master.php] start in DEBUG mode
+2017-09-22 15:52:31 pid:1074 Workerman[timing_master.php] already running
+2017-09-22 15:52:37 pid:1075 Workerman[timing_master.php] start in DEBUG mode
+2017-09-22 15:52:37 pid:1075 Workerman[timing_master.php] already running
+2017-09-22 15:53:01 pid:1078 Workerman[timing_master.php] reload 
+2017-09-22 15:53:01 pid:1078 Workerman[timing_master.php] reload
+2017-09-22 15:53:08 pid:1082 Workerman[timing_master.php] start in DEBUG mode
+2017-09-22 15:53:08 pid:1082 Workerman[timing_master.php] already running
+2017-09-22 15:53:16 pid:1085 Workerman[timing_master.php] stop 
+2017-09-22 15:53:16 pid:1085 Workerman[timing_master.php] is stoping ...
+2017-09-22 15:53:21 pid:1085 Workerman[timing_master.php] stop fail
+2017-09-22 15:55:56 pid:1104 Workerman[timing_master.php] start in DAEMON mode
+2017-09-22 15:55:56 pid:1104 Workerman[timing_master.php] already running
+2017-09-22 16:09:24 pid:4607 Workerman[timing_master.php] start in DEBUG mode
+2017-09-22 16:09:24 pid:4607 Workerman[timing_master.php] already running
+2017-09-22 16:15:09 pid:4660 Workerman[timing_master.php] start in DEBUG mode
+2017-09-22 16:15:21 pid:4660 Workerman[timing_master.php] Stopping ...
+2017-09-22 16:15:21 pid:4660 Workerman[timing_master.php] has been stopped
+2017-09-22 16:16:13 pid:4666 Workerman[timing_master.php] status 
+2017-09-22 16:16:13 pid:4666 Workerman[timing_master.php] not run
+2017-09-22 16:20:29 pid:4682 Workerman[timing_master.php] start in DAEMON mode
+2017-09-22 16:22:48 pid:4726 Workerman[timing_master.php] reload 
+2017-09-22 16:22:48 pid:4726 Workerman[timing_master.php] reload
+2017-09-22 16:22:48 pid:4684 Workerman[timing_master.php] reloading
+2017-09-22 16:22:53 pid:4728 Workerman[timing_master.php] status 
+2017-09-28 10:30:51 pid:15632 Workerman[timing_master.php] status 
+2017-09-30 16:10:49 pid:1548 Workerman[timing_master.php] status 
+2017-10-09 17:49:32 pid:1506 Workerman[timing_master.php] status 
+2017-10-09 18:08:07 pid:1968 Workerman[timing_master.php] start in DEBUG mode
+2017-10-09 18:08:07 pid:1968 Workerman[timing_master.php] already running
+2017-10-09 18:08:13 pid:1970 Workerman[timing_master.php] stop 
+2017-10-09 18:08:13 pid:1970 Workerman[timing_master.php] is stoping ...
+2017-10-09 18:08:13 pid:4684 Workerman[timing_master.php] Stopping ...
+2017-10-09 18:08:13 pid:4684 Workerman[timing_master.php] has been stopped
+2017-10-09 18:08:13 pid:1970 Workerman[timing_master.php] stop success
+2017-10-09 18:08:18 pid:1971 Workerman[timing_master.php] start in DEBUG mode
+2017-10-10 15:05:52 pid:1972 Worker[1972] process terminated with ERROR: E_ERROR "Uncaught exception 'PDOException' with message 'SQLSTATE[HY000] [2002] Connection refused' in /opt/lampp/www/workman/Workerman/Connection/MysqlConnection.php:1709
+Stack trace:
+#0 /opt/lampp/www/workman/Workerman/Connection/MysqlConnection.php(1709): PDO->__construct('mysql:dbname=yi...', 'root', 'cat123', Array)
+#1 /opt/lampp/www/workman/Workerman/Connection/MysqlConnection.php(1695): Workerman\Connection\MysqlConnection->connect()
+#2 /opt/lampp/www/workman/timing_master.php(27): Workerman\Connection\MysqlConnection->__construct('192.168.20.104', '3306', 'root', 'cat123', 'yii2-peng')
+#3 [internal function]: {closure}()
+#4 /opt/lampp/www/workman/Workerman/Events/Select.php(233): call_user_func_array(Object(Closure), Array)
+#5 /opt/lampp/www/workman/Workerman/Events/Select.php(274): Workerman\Events\Select->tick()
+#6 /opt/lampp/www/workman/Workerman/Worker.php(1745): Workerman\Events\Select->loop()
+#7 /opt/lampp/www/workman/Workerman/Worker.php(1047): Workerman\Worker->run()
+#8 /opt/lampp/www/workman/Workerman in /opt/lampp/www/workman/Workerman/Connection/MysqlConnection.php on line 1709"
+2017-10-10 15:05:52 pid:1971 worker[none:1972] exit with status 65280
+2017-10-10 15:12:22 pid:9403 Worker[9403] process terminated with ERROR: E_ERROR "Uncaught exception 'PDOException' with message 'SQLSTATE[HY000] [2002] Connection refused' in /opt/lampp/www/workman/Workerman/Connection/MysqlConnection.php:1709
+Stack trace:
+#0 /opt/lampp/www/workman/Workerman/Connection/MysqlConnection.php(1709): PDO->__construct('mysql:dbname=yi...', 'root', 'cat123', Array)
+#1 /opt/lampp/www/workman/Workerman/Connection/MysqlConnection.php(1695): Workerman\Connection\MysqlConnection->connect()
+#2 /opt/lampp/www/workman/timing_master.php(27): Workerman\Connection\MysqlConnection->__construct('192.168.20.104', '3306', 'root', 'cat123', 'yii2-peng')
+#3 [internal function]: {closure}()
+#4 /opt/lampp/www/workman/Workerman/Events/Select.php(233): call_user_func_array(Object(Closure), Array)
+#5 /opt/lampp/www/workman/Workerman/Events/Select.php(274): Workerman\Events\Select->tick()
+#6 /opt/lampp/www/workman/Workerman/Worker.php(1745): Workerman\Events\Select->loop()
+#7 /opt/lampp/www/workman/Workerman/Worker.php(1047): Workerman\Worker->run()
+#8 /opt/lampp/www/workman/Workerman in /opt/lampp/www/workman/Workerman/Connection/MysqlConnection.php on line 1709"
+2017-10-10 15:12:22 pid:1971 worker[none:9403] exit with status 65280
+2017-10-10 16:27:24 pid:1971 Workerman[timing_master.php] Stopping ...
+2017-10-10 16:27:24 pid:1971 Workerman[timing_master.php] has been stopped
+2017-10-10 16:42:42 pid:11289 Workerman[timing_master.php] start in DEBUG mode
+2017-10-10 16:42:47 pid:11290 Worker[11290] process terminated
+2017-10-10 16:42:52 pid:11292 Worker[11292] process terminated
+2017-10-10 16:42:53 pid:11289 Workerman[timing_master.php] Stopping ...
+2017-10-10 16:42:53 pid:11289 Workerman[timing_master.php] has been stopped
+2017-10-10 16:43:18 pid:11298 Workerman[timing_master.php] start in DEBUG mode
+2017-10-10 16:43:23 pid:11299 Worker[11299] process terminated
+2017-10-10 16:43:29 pid:11301 Worker[11301] process terminated
+2017-10-10 16:43:31 pid:11298 Workerman[timing_master.php] Stopping ...
+2017-10-10 16:43:31 pid:11298 Workerman[timing_master.php] has been stopped
+2017-10-10 16:43:52 pid:11304 Workerman[timing_master.php] start in DEBUG mode
+2017-10-10 16:43:57 pid:11305 Worker[11305] process terminated
+2017-10-10 16:44:03 pid:11307 Worker[11307] process terminated
+2017-10-10 16:44:03 pid:11304 Workerman[timing_master.php] Stopping ...
+2017-10-10 16:44:03 pid:11304 Workerman[timing_master.php] has been stopped
+2017-10-10 16:44:11 pid:11310 Workerman[timing_master.php] start in DEBUG mode
+2017-10-10 16:44:16 pid:11311 Worker[11311] process terminated
+2017-10-10 16:44:21 pid:11313 Worker[11313] process terminated
+2017-10-10 16:44:26 pid:11315 Worker[11315] process terminated
+2017-10-10 16:44:31 pid:11317 Worker[11317] process terminated
+2017-10-10 16:44:36 pid:11319 Worker[11319] process terminated
+2017-10-10 16:44:41 pid:11322 Worker[11322] process terminated
+2017-10-10 16:44:46 pid:11324 Worker[11324] process terminated
+2017-10-10 16:44:51 pid:11326 Worker[11326] process terminated
+2017-10-10 16:44:56 pid:11328 Worker[11328] process terminated
+2017-10-10 16:45:01 pid:11330 Worker[11330] process terminated
+2017-10-10 16:45:06 pid:11332 Worker[11332] process terminated
+2017-10-10 16:45:11 pid:11345 Worker[11345] process terminated
+2017-10-10 16:45:16 pid:11347 Worker[11347] process terminated
+2017-10-10 16:45:21 pid:11349 Worker[11349] process terminated
+2017-10-10 16:45:26 pid:11351 Worker[11351] process terminated
+2017-10-10 16:45:31 pid:11353 Worker[11353] process terminated
+2017-10-10 16:45:36 pid:11355 Worker[11355] process terminated
+2017-10-10 16:45:36 pid:11310 Workerman[timing_master.php] Stopping ...
+2017-10-10 16:45:36 pid:11310 Workerman[timing_master.php] has been stopped
+2017-10-10 16:49:45 pid:11360 Workerman[timing_master.php] start in DEBUG mode
+2017-10-10 16:49:50 pid:11361 Worker[11361] process terminated
+2017-10-10 16:49:55 pid:11363 Worker[11363] process terminated
+2017-10-10 16:50:00 pid:11365 Worker[11365] process terminated
+2017-10-10 16:50:05 pid:11367 Worker[11367] process terminated
+2017-10-10 16:50:10 pid:11380 Worker[11380] process terminated
+2017-10-10 16:50:15 pid:11382 Worker[11382] process terminated
+2017-10-10 16:50:20 pid:11384 Worker[11384] process terminated
+2017-10-10 16:50:25 pid:11386 Worker[11386] process terminated
+2017-10-10 16:50:30 pid:11388 Worker[11388] process terminated
+2017-10-10 16:50:35 pid:11390 Worker[11390] process terminated
+2017-10-10 16:50:40 pid:11392 Worker[11392] process terminated
+2017-10-10 16:50:45 pid:11394 Worker[11394] process terminated
+2017-10-10 16:50:50 pid:11397 Worker[11397] process terminated
+2017-10-10 16:50:55 pid:11399 Worker[11399] process terminated
+2017-10-10 16:51:00 pid:11401 Worker[11401] process terminated
+2017-10-10 16:51:05 pid:11403 Worker[11403] process terminated
+2017-10-10 16:51:10 pid:11405 Worker[11405] process terminated
+2017-10-10 16:51:15 pid:11407 Worker[11407] process terminated
+2017-10-10 16:51:20 pid:11410 Worker[11410] process terminated
+2017-10-10 16:51:25 pid:11412 Worker[11412] process terminated
+2017-10-10 16:51:30 pid:11414 Worker[11414] process terminated
+2017-10-10 16:51:35 pid:11416 Worker[11416] process terminated
+2017-10-10 16:51:38 pid:11360 Workerman[timing_master.php] Stopping ...
+2017-10-10 16:51:38 pid:11360 Workerman[timing_master.php] has been stopped
+2017-10-10 16:52:41 pid:11420 Workerman[timing_master.php] start in DEBUG mode
+2017-10-10 16:52:46 pid:11421 Worker[11421] process terminated
+2017-10-10 16:52:51 pid:11423 Worker[11423] process terminated
+2017-10-10 16:52:56 pid:11425 Worker[11425] process terminated
+2017-10-10 16:53:01 pid:11428 Worker[11428] process terminated
+2017-10-10 16:53:06 pid:11430 Worker[11430] process terminated
+2017-10-10 16:53:11 pid:11432 Worker[11432] process terminated
+2017-10-10 16:53:16 pid:11434 Worker[11434] process terminated
+2017-10-10 16:53:21 pid:11436 Worker[11436] process terminated
+2017-10-10 16:53:25 pid:11420 Workerman[timing_master.php] Stopping ...
+2017-10-10 16:53:25 pid:11420 Workerman[timing_master.php] has been stopped
+2017-10-10 16:53:26 pid:11439 Workerman[timing_master.php] start in DEBUG mode
+2017-10-10 16:53:31 pid:11440 Worker[11440] process terminated
+2017-10-10 16:53:36 pid:11442 Worker[11442] process terminated
+2017-10-10 16:53:39 pid:11439 Workerman[timing_master.php] Stopping ...
+2017-10-10 16:53:39 pid:11439 Workerman[timing_master.php] has been stopped
+2017-10-10 16:53:56 pid:11445 Workerman[timing_master.php] start in DEBUG mode
+2017-10-10 16:54:01 pid:11446 Worker[11446] process terminated
+2017-10-10 16:54:06 pid:11448 Worker[11448] process terminated
+2017-10-10 16:54:11 pid:11450 Worker[11450] process terminated
+2017-10-10 16:54:16 pid:11452 Worker[11452] process terminated
+2017-10-10 16:54:21 pid:11454 Worker[11454] process terminated
+2017-10-10 16:54:26 pid:11456 Worker[11456] process terminated
+2017-10-10 16:54:31 pid:11458 Worker[11458] process terminated
+2017-10-10 16:54:36 pid:11460 Worker[11460] process terminated
+2017-10-10 16:54:37 pid:11445 Workerman[timing_master.php] Stopping ...
+2017-10-10 16:54:37 pid:11445 Workerman[timing_master.php] has been stopped
+2017-10-10 16:55:54 pid:11477 Workerman[timing_master.php] start in DEBUG mode
+2017-10-10 16:55:59 pid:11478 Worker[11478] process terminated with ERROR: E_ERROR "Uncaught exception 'PDOException' with message 'SQL:SELECT id,crontab FROM `timing` WHERE status = 1 AND cooldown < 1507625759 AND end_date > "2017-10-10"" SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '"2017-10-10""' at line 1' in /opt/lampp/www/workman/Workerman/Connection/MysqlConnection.php:1766
+Stack trace:
+#0 /opt/lampp/www/workman/Workerman/Connection/MysqlConnection.php(1824): Workerman\Connection\MysqlConnection->execute('SELECT id,cront...', Array)
+#1 /opt/lampp/www/workman/timing_master.php(30): Workerman\Connection\MysqlConnection->query()
+#2 [internal function]: {closure}()
+#3 /opt/lampp/www/workman/Workerman/Events/Select.php(233): call_user_func_array(Object(Closure), Array)
+#4 /opt/lampp/www/workman/Workerman/Events/Select.php(274): Workerman\Events\Select->tick()
+#5 /opt/lampp/www/workman/Workerman/Worker.php(1745): Workerman\Events\Select->loop()
+# in /opt/lampp/www/workman/Workerman/Connection/MysqlConnection.php on line 1766"
+2017-10-10 16:55:59 pid:11477 worker[none:11478] exit with status 65280
+2017-10-10 16:56:02 pid:11477 Workerman[timing_master.php] Stopping ...
+2017-10-10 16:56:02 pid:11477 Workerman[timing_master.php] has been stopped
+2017-10-10 16:57:26 pid:11481 Workerman[timing_master.php] start in DEBUG mode
+2017-10-10 16:57:31 pid:11482 Worker[11482] process terminated
+2017-10-10 16:57:36 pid:11484 Worker[11484] process terminated
+2017-10-10 16:57:41 pid:11486 Worker[11486] process terminated
+2017-10-10 16:57:46 pid:11488 Worker[11488] process terminated
+2017-10-10 16:57:51 pid:11490 Worker[11490] process terminated
+2017-10-10 16:57:56 pid:11492 Worker[11492] process terminated
+2017-10-10 16:57:59 pid:11481 Workerman[timing_master.php] Stopping ...
+2017-10-10 16:57:59 pid:11481 Workerman[timing_master.php] has been stopped
+2017-10-10 16:59:20 pid:11498 Workerman[timing_master.php] start in DAEMON mode
+2017-10-10 16:59:26 pid:11502 Workerman[timing_master.php] status 
+2017-10-10 18:21:41 pid:12165 Workerman[timing_master.php] stop 
+2017-10-10 18:21:41 pid:12165 Workerman[timing_master.php] is stoping ...
+2017-10-10 18:21:41 pid:11500 Workerman[timing_master.php] Stopping ...
+2017-10-10 18:21:41 pid:11500 Workerman[timing_master.php] has been stopped
+2017-10-10 18:21:41 pid:12165 Workerman[timing_master.php] stop success
+2017-10-11 10:33:42 pid:15279 Workerman[timing_master.php] start in DAEMON mode
+2017-10-12 15:44:16 pid:26987 Workerman[timing_master.php] stop 
+2017-10-12 15:44:16 pid:26987 Workerman[timing_master.php] is stoping ...
+2017-10-12 15:44:16 pid:15281 Workerman[timing_master.php] Stopping ...
+2017-10-12 15:44:16 pid:15281 Workerman[timing_master.php] has been stopped
+2017-10-12 15:44:16 pid:26987 Workerman[timing_master.php] stop success
+2017-10-12 15:44:29 pid:26988 Workerman[timing_master.php] start in DAEMON mode
+2017-10-12 15:44:37 pid:26992 Workerman[timing_master.php] status 
+2017-10-27 17:10:51 pid:19223 Workerman[timing_master.php] reload 
+2017-10-27 17:10:51 pid:19223 Workerman[timing_master.php] reload
+2017-10-27 17:10:51 pid:26990 Workerman[timing_master.php] reloading
+2017-10-27 17:12:20 pid:19232 Workerman[timing_master.php] stop 
+2017-10-27 17:12:20 pid:19232 Workerman[timing_master.php] is stoping ...
+2017-10-27 17:12:20 pid:26990 Workerman[timing_master.php] Stopping ...
+2017-10-27 17:12:20 pid:26990 Workerman[timing_master.php] has been stopped
+2017-10-27 17:12:20 pid:19232 Workerman[timing_master.php] stop success
+2017-10-27 17:13:47 pid:19242 Workerman[timing_master.php] start in DEBUG mode
+2017-10-27 17:25:29 pid:19242 Workerman[timing_master.php] Stopping ...
+2017-10-27 17:25:29 pid:19242 Workerman[timing_master.php] has been stopped
+2017-10-27 17:25:39 pid:19508 Workerman[timing_master.php] start in DAEMON mode
+2017-11-22 17:17:58 pid:18840 Workerman[timing_master.php] status 
+2017-11-22 17:18:21 pid:18842 Workerman[timing_master.php] reload 
+2017-11-22 17:18:21 pid:18842 Workerman[timing_master.php] reload
+2017-11-22 17:18:21 pid:19510 Workerman[timing_master.php] reloading
+2017-11-22 17:18:25 pid:18844 Workerman[timing_master.php] status 
+2017-11-22 17:18:39 pid:18845 Workerman[timing_master.php] status 
