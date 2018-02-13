@@ -21,15 +21,15 @@ class RedisDb
      */
     public static function instance($config_name)
     {
-        if(!isset(\Config\Db::$$config_name))
+        if(!isset(\Workerman\Config\Db::$$config_name))
         {
-            echo "\\Config\\Db::$config_name not set\n";
-            throw new \Exception("\\Config\\Db::$config_name not set\n");
+            echo "\\Workerman\\Config\\Db::$config_name not set\n";
+            throw new \Exception("\\Workerman\\Config\\Db::$config_name not set\n");
         }
         
         if(empty(self::$instance[$config_name]))
         {
-            $config = \Config\Db::$$config_name;
+            $config = \Workerman\Config\Db::$$config_name;
             self::$instance[$config_name] = new \Redis();
 			self::$instance[$config_name]->pconnect($config['host'], $config['port']);
         }
