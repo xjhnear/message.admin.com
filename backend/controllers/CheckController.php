@@ -142,6 +142,12 @@ class CheckController extends BaseController
             $status_unicom = $data['status_unicom'];unset($data['status_unicom']);
             $status_mobile = $data['status_mobile'];unset($data['status_mobile']);
             $status_telecom = $data['status_telecom'];unset($data['status_telecom']);
+            $content = array();
+            $content['unicom'] = $data['content'];
+            $content['mobile'] = $data['content1'];unset($data['content1']);
+            $content['telecom'] = $data['content2'];unset($data['content2']);
+            $data['content'] = json_encode($content);
+            $pass = $data['pass'];unset($data['pass']);
             $data['status'] = 1;
             $data['check_time'] = time();
             $data['check_uid'] = Yii::$app->user->identity->uid;
@@ -159,19 +165,30 @@ class CheckController extends BaseController
             if ($this->saveRow($model, $data)) {
 
                 $db = Yii::$app->db;
-                $sql = "UPDATE yii2_message_detail SET channel_id=".$status_unicom." WHERE operator=1 AND message_id=".$id;
-                $command = $db->createCommand($sql);
-                $command->execute();
-                $sql = "UPDATE yii2_message_detail SET channel_id=".$status_mobile." WHERE operator=2 AND message_id=".$id;
-                $command = $db->createCommand($sql);
-                $command->execute();
-                $sql = "UPDATE yii2_message_detail SET channel_id=".$status_telecom." WHERE operator=3 AND message_id=".$id;
-                $command = $db->createCommand($sql);
-                $command->execute();
-                $sql = "UPDATE yii2_message_detail SET status=1 WHERE message_id=".$id;
-                $command = $db->createCommand($sql);
-                $command->execute();
-
+                if (in_array('unicom',$pass)) {
+                    $sql = "UPDATE yii2_message_detail SET channel_id=".$status_unicom." WHERE operator=1 AND message_id=".$id;
+                    $command = $db->createCommand($sql);
+                    $command->execute();
+                    $sql = "UPDATE yii2_message_detail SET status=1 WHERE operator=1 AND message_id=".$id;
+                    $command = $db->createCommand($sql);
+                    $command->execute();
+                }
+                if (in_array('mobile',$pass)) {
+                    $sql = "UPDATE yii2_message_detail SET channel_id=".$status_mobile." WHERE operator=2 AND message_id=".$id;
+                    $command = $db->createCommand($sql);
+                    $command->execute();
+                    $sql = "UPDATE yii2_message_detail SET status=1 WHERE operator=2 AND message_id=".$id;
+                    $command = $db->createCommand($sql);
+                    $command->execute();
+                }
+                if (in_array('telecom',$pass)) {
+                    $sql = "UPDATE yii2_message_detail SET channel_id=".$status_telecom." WHERE operator=3 AND message_id=".$id;
+                    $command = $db->createCommand($sql);
+                    $command->execute();
+                    $sql = "UPDATE yii2_message_detail SET status=1 WHERE operator=3 AND message_id=".$id;
+                    $command = $db->createCommand($sql);
+                    $command->execute();
+                }
                 $this->success('操作成功', $this->getForward());
             } else {
                 $this->error('操作错误');
@@ -180,6 +197,8 @@ class CheckController extends BaseController
         $model->send_time = date('Y-m-d H:i', $model->send_time);
         $phonenumbers_json = json_decode($model->phonenumbers_json, true);
         $model->phonenumbers_json = array('unicom'=>count($phonenumbers_json['unicom']),'mobile'=>count($phonenumbers_json['mobile']),'telecom'=>count($phonenumbers_json['telecom']));
+        $content = json_decode($model->content, true);
+        $model->content = $content;
 //        print_r($model->phonenumbers_json);exit;
         /* 渲染模板 */
         return $this->render('edit', [
