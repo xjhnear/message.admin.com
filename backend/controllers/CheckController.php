@@ -135,9 +135,9 @@ class CheckController extends BaseController
     public function actionEdit()
     {
 //
-        $re = $this->statusApi('13917438216','新年快乐',date('Y-m-d H:i:s', time()));
-        $re = $this->xmlToArray($re);
-        print_r($re);exit;
+//        $re = $this->statusApi('13917438216','新年快乐',date('Y-m-d H:i:s', time()));
+//        $re = $this->xmlToArray($re);
+//        print_r($re);exit;
 
         $id = Yii::$app->request->get('id', 0);
         $model = $this->findModel($id);
