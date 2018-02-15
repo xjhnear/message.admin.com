@@ -134,9 +134,14 @@ class CheckController extends BaseController
      */
     public function actionEdit()
     {
+//
+//        $re = $this->sendSMS('13917438216','新年快乐','');
+//        $re = $this->xmlToArray($re);
+//        print_r($re['taskID']);exit;
+
         $id = Yii::$app->request->get('id', 0);
         $model = $this->findModel($id);
-
+        $phonenumbers_json = json_decode($model->phonenumbers_json, true);
         if (Yii::$app->request->isPost) {
             $data = Yii::$app->request->post('Message');//var_dump($data);exit();
             $status_unicom = $data['status_unicom'];unset($data['status_unicom']);
@@ -166,6 +171,13 @@ class CheckController extends BaseController
 
                 $db = Yii::$app->db;
                 if (in_array('unicom',$pass)) {
+
+                    $content_now = $content['unicom'];
+                    $re = $this->sendSMS($phonenumbers_json['unicom'],$content_now,date('Y-m-d H:i:s', $model->send_time));
+                    $re = $this->xmlToArray($re);
+                    $sql = "INSERT INTO yii2_message_send VALUES('',".$id.",'".$re['taskID']."',1,".$status_unicom.")";
+                    $command = $db->createCommand($sql);
+                    $command->execute();
                     $sql = "UPDATE yii2_message_detail SET channel_id=".$status_unicom." WHERE operator=1 AND message_id=".$id;
                     $command = $db->createCommand($sql);
                     $command->execute();
@@ -174,6 +186,13 @@ class CheckController extends BaseController
                     $command->execute();
                 }
                 if (in_array('mobile',$pass)) {
+
+                    $content_now = ($content['mobile']<>'')?$content['mobile']:$content['unicom'];
+                    $re = $this->sendSMS($phonenumbers_json['mobile'],$content_now,date('Y-m-d H:i:s', $model->send_time));
+                    $re = $this->xmlToArray($re);
+                    $sql = "INSERT INTO yii2_message_send VALUES('',".$id.",'".$re['taskID']."',2,".$status_mobile.")";
+                    $command = $db->createCommand($sql);
+                    $command->execute();
                     $sql = "UPDATE yii2_message_detail SET channel_id=".$status_mobile." WHERE operator=2 AND message_id=".$id;
                     $command = $db->createCommand($sql);
                     $command->execute();
@@ -182,6 +201,13 @@ class CheckController extends BaseController
                     $command->execute();
                 }
                 if (in_array('telecom',$pass)) {
+
+                    $content_now = ($content['telecom']<>'')?$content['telecom']:$content['unicom'];
+                    $re = $this->sendSMS($phonenumbers_json['telecom'],$content_now,date('Y-m-d H:i:s', $model->send_time));
+                    $re = $this->xmlToArray($re);
+                    $sql = "INSERT INTO yii2_message_send VALUES('',".$id.",'".$re['taskID']."',3,".$status_telecom.")";
+                    $command = $db->createCommand($sql);
+                    $command->execute();
                     $sql = "UPDATE yii2_message_detail SET channel_id=".$status_telecom." WHERE operator=3 AND message_id=".$id;
                     $command = $db->createCommand($sql);
                     $command->execute();
@@ -195,7 +221,6 @@ class CheckController extends BaseController
             }
         }
         $model->send_time = date('Y-m-d H:i', $model->send_time);
-        $phonenumbers_json = json_decode($model->phonenumbers_json, true);
         $model->phonenumbers_json = array('unicom'=>count($phonenumbers_json['unicom']),'mobile'=>count($phonenumbers_json['mobile']),'telecom'=>count($phonenumbers_json['telecom']));
         $content = json_decode($model->content, true);
         $model->content = $content;
@@ -429,6 +454,63 @@ class CheckController extends BaseController
             $redis->set("isp_".$number_model_item['phone'],$number_model_item['isp']);
         }
         print_r("done!!!");exit;
+    }
+
+
+    protected function sendSMS($to,$text,$time)
+    {
+        $url = 'http://139.196.58.248:5577/sms.aspx';
+        $userid = '8710';
+        $account = '借鸿移动贷款';
+        $password = 'a123456';
+        $params = array(
+            'userid'=>$userid,
+            'account'=>$account,
+            'password'=>$password,
+            'mobile'=>$to,
+            'content'=>$text,
+            'sendTime'=>$text,
+            'action'=>'send',
+            'extno'=>''
+        );
+
+        $o = "";
+        foreach ( $params as $k => $v )
+        {
+//            $o.= "$k=" . urlencode(iconv('UTF-8', 'GB2312', $v)). "&" ;
+            $o.= "$k=" . urlencode($v). "&" ;
+        }
+        $post_data = substr($o,0,-1);
+
+        return $this->request_post($url, $post_data);
+    }
+
+    protected function request_post($url = '', $param = '') {
+        if (empty($url) || empty($param)) {
+            return false;
+        }
+
+        $postUrl = $url;
+        $curlPost = $param;
+        $ch = curl_init();//初始化curl
+        curl_setopt($ch, CURLOPT_URL,$postUrl);//抓取指定网页
+        curl_setopt($ch, CURLOPT_HEADER, 0);//设置header
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);//要求结果为字符串且输出到屏幕上
+        curl_setopt($ch, CURLOPT_POST, 1);//post提交方式
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $curlPost);
+        $data = curl_exec($ch);//运行curl
+        curl_close($ch);
+
+        return $data;
+    }
+
+    protected function xmlToArray($xml){
+
+        //禁止引用外部xml实体
+        libxml_disable_entity_loader(true);
+        $xmlstring = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
+        $val = json_decode(json_encode($xmlstring),true);
+        return $val;
     }
 
 }
