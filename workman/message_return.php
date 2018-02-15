@@ -20,6 +20,17 @@ $task->onWorkerStart = function($task)
     $time_interval = 5;
     Timer::add($time_interval, function()  
     {
+//		$all_tables_1 = RedisDb::instance('redis')->get('isp_1391743');
+//		print_r($all_tables_1);exit;
+
+		$now_time = time();
+		$now_date = date('Y-m-d');
+		$db= new MysqlConnection('127.0.0.1', '3306', 'root', 'near','message_www');
+        $all_tables=$db->select(array('message_sid','message_id','task_id','operator','channel_id'))->from('yii2_message_send')->where('status = 0')->query();
+        $all_tables_arr = array();
+        foreach ($all_tables as $item) {
+            $all_tables_arr[$item['task_id']] = $item;
+        }
 
         $url = 'http://139.196.58.248:5577/statusApi.aspx';
         $userid = '8710';
@@ -47,57 +58,11 @@ $task->onWorkerStart = function($task)
         curl_setopt($ch, CURLOPT_POSTFIELDS, $curlPost);
         $data = curl_exec($ch);//运行curl
         curl_close($ch);
-        print_r($data);exit;
-
-
-
-
-
-
-
-//		$all_tables_1 = RedisDb::instance('redis')->get('isp_1391743');
-//		print_r($all_tables_1);exit;
-
-		$now_time = time();
-		$now_date = date('Y-m-d');
-		$db= new MysqlConnection('127.0.0.1', '3306', 'root', 'near','message_www');
-        $all_tables=$db->select(array('message_sid','message_id','task_id','operator','channel_id'))->from('yii2_message_send')->where('status = 0')->query();
-        $all_tables_arr = array();
-        foreach ($all_tables as $item) {
-            $all_tables_arr[$item['task_id']] = $item;
-        }
-
-		foreach ($all_tables as $item) {
-			$can_send = true;
-			$crontab_arr = explode(' ',$item['crontab']);
-			foreach ($crontab_arr as $k=>$v) {
-				$v = explode(',',$v);
-				if(!in_array('*',$v) && !in_array($date_now_arr[$k],$v)) {
-					$can_send = false;
-				}
-			}
-			if ($can_send) {
-				$url = 'http://139.196.58.248:5577/sms.aspx';
-				$data = array(
-					'access-token'=>'admin',
-					'id'=>$item['id']
-				);
-				$query_str = http_build_query($data);
-				$info = parse_url($url);
-				$fp = fsockopen($info["host"], $info["port"], $errno, $errstr, 3);
-				//$head = "GET ".$info['path']."?".$info["query"]." HTTP/1.0\r\n";
-				$head = "GET ".$info['path']."?".$query_str." HTTP/1.0\r\n";
-				$head .= "Host: ".$info['host']."\r\n";
-				$head .= "\r\n";
-				fputs($fp, $head);
-				fclose($fp);
-//				while (!feof($fp))
-//				{
-//					$line = fread($fp,4096);
-//					echo $line;
-//				}
-			}
-			echo $can_send;
+        libxml_disable_entity_loader(true);
+        $xmlstring = simplexml_load_string($data, 'SimpleXMLElement', LIBXML_NOCDATA);
+        $val = json_decode(json_encode($xmlstring),true);
+        foreach ($val['statusbox'] as $item) {
+            $all_tables=$db->update('yii2_message_detail')->cols(array('status'=>$item['status'],'return_time'=>$now_time))->where('phonenumber='.$item['mobile'])->query();
 		}
     });  
 };  
