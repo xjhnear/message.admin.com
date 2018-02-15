@@ -20,24 +20,52 @@ $task->onWorkerStart = function($task)
     $time_interval = 5;
     Timer::add($time_interval, function()  
     {
-		$all_tables_1 = RedisDb::instance('redis')->get('isp_1391743');
-		print_r($all_tables_1);exit;
 
-		$minute = date('i');
-		$hour = date('H');
-		$day = date('d');
-		$month = date('m');
-		$dayofweek = date('w');
-		$date_now_arr = array($minute,$hour,$day,$month,$dayofweek);
-		//echo $minute.",".$hour.",".$day.",".$month.",".$dayofweek."\n";  
+        $url = 'http://139.196.58.248:5577/statusApi.aspx';
+        $userid = '8710';
+        $account = '借鸿移动贷款';
+        $password = 'a123456';
+        $params = array(
+            'userid'=>$userid,
+            'account'=>$account,
+            'password'=>$password,
+            'action'=>'query'
+        );
+        $o = "";
+        foreach ( $params as $k => $v )
+        {
+            $o.= "$k=" . urlencode($v). "&" ;
+        }
+        $post_data = substr($o,0,-1);
+        $postUrl = $url;
+        $curlPost = $post_data;
+        $ch = curl_init();//初始化curl
+        curl_setopt($ch, CURLOPT_URL,$postUrl);//抓取指定网页
+        curl_setopt($ch, CURLOPT_HEADER, 0);//设置header
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);//要求结果为字符串且输出到屏幕上
+        curl_setopt($ch, CURLOPT_POST, 1);//post提交方式
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $curlPost);
+        $data = curl_exec($ch);//运行curl
+        curl_close($ch);
+        print_r($data);exit;
+
+
+
+
+
+
+
+//		$all_tables_1 = RedisDb::instance('redis')->get('isp_1391743');
+//		print_r($all_tables_1);exit;
+
 		$now_time = time();
 		$now_date = date('Y-m-d');
 		$db= new MysqlConnection('127.0.0.1', '3306', 'root', 'near','message_www');
-		$all_tables_1=$db->select(array('message_id','message_code'))->from('yii2_message_list')->where('status = 1')->query();
-
-		print_r($all_tables_1);exit;
-		$all_tables_2=$db->select(array('id','crontab'))->from('timing')->where('status = 1')->where('isdel = 0')->where('cooldown < '.$now_time)->where('end_date > "'.$now_date.'"')->query();
-		$all_tables = array_merge($all_tables_1,$all_tables_2);
+        $all_tables=$db->select(array('message_sid','message_id','task_id','operator','channel_id'))->from('yii2_message_send')->where('status = 0')->query();
+        $all_tables_arr = array();
+        foreach ($all_tables as $item) {
+            $all_tables_arr[$item['task_id']] = $item;
+        }
 
 		foreach ($all_tables as $item) {
 			$can_send = true;
