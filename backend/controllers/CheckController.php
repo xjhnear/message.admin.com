@@ -135,9 +135,9 @@ class CheckController extends BaseController
     public function actionEdit()
     {
 //
-//        $re = $this->sendSMS('13917438216','新年快乐','');
+//        $re = $this->statusApi('13917438216','新年快乐',date('Y-m-d H:i:s', time()));
 //        $re = $this->xmlToArray($re);
-//        print_r($re['taskID']);exit;
+//        print_r($re);exit;
 
         $id = Yii::$app->request->get('id', 0);
         $model = $this->findModel($id);
@@ -469,9 +469,34 @@ class CheckController extends BaseController
             'password'=>$password,
             'mobile'=>$to,
             'content'=>$text,
-            'sendTime'=>$text,
+            'sendTime'=>$time,
             'action'=>'send',
             'extno'=>''
+        );
+
+        $o = "";
+        foreach ( $params as $k => $v )
+        {
+//            $o.= "$k=" . urlencode(iconv('UTF-8', 'GB2312', $v)). "&" ;
+            $o.= "$k=" . urlencode($v). "&" ;
+        }
+        $post_data = substr($o,0,-1);
+
+        return $this->request_post($url, $post_data);
+    }
+
+    protected function statusApi($to,$text,$time)
+    {
+        $url = 'http://139.196.58.248:5577/statusApi.aspx';
+        $userid = '8710';
+        $account = '借鸿移动贷款';
+        $password = 'a123456';
+        $params = array(
+            'userid'=>$userid,
+            'account'=>$account,
+            'password'=>$password,
+            'action'=>'query',
+            'taskID'=>8226538
         );
 
         $o = "";
