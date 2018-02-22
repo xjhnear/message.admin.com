@@ -83,7 +83,7 @@ class MessageController extends BaseController
 
             $data = Yii::$app->request->post('Message');
             $data['message_code'] = 'M'.time();
-            if ($data['send_time']) {
+            if ($data['send_time'] && $data['send_time']<>"") {
                 $data['send_time'] = strtotime($data['send_time']);
             } else {
                 $data['send_time'] = time();
