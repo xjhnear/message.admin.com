@@ -48,7 +48,7 @@ class MessageSearch extends Message
     {
         //$params = $params ? : Yii::$app->request->getQueryParams();
         
-        $query = Message::find()->orderBy('message_id DESC')->asArray();
+        $query = Message::find()->orderBy('status ASC')->orderBy('message_id DESC')->asArray();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -86,7 +86,7 @@ class MessageSearch extends Message
         
         /* 排序 */
         $query->orderBy([
-            'message_id' => SORT_ASC,
+            'status' => SORT_ASC,
             'message_id' => SORT_DESC,
         ]);
 

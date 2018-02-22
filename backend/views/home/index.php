@@ -73,7 +73,7 @@ $this->params['title_sub'] = '';
 <div class="row-fluid margin-bottom-30">
     <div class="span6">
         <blockquote class="hero">
-            <p>您已超过95%的用户</p>
+            <p></p>
             <!--<small>Bob Nilson</small>-->
         </blockquote>
     </div>
