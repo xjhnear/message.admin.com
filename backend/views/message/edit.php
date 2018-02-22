@@ -37,20 +37,20 @@ $this->params['title_sub'] = '';  // 在\yii\base\View中有$params这个可以�
         ]); ?>
 
         <div class="form-group field-message-phonenumbers" style="height: 200px;">
-        <div style="width: 40%;float: left;">
-            <div><label class="" for="message-phonenumbers">手机号码</label><span class="help-inline">（多个号码之间","隔开）</span></div><textarea id="message-phonenumbers" class="form-control c-md-5" name="Message[phonenumbers]" rows="6"><?=$model->phonenumbers ?></textarea><span class="help-block"></span>
-            <input id="message-phonenumbers_json" type="hidden" name="Message[phonenumbers_json]" value="<?=$model->phonenumbers_json ?>">
-            <div style="margin-bottom:5px;">
+            <div style="margin-top:10px;margin-bottom:10px;">
                 <span class="btn red btn-outline btn-file">
                     <span id="fileup" class="fileinput-new"> 上传文件 </span>
-                    <input id="fileUpload" type="file" name="fileUpload" style="display: none" onchange="ajaxUploadFile()" />
+                    <input id="fileUpload" type="file" name="fileUpload" style="display: none" onchange="ajaxUploadFile()" accept="text/plain,.csv" />
                 </span>
             </div>
-        </div>
-        <div style="width: 60%;float: left;">
-            <div><label class="" for="message-content">短信内容</label><span class="help-inline"></span></div><textarea id="message-content" class="form-control c-md-7" name="Message[content]" rows="2" onkeyup="checkLen(this)"><?=$model->content ?></textarea><span class="help-block"></span>
-            <div class="help-inline">您已经输入 <span id="count">0</span> 个文字</div>
-        </div>
+            <div style="width: 25%;float: left;">
+                <div><label class="" for="message-phonenumbers">手机号码</label><span class="help-inline">（多个号码之间","隔开）</span></div><textarea id="message-phonenumbers" class="form-control c-md-9" name="Message[phonenumbers]" rows="6"><?=$model->phonenumbers ?></textarea><span class="help-block"></span>
+                <input id="message-phonenumbers_json" type="hidden" name="Message[phonenumbers_json]" value="<?=$model->phonenumbers_json ?>">
+            </div>
+            <div style="width: 75%;float: left;">
+                <div><label class="" for="message-content">短信内容</label><span class="help-inline"></span></div><textarea id="message-content" class="form-control c-md-7" name="Message[content]" rows="5" onkeyup="checkLen(this)"><?=$model->content ?></textarea><span class="help-block"></span>
+                <div class="help-inline">您已经输入 <span id="count">0</span> 个文字</div>
+            </div>
         </div>
         <div class="form-group field-message-content">
             <input type="hidden" id="rest" value="<?=$data["rest"] ?>">
@@ -80,12 +80,12 @@ $this->params['title_sub'] = '';  // 在\yii\base\View中有$params这个可以�
                 'format' => 'yyyy-mm-dd hh:ii',
             ]
         ],['class' => 'c-md-2'])->label('发送时间')->hint('')?>
-        
+
         <div class="form-actions">
             <?= Html::submitButton('<i class="icon-ok"></i> 提交', ['id' => 'sub','class' => 'btn blue ajax-post','target-form'=>'form-aaa']) ?>
             <?= Html::button('取消', ['class' => 'btn','onclick'=>'JavaScript:history.go(-1)']) ?>
         </div>
-        
+
         <?php ActiveForm::end(); ?>
 
         <!-- END FORM-->
@@ -102,18 +102,18 @@ AppAsset::addScript($this,'static/js/ajaxfileupload.js');
 <?php $this->beginBlock('test'); ?>
 
 $(function() {
-    /* 子导航高亮 */
-    highlight_subnav('message/add');
-    checkLen(document.getElementById("message-content"))
-    checkLen1(document.getElementById("message-content1"))
-    checkLen2(document.getElementById("message-content2"))
+/* 子导航高亮 */
+highlight_subnav('message/add');
+checkLen(document.getElementById("message-content"))
+checkLen1(document.getElementById("message-content1"))
+checkLen2(document.getElementById("message-content2"))
 });
 
 // 短信内容字数统计
 function checkLen(obj)
 {
-    var curr = obj.value.length;
-    document.getElementById("count").innerHTML = curr.toString();
+var curr = obj.value.length;
+document.getElementById("count").innerHTML = curr.toString();
 }
 function checkLen1(obj)
 {
@@ -129,62 +129,62 @@ document.getElementById("count2").innerHTML = curr.toString();
 // 定义的热点被单击则打开文件选择框
 $('#fileup').on('click', function()
 {
-    UploadFileOnSelect();
+UploadFileOnSelect();
 });
 
 // 选需要上载的图片 上载完毕清除 form
 function UploadFileOnSelect()
 {
-    // 打开文件选择框
-    var input = document.getElementById("fileUpload");
-    input.click();
+// 打开文件选择框
+var input = document.getElementById("fileUpload");
+input.click();
 }
 
 function ajaxUploadFile()
 {
-    // 当 file 框内容改变则提交 form
-    // $('#formUpload').submit();
+// 当 file 框内容改变则提交 form
+// $('#formUpload').submit();
 
-    var token = "<?php echo \Yii::$app->request->getCsrfToken()?>";
-    //$("#jUploadFormfileUpload").remove();
-    //var type=$("input[name='type']:checked").val();
-    //var formId = 'jUploadForm' + 'fileUpload';  //file为input的id
-    //var test1 = jQuery('#'+formId);
-    //console.log("1:"+test1.prop("outerHTML"));//打印输出
+var token = "<?php echo \Yii::$app->request->getCsrfToken()?>";
+//$("#jUploadFormfileUpload").remove();
+//var type=$("input[name='type']:checked").val();
+//var formId = 'jUploadForm' + 'fileUpload';  //file为input的id
+//var test1 = jQuery('#'+formId);
+//console.log("1:"+test1.prop("outerHTML"));//打印输出
 
-    $.ajaxFileUpload({
-    url: '/message/get-ajax',
-    secureuri: false,
-    cache:false,
-    data:{_csrf: token},
-    fileElementId:'fileUpload',
-    dataType: 'json',
-    success: function (data) {
-    if (data.state) {
-    //上传成功
-    data.phone = data.phone.replace(/,/g,",\n");
-    document.getElementById("message-phonenumbers").innerHTML = data.phone;
-    document.getElementById("phone_count").innerHTML = data.phone_count.all;
-    document.getElementById("phone_count_unicom").innerHTML = data.phone_count.unicom;
-    document.getElementById("phone_count_mobile").innerHTML = data.phone_count.mobile;
-    document.getElementById("phone_count_telecom").innerHTML = data.phone_count.telecom;
-    document.getElementById("message-phonenumbers_json").value = data.phone_json;
-    $("#phone_msg").show();
-    if (data.phone_count.all > $('#rest').val()) {
-        $("#rest_error").show();
-        $("#sub").attr("disabled", true);
-    } else {
-        $("#sub").attr("disabled", false);
-    }
-    $('form')[0].reset();
-    } else {
-    alert(data.msg);
-    }
-    },
-    error: function (data, status, e) {
-    return;
-    }
-    });
+$.ajaxFileUpload({
+url: '/message/get-ajax',
+secureuri: false,
+cache:false,
+data:{_csrf: token},
+fileElementId:'fileUpload',
+dataType: 'json',
+success: function (data) {
+if (data.state) {
+//上传成功
+data.phone = data.phone.replace(/,/g,",\n");
+document.getElementById("message-phonenumbers").innerHTML = data.phone;
+document.getElementById("phone_count").innerHTML = data.phone_count.all;
+document.getElementById("phone_count_unicom").innerHTML = data.phone_count.unicom;
+document.getElementById("phone_count_mobile").innerHTML = data.phone_count.mobile;
+document.getElementById("phone_count_telecom").innerHTML = data.phone_count.telecom;
+document.getElementById("message-phonenumbers_json").value = data.phone_json;
+$("#phone_msg").show();
+if (data.phone_count.all > $('#rest').val()) {
+$("#rest_error").show();
+$("#sub").attr("disabled", true);
+} else {
+$("#sub").attr("disabled", false);
+}
+$('form')[0].reset();
+} else {
+alert(data.msg);
+}
+},
+error: function (data, status, e) {
+return;
+}
+});
 }
 
 

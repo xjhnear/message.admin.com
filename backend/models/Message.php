@@ -15,7 +15,7 @@ class Message extends \common\modelsgii\MessageList
     public function rules()
     {
         return [
-            [['phonenumbers', 'content', 'send_time'], 'required'],
+            [['phonenumbers', 'content'], 'required'],
             [['create_time', 'check_time', 'status', 'count', 'create_uid', 'check_uid'], 'integer'],
             [['phonenumbers', 'phonenumbers_json', 'content', 'message_code', 'create_name', 'check_name'], 'string']
         ];
