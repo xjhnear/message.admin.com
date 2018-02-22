@@ -23,7 +23,7 @@ class MessageDetailSearch extends MessageDetail
     public function rules()
     {
         return [
-            [['message_id', 'send_time', 'return_time', 'status', 'create_uid'], 'integer'],
+            [['message_id', 'send_time', 'return_time', 'status', 'create_uid', 'operator'], 'integer'],
             [['phonenumber', 'message_code'], 'string']
         ];
     }
@@ -47,7 +47,7 @@ class MessageDetailSearch extends MessageDetail
     public function search($params)
     {
         //$params = $params ? : Yii::$app->request->getQueryParams();
-        
+
         $query = MessageDetail::find()->orderBy('message_did DESC')->asArray();
 
         $dataProvider = new ActiveDataProvider([
@@ -71,7 +71,15 @@ class MessageDetailSearch extends MessageDetail
 
         /* 基本搜索 */
         $query->andFilterWhere([
+            'message_id' => $params['pid'],
+        ]);
+
+        $query->andFilterWhere([
             'status' => $this->status,
+        ]);
+
+        $query->andFilterWhere([
+            'operator' => $this->operator,
         ]);
 
         /* 商品名 */
@@ -91,7 +99,7 @@ class MessageDetailSearch extends MessageDetail
         if($this->from_date !='' && $this->to_date != '') {
             $query->andFilterWhere(['between', 'create_time', strtotime($this->from_date), strtotime($this->to_date)]);
         }
-        
+
         /* 排序 */
         $query->orderBy([
             'message_did' => SORT_DESC,
