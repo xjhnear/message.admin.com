@@ -19,7 +19,7 @@ class CheckmanSearch extends Admin
     public function rules()
     {
         return [
-            [['uid', 'reg_time', 'reg_ip', 'last_login_time', 'last_login_ip', 'update_time', 'status', 'role', 'balance'], 'integer'],
+            [['uid', 'reg_time', 'reg_ip', 'last_login_time', 'last_login_ip', 'update_time', 'status', 'is_del', 'role', 'balance'], 'integer'],
             [['username', 'password', 'salt', 'email', 'mobile'], 'safe'],
         ];
     }
@@ -61,6 +61,7 @@ class CheckmanSearch extends Admin
 
         $query->andFilterWhere([
             'role' => 2,
+            'is_del' => 0,
         ]);
 
         $query->andFilterWhere([

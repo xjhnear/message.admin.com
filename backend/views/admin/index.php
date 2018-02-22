@@ -48,7 +48,7 @@ $columns = [
         'header' => '最后登录时间',
         'attribute' => 'last_login_time',
         'options' => ['width' => '150px;'],
-        'format' => ['date', 'php:Y-m-d H:i']
+        'format' => ['date', 'php:Y-m-d H:i:s']
     ],
     [
         'header' => '最后登录IP',

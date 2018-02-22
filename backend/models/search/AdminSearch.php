@@ -19,7 +19,7 @@ class AdminSearch extends Admin
     public function rules()
     {
         return [
-            [['uid', 'reg_time', 'reg_ip', 'last_login_time', 'last_login_ip', 'update_time', 'status', 'role', 'balance'], 'integer'],
+            [['uid', 'reg_time', 'reg_ip', 'last_login_time', 'last_login_ip', 'update_time', 'status', 'is_del', 'role', 'balance'], 'integer'],
             [['username', 'password', 'salt', 'email', 'mobile'], 'safe'],
         ];
     }
@@ -58,7 +58,7 @@ class AdminSearch extends Admin
             // $query->where('0=1');
             return $dataProvider;
         }
-        
+
         $query->andFilterWhere([
             'uid' => $this->uid,
             'reg_time' => $this->reg_time,

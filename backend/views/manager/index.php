@@ -38,7 +38,7 @@ $columns = [
         'label' => '注册时间',
         'value' => 'reg_time',
         'options' => ['width' => '150px;'],
-        'format' =>  ['date', 'php:Y-m-d H:i']
+        'format' =>  ['date', 'php:Y-m-d H:i:s']
     ],
     [
         'header' => '状态',

@@ -19,8 +19,8 @@ class CustomerSearch extends Admin
     public function rules()
     {
         return [
-            [['uid', 'reg_time', 'reg_ip', 'last_login_time', 'last_login_ip', 'update_time', 'status', 'role', 'balance'], 'integer'],
-            [['username', 'password', 'salt', 'email', 'mobile'], 'safe'],
+            [['uid', 'reg_time', 'reg_ip', 'last_login_time', 'last_login_ip', 'update_time', 'status', 'is_del', 'role', 'balance'], 'integer'],
+            [['username', 'password', 'salt', 'email', 'mobile','company', 'address', 'remark'], 'safe'],
         ];
     }
 
@@ -61,6 +61,7 @@ class CustomerSearch extends Admin
 
         $query->andFilterWhere([
             'role' => 1,
+            'is_del' => 0,
         ]);
 
         $query->andFilterWhere([

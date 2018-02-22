@@ -63,6 +63,27 @@ $this->params['title_sub'] = '';  // 在\yii\base\View中有$params这个可以�
             'placeholder' => 'Mobile'
         ])->label('电话') ?>
 
+        <?= $form->field($model, 'company')->iconTextInput([
+            'class'=>'form-control c-md-3',
+            'iconPos' => 'left',
+            'iconClass' => 'fa fa-shield',
+            'placeholder' => 'Company'
+        ])->label('公司名称') ?>
+
+        <?= $form->field($model, 'address')->iconTextInput([
+            'class'=>'form-control c-md-3',
+            'iconPos' => 'left',
+            'iconClass' => 'fa fa-compass',
+            'placeholder' => 'Address'
+        ])->label('公司地址') ?>
+
+        <?= $form->field($model, 'remark')->iconTextInput([
+            'class'=>'form-control c-md-3',
+            'iconPos' => 'left',
+            'iconClass' => 'fa fa-tag',
+            'placeholder' => 'Remark'
+        ])->label('备注') ?>
+
         <?= $form->field($model, 'coefficient')->iconTextInput([
             'class'=>'form-control c-md-3',
             'iconPos' => 'left',

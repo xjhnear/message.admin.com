@@ -61,6 +61,7 @@ class ManagerSearch extends Admin
 
         $query->andFilterWhere([
             'role' => 3,
+            'is_del' => 0,
         ]);
 
         $query->andFilterWhere([

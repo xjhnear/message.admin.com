@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use Yii;
+use backend\models\Admin;
 use backend\models\Message;
 use backend\models\search\MessageSearch;
 use backend\models\MessageDetail;
@@ -142,6 +143,7 @@ class CheckController extends BaseController
         $id = Yii::$app->request->get('id', 0);
         $model = $this->findModel($id);
         $phonenumbers_json = json_decode($model->phonenumbers_json, true);
+        $model_admin = Admin::findIdentity($model->create_uid);
         if (Yii::$app->request->isPost) {
             $data = Yii::$app->request->post('Message');//var_dump($data);exit();
             $status_unicom = $data['status_unicom'];unset($data['status_unicom']);
@@ -228,6 +230,7 @@ class CheckController extends BaseController
         /* 渲染模板 */
         return $this->render('edit', [
             'model' => $model,
+            'model_admin' => $model_admin,
         ]);
     }
 

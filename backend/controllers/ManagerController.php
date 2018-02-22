@@ -122,20 +122,11 @@ class ManagerController extends BaseController
      */
     public function actionDelete()
     {
-        $ids = Yii::$app->request->param('id', 0);
-        $ids = implode(',', array_unique((array)$ids));
-
-        if (empty($ids)) {
-            $this->error('请选择要操作的数据!');
-        }
-
-        /* 不能删除超级管理员 */
-        if (in_array(Yii::$app->params['admin'], explode(',', $ids))) {
-            $this->error('不能删除超级管理员！');
-        }
-
-        $_where = 'uid in(' . $ids . ')';
-        if (Admin::deleteAll($_where)) {
+        $uid = Yii::$app->request->param('id', 0);
+        $model = Admin::findOne($uid);
+        $data['is_del'] = 1;
+        $model->setAttributes($data);
+        if ($model->save()) {
             $this->success('删除成功', $this->getForward());
         } else {
             $this->error('删除失败！');
