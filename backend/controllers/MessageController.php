@@ -84,9 +84,15 @@ class MessageController extends BaseController
             $data = Yii::$app->request->post('Message');
             $data['message_code'] = 'M'.time();
             $data['send_time'] = strtotime($data['send_time']);
-            $phonenumbers = $data['phonenumbers'];
-            $phonenumbers_arr = explode(',',$phonenumbers);
-            $data['count'] = count($phonenumbers_arr);
+            $content = array();
+            $content['unicom'] = $data['content'];
+            $content['mobile'] = $data['content1'];unset($data['content1']);
+            $content['telecom'] = $data['content2'];unset($data['content2']);
+            $data['content'] = json_encode($content);
+            $phonenumbers = $data['phonenumbers_json'];
+            $phonenumbers_arr = json_decode($phonenumbers, true);
+            $phone_number_show = array_merge($phonenumbers_arr['unicom'],$phonenumbers_arr['mobile'],$phonenumbers_arr['telecom'],$phonenumbers_arr['other']);
+            $data['count'] = count($phone_number_show);
             $data['create_uid'] = Yii::$app->user->identity->uid;
             $data['create_name'] = Yii::$app->user->identity->username;
             /* 格式化extend值，为空或数组序列化 */
@@ -101,13 +107,50 @@ class MessageController extends BaseController
             /* 表单数据加载、验证、数据库操作 */
             if ($r = $this->saveRow($model, $data)) {
                 $model_d = new MessageDetail();
-                foreach($phonenumbers_arr as $phonenumber)
+                foreach($phonenumbers_arr['unicom'] as $phonenumber)
                 {
                     $attributes = array();
                     $attributes['phonenumber'] = $phonenumber;
                     $attributes['message_id'] = $r->message_id;
                     $attributes['message_code'] = $data['message_code'];
                     $attributes['send_time'] = $data['send_time'];
+                    $attributes['operator'] = 1;
+                    $attributes['create_uid'] = Yii::$app->user->identity->uid;
+                    $_model_d = clone $model_d;
+                    $this->saveRow($_model_d, $attributes);
+                }
+                foreach($phonenumbers_arr['mobile'] as $phonenumber)
+                {
+                    $attributes = array();
+                    $attributes['phonenumber'] = $phonenumber;
+                    $attributes['message_id'] = $r->message_id;
+                    $attributes['message_code'] = $data['message_code'];
+                    $attributes['send_time'] = $data['send_time'];
+                    $attributes['operator'] = 2;
+                    $attributes['create_uid'] = Yii::$app->user->identity->uid;
+                    $_model_d = clone $model_d;
+                    $this->saveRow($_model_d, $attributes);
+                }
+                foreach($phonenumbers_arr['telecom'] as $phonenumber)
+                {
+                    $attributes = array();
+                    $attributes['phonenumber'] = $phonenumber;
+                    $attributes['message_id'] = $r->message_id;
+                    $attributes['message_code'] = $data['message_code'];
+                    $attributes['send_time'] = $data['send_time'];
+                    $attributes['operator'] = 3;
+                    $attributes['create_uid'] = Yii::$app->user->identity->uid;
+                    $_model_d = clone $model_d;
+                    $this->saveRow($_model_d, $attributes);
+                }
+                foreach($phonenumbers_arr['other'] as $phonenumber)
+                {
+                    $attributes = array();
+                    $attributes['phonenumber'] = $phonenumber;
+                    $attributes['message_id'] = $r->message_id;
+                    $attributes['message_code'] = $data['message_code'];
+                    $attributes['send_time'] = $data['send_time'];
+                    $attributes['operator'] = 4;
                     $attributes['create_uid'] = Yii::$app->user->identity->uid;
                     $_model_d = clone $model_d;
                     $this->saveRow($_model_d, $attributes);
@@ -118,12 +161,15 @@ class MessageController extends BaseController
                 $this->error('操作错误');
             }
         }
-
+        $data['balance'] = Yii::$app->user->identity->balance;
+        $data['coefficient'] = Yii::$app->user->identity->coefficient;
+        $data['rest'] = floor($data['balance']/$data['coefficient']);
         /* 获取模型默认数据 */
         $model->loadDefaultValues();
         /* 渲染模板 */
         return $this->render('edit', [
             'model' => $model,
+            'data' => $data,
         ]);
     }
 

@@ -58,7 +58,7 @@ $columns = [
         'label' => '创建时间',
         'value' => 'create_time',
         'options' => ['width' => '150px;'],
-        'format' =>  ['date', 'php:Y-m-d H:i']
+        'format' =>  ['date', 'php:Y-m-d H:i:s']
     ],
     [
         'class' => 'yii\grid\ActionColumn',

@@ -33,13 +33,19 @@ $columns = [
         'header' => '批次号',
         'value' => 'message_code',
         'options' => ['width' => '50px;'],
-        'filter' => Html::input('text', 'MessageDetailSearch[message_code]', $searchModel->message_code, ['class'=>'form-control'])
     ],
     [
         'header' => '手机号',
         'value' => 'phonenumber',
         'options' => ['width' => '50px;'],
-        'filter' => Html::input('text', 'MessageDetailSearch[phonenumber]', $searchModel->phonenumber, ['class'=>'form-control'])
+    ],
+    [
+        'header' => '运营商',
+        'value' => 'operator',
+        'options' => ['width' => '80px;'],
+        'content' => function($model){
+            return Yii::$app->params['operator_status'][$model['operator']];
+        },
     ],
     [
         'header' => '发送时间',
@@ -49,13 +55,11 @@ $columns = [
     ],
     [
         'label' => '状态',
-        'attribute' => 'status',
+        'value' => 'status',
         'options' => ['width' => '80px;'],
         'content' => function($model){
             return Yii::$app->params['send_status'][$model['status']];
         },
-        'filter' => Html::activeDropDownList($searchModel, 'status', [0 => '待审核',1 => '审核通过',2 => '审核拒绝',3 => '发送成功',4 => '发送失败'], ['prompt'=>'全部','class'=>'form-control']),
-
     ],
 ];
 
@@ -87,7 +91,7 @@ $columns = [
     <div class="portlet-body">
         <?php \yii\widgets\Pjax::begin(['options'=>['id'=>'pjax-container']]); ?>
         <div>
-            <?php //echo $this->render('_search', ['model' => $searchModel]); ?> <!-- 条件搜索-->
+            <?php echo $this->render('_search_detail', ['model' => $searchModel]); ?> <!-- 条件搜索-->
         </div>
         <div class="table-container">
             <form class="ids">

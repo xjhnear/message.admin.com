@@ -36,21 +36,38 @@ $this->params['title_sub'] = '';  // 在\yii\base\View中有$params这个可以�
             ]
         ]); ?>
 
-        <div class="form-group field-message-phonenumbers">
-            <div><label class="" for="message-phonenumbers">手机号码</label><span class="help-inline">（多个号码之间","隔开）</span></div><textarea id="message-phonenumbers" class="form-control c-md-7" name="Message[phonenumbers]" rows="5"><?=$model->phonenumbers ?></textarea><span class="help-block"></span>
+        <div class="form-group field-message-phonenumbers" style="height: 200px;">
+        <div style="width: 40%;float: left;">
+            <div><label class="" for="message-phonenumbers">手机号码</label><span class="help-inline">（多个号码之间","隔开）</span></div><textarea id="message-phonenumbers" class="form-control c-md-5" name="Message[phonenumbers]" rows="6"><?=$model->phonenumbers ?></textarea><span class="help-block"></span>
             <input id="message-phonenumbers_json" type="hidden" name="Message[phonenumbers_json]" value="<?=$model->phonenumbers_json ?>">
             <div style="margin-bottom:5px;">
                 <span class="btn red btn-outline btn-file">
                     <span id="fileup" class="fileinput-new"> 上传文件 </span>
                     <input id="fileUpload" type="file" name="fileUpload" style="display: none" onchange="ajaxUploadFile()" />
                 </span>
-                <div class="help-inline" id="phone_msg" style="display: none;">共导入 <span id="phone_count">0</span> 个号码 (联通: <span id="phone_count_unicom">0</span> 个 移动: <span id="phone_count_mobile">0</span> 个 电信: <span id="phone_count_telecom">0</span> 个)</div>
+            </div>
+        </div>
+        <div style="width: 60%;float: left;">
+            <div><label class="" for="message-content">短信内容</label><span class="help-inline"></span></div><textarea id="message-content" class="form-control c-md-7" name="Message[content]" rows="2" onkeyup="checkLen(this)"><?=$model->content ?></textarea><span class="help-block"></span>
+            <div class="help-inline">您已经输入 <span id="count">0</span> 个文字</div>
+        </div>
+        </div>
+        <div class="form-group field-message-content">
+            <input type="hidden" id="rest" value="<?=$data["rest"] ?>">
+            <div class="help-inline" id="phone_msg" style="display: none;">
+                共导入 <span id="phone_count">0</span> 个号码 (联通: <span id="phone_count_unicom">0</span> 个 移动: <span id="phone_count_mobile">0</span> 个 电信: <span id="phone_count_telecom">0</span> 个)
+                <b id="rest_error" style="display: none;color: #e7505a;padding-left: 21px;"> * 您目前的余额只能发送 <span id="phone_rest"><?=$data["rest"] ?></span> 个号码</b>
             </div>
         </div>
 
-        <div class="form-group field-message-content">
-            <div><label class="" for="message-content">短信内容</label><span class="help-inline"></span></div><textarea id="message-content" class="form-control c-md-7" name="Message[content]" rows="5" onkeyup="checkLen(this)"><?=$model->content ?></textarea><span class="help-block"></span>
-            <div class="help-inline">您已经输入 <span id="count">0</span> 个文字</div>
+        <div class="form-group field-message-content" style="display: none" >
+            <div><label class="" for="message-content">短信内容</label><span class="help-inline">（移动）*为空默认同联通</span></div><textarea id="message-content1" class="form-control c-md-7" name="Message[content1]" rows="5" onkeyup="checkLen1(this)"><?=$model->content ?></textarea><span class="help-block"></span>
+            <div class="help-inline">您已经输入 <span id="count1">0</span> 个文字</div>
+        </div>
+
+        <div class="form-group field-message-content" style="display: none" >
+            <div><label class="" for="message-content">短信内容</label><span class="help-inline">（电信）*为空默认同联通</span></div><textarea id="message-content2" class="form-control c-md-7" name="Message[content2]" rows="5" onkeyup="checkLen2(this)"><?=$model->content ?></textarea><span class="help-block"></span>
+            <div class="help-inline">您已经输入 <span id="count2">0</span> 个文字</div>
         </div>
 
         <?=$form->field($model, 'send_time')->widget(\kartik\widgets\DateTimePicker::classname(),[
@@ -65,7 +82,7 @@ $this->params['title_sub'] = '';  // 在\yii\base\View中有$params这个可以�
         ],['class' => 'c-md-2'])->label('发送时间')->hint('')?>
         
         <div class="form-actions">
-            <?= Html::submitButton('<i class="icon-ok"></i> 提交', ['class' => 'btn blue ajax-post','target-form'=>'form-aaa']) ?>
+            <?= Html::submitButton('<i class="icon-ok"></i> 提交', ['id' => 'sub','class' => 'btn blue ajax-post','target-form'=>'form-aaa']) ?>
             <?= Html::button('取消', ['class' => 'btn','onclick'=>'JavaScript:history.go(-1)']) ?>
         </div>
         
@@ -88,6 +105,8 @@ $(function() {
     /* 子导航高亮 */
     highlight_subnav('message/add');
     checkLen(document.getElementById("message-content"))
+    checkLen1(document.getElementById("message-content1"))
+    checkLen2(document.getElementById("message-content2"))
 });
 
 // 短信内容字数统计
@@ -95,6 +114,16 @@ function checkLen(obj)
 {
     var curr = obj.value.length;
     document.getElementById("count").innerHTML = curr.toString();
+}
+function checkLen1(obj)
+{
+var curr = obj.value.length;
+document.getElementById("count1").innerHTML = curr.toString();
+}
+function checkLen2(obj)
+{
+var curr = obj.value.length;
+document.getElementById("count2").innerHTML = curr.toString();
 }
 
 // 定义的热点被单击则打开文件选择框
@@ -133,6 +162,7 @@ function ajaxUploadFile()
     success: function (data) {
     if (data.state) {
     //上传成功
+    data.phone = data.phone.replace(/,/g,",\n");
     document.getElementById("message-phonenumbers").innerHTML = data.phone;
     document.getElementById("phone_count").innerHTML = data.phone_count.all;
     document.getElementById("phone_count_unicom").innerHTML = data.phone_count.unicom;
@@ -140,6 +170,12 @@ function ajaxUploadFile()
     document.getElementById("phone_count_telecom").innerHTML = data.phone_count.telecom;
     document.getElementById("message-phonenumbers_json").value = data.phone_json;
     $("#phone_msg").show();
+    if (data.phone_count.all > $('#rest').val()) {
+        $("#rest_error").show();
+        $("#sub").attr("disabled", true);
+    } else {
+        $("#sub").attr("disabled", false);
+    }
     $('form')[0].reset();
     } else {
     alert(data.msg);
