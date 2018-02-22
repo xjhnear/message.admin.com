@@ -7,7 +7,7 @@ return [
     'sourceLanguage' => 'zh-CN',
     /* 目标语言 */
     'language' => 'zh-CN',
-
+    'timeZone' => 'Asia/Shanghai',
     'components' => [
         'cache' => [
             'class' => 'yii\caching\FileCache',
