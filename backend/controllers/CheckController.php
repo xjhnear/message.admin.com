@@ -251,9 +251,24 @@ class CheckController extends BaseController
     {
         $id = Yii::$app->request->get('id', 0);
         $model = $this->findModel($id);
+        $create_uid = $model['create_uid'];
+        $count = $model['count'];
         $data['status'] = 2;
+        $data['check_time'] = time();
+        $data['check_uid'] = Yii::$app->user->identity->uid;
+        $data['check_name'] = Yii::$app->user->identity->username;
         /* 表单数据加载、验证、数据库操作 */
         if ($this->saveRow($model, $data)) {
+            $db = Yii::$app->db;
+            $sql = "UPDATE yii2_message_detail SET status=2 WHERE message_id=".$id;
+            $command = $db->createCommand($sql);
+            $command->execute();
+
+            $model_a =  Admin::findOne($create_uid);
+            $cost = $count * $model_a['coefficient'];
+            $data['balance'] = $model_a['balance'] + $cost;
+            $this->saveRow($model_a, $data);
+
             $this->success('操作成功', $this->getForward());
         } else {
             $this->error('操作错误');
