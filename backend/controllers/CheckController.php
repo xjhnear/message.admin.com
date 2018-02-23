@@ -184,7 +184,7 @@ class CheckController extends BaseController
 //                    $sql = "INSERT INTO yii2_message_send VALUES('',".$id.",'".$re['taskID']."',1,".$status_unicom.")";
 //                    $command = $db->createCommand($sql);
 //                    $command->execute();
-                    $sql = "UPDATE yii2_message_detail SET content=".$content_now." WHERE operator=1 AND message_id=".$id;
+                    $sql = "UPDATE yii2_message_detail SET content='".$content_now."' WHERE operator=1 AND message_id=".$id;
                     $command = $db->createCommand($sql);
                     $command->execute();
                     $sql = "UPDATE yii2_message_detail SET channel_id=".$status_unicom." WHERE operator=1 AND message_id=".$id;
@@ -202,7 +202,7 @@ class CheckController extends BaseController
 //                    $sql = "INSERT INTO yii2_message_send VALUES('',".$id.",'".$re['taskID']."',2,".$status_mobile.")";
 //                    $command = $db->createCommand($sql);
 //                    $command->execute();
-                    $sql = "UPDATE yii2_message_detail SET content=".$content_now." WHERE operator=2 AND message_id=".$id;
+                    $sql = "UPDATE yii2_message_detail SET content='".$content_now."' WHERE operator=2 AND message_id=".$id;
                     $command = $db->createCommand($sql);
                     $command->execute();
                     $sql = "UPDATE yii2_message_detail SET channel_id=".$status_mobile." WHERE operator=2 AND message_id=".$id;
@@ -220,7 +220,7 @@ class CheckController extends BaseController
 //                    $sql = "INSERT INTO yii2_message_send VALUES('',".$id.",'".$re['taskID']."',3,".$status_telecom.")";
 //                    $command = $db->createCommand($sql);
 //                    $command->execute();
-                    $sql = "UPDATE yii2_message_detail SET content=".$content_now." WHERE operator=3 AND message_id=".$id;
+                    $sql = "UPDATE yii2_message_detail SET content='".$content_now."' WHERE operator=3 AND message_id=".$id;
                     $command = $db->createCommand($sql);
                     $command->execute();
                     $sql = "UPDATE yii2_message_detail SET channel_id=".$status_telecom." WHERE operator=3 AND message_id=".$id;
