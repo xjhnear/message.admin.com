@@ -46,6 +46,7 @@ $this->params['title_sub'] = '';  // 在\yii\base\View中有$params这个可以�
             <div style="width: 25%;float: left;">
                 <div><label class="" for="message-phonenumbers">手机号码</label><span class="help-inline">（多个号码之间","隔开）</span></div><textarea id="message-phonenumbers" class="form-control c-md-9" name="Message[phonenumbers]" rows="6"><?=$model->phonenumbers ?></textarea><span class="help-block"></span>
                 <input id="message-phonenumbers_json" type="hidden" name="Message[phonenumbers_json]" value="<?=$model->phonenumbers_json ?>">
+                <input id="message-phonenumbers-upload" type="hidden" name="Message[upload]" value="0">
             </div>
             <div style="width: 75%;float: left;">
                 <div><label class="" for="message-content">短信内容</label><span class="help-inline"></span></div><textarea id="message-content" class="form-control c-md-7" name="Message[content]" rows="5" onkeyup="checkLen(this)"><?=$model->content ?></textarea><span class="help-block"></span>
@@ -162,7 +163,7 @@ dataType: 'json',
 success: function (data) {
 if (data.state) {
 //上传成功
-data.phone = data.phone.replace(/,/g,",\n");
+data.phone = data.phone.replace(/,/g,"\n");
 document.getElementById("message-phonenumbers").innerHTML = data.phone;
 document.getElementById("phone_count").innerHTML = data.phone_count.all;
 document.getElementById("phone_count_unicom").innerHTML = data.phone_count.unicom;
@@ -170,6 +171,8 @@ document.getElementById("phone_count_mobile").innerHTML = data.phone_count.mobil
 document.getElementById("phone_count_telecom").innerHTML = data.phone_count.telecom;
 document.getElementById("message-phonenumbers_json").value = data.phone_json;
 $("#phone_msg").show();
+document.getElementById("message-phonenumbers").disabled = true;
+document.getElementById("message-phonenumbers-upload").value = 1;
 if (data.phone_count.all > $('#rest').val()) {
 $("#rest_error").show();
 $("#sub").attr("disabled", true);

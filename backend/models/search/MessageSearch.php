@@ -47,8 +47,8 @@ class MessageSearch extends Message
     public function search($params)
     {
         //$params = $params ? : Yii::$app->request->getQueryParams();
-        
-        $query = Message::find()->orderBy('status ASC')->orderBy('message_id DESC')->asArray();
+
+        $query = Message::find()->orderBy('message_id DESC')->asArray();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -64,6 +64,10 @@ class MessageSearch extends Message
             // $query->where('0=1');
             return $dataProvider;
         }
+
+        $query->andFilterWhere([
+            'create_uid' => Yii::$app->user->identity->uid,
+        ]);
 
         /* 基本搜索 */
         $query->andFilterWhere([
@@ -83,10 +87,9 @@ class MessageSearch extends Message
         if($this->from_date !='' && $this->to_date != '') {
             $query->andFilterWhere(['between', 'create_time', strtotime($this->from_date), strtotime($this->to_date)]);
         }
-        
+
         /* 排序 */
         $query->orderBy([
-            'status' => SORT_ASC,
             'message_id' => SORT_DESC,
         ]);
 

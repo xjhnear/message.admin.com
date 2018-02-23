@@ -58,6 +58,10 @@ class MessageController extends BaseController
         $params = Yii::$app->request->getQueryParams();
 
         $searchModel = new MessageDetailSearch();
+        $count_arr = array();
+        $count_arr['wait'] = $searchModel->getWaitCount($params['pid']);
+        $count_arr['success'] = $searchModel->getSuccessCount($params['pid']);
+        $count_arr['fail'] = $searchModel->getfailCount($params['pid']);
         $dataProvider = $searchModel->search($params); //var_dump($dataProvider->query->all());exit();
 
         /* 导出excel */
@@ -69,6 +73,7 @@ class MessageController extends BaseController
         return $this->render('detail', [
             'dataProvider' => $dataProvider,
             'searchModel' => $searchModel,
+            'dataCount' => $count_arr,
         ]);
     }
 
@@ -80,6 +85,9 @@ class MessageController extends BaseController
     public function actionAdd()
     {
         $model = $this->findModel(0);
+        $balance = Yii::$app->user->identity->balance;
+        $coefficient = Yii::$app->user->identity->coefficient;
+        $rest = floor($balance/$coefficient);
         if (Yii::$app->request->isPost) {
 
             $data = Yii::$app->request->post('Message');
@@ -95,10 +103,67 @@ class MessageController extends BaseController
             $content['telecom'] = $data['content2'];unset($data['content2']);
             $data['content'] = $content['unicom'];
             $data['content_json'] = json_encode($content);
-            $phonenumbers = $data['phonenumbers_json'];
-            $phonenumbers_arr = json_decode($phonenumbers, true);
-            $phone_number_show = array_merge($phonenumbers_arr['unicom'],$phonenumbers_arr['mobile'],$phonenumbers_arr['telecom'],$phonenumbers_arr['other']);
+            $is_upload = $data['upload'];unset($data['upload']);
+            if ($is_upload == 1) {
+                $phonenumbers = $data['phonenumbers_json'];
+                $phonenumbers_arr = json_decode($phonenumbers, true);
+                $phone_number_show = array_merge($phonenumbers_arr['unicom'],$phonenumbers_arr['mobile'],$phonenumbers_arr['telecom'],$phonenumbers_arr['other']);
+                $data['phonenumbers'] = implode(',',$phone_number_show);
+            } else {
+                $phonenumbers = $data['phonenumbers'];
+                if (strpos($phonenumbers,",\r\n")) {
+                    $phonenumbers = explode(",\r\n",$phonenumbers);
+                } elseif (strpos($phonenumbers,"\r\n")) {
+                    $phonenumbers = explode("\r\n",$phonenumbers);
+                } else {
+                    $phonenumbers = explode(",",$phonenumbers);
+                }
+                $phone_number_arr = $phone_number_show = array();
+                $phone_number_arr['unicom'] = $phone_number_arr['mobile'] = $phone_number_arr['telecom'] = $phone_number_arr['other'] = array();
+                foreach ($phonenumbers as $item_phonenumber) {
+                    if(self::validateMobile($item_phonenumber)!==true) {
+                        continue;
+                    }
+                    $phone_number_7 =  substr($item_phonenumber,0,7);
+                    $redis = Yii::$app->redis;
+                    if ($redis->get("isp_".$phone_number_7)) {
+                        $operator = $redis->get("isp_".$phone_number_7);
+                    } else {
+                        $operator = '';
+                    }
+                    switch ($operator) {
+                        case "联通":
+                            $phone_number_arr['unicom'][] = $item_phonenumber;
+                            break;
+                        case "移动":
+                            $phone_number_arr['mobile'][] = $item_phonenumber;
+                            break;
+                        case "电信":
+                            $phone_number_arr['telecom'][] = $item_phonenumber;
+                            break;
+                        case "虚拟/联通":
+                            $phone_number_arr['unicom'][] = $item_phonenumber;
+                            break;
+                        case "虚拟/移动":
+                            $phone_number_arr['mobile'][] = $item_phonenumber;
+                            break;
+                        case "虚拟/电信":
+                            $phone_number_arr['telecom'][] = $item_phonenumber;
+                            break;
+                        default:
+                            $phone_number_arr['other'][] = $item_phonenumber;
+                            break;
+                    }
+                    $phone_number_show = array_merge($phone_number_arr['unicom'],$phone_number_arr['mobile'],$phone_number_arr['telecom'],$phone_number_arr['other']);
+                }
+                $data['phonenumbers'] = implode(',',$phone_number_show);
+                $data['phonenumbers_json'] = json_encode($phone_number_arr);
+                $phonenumbers_arr = $phone_number_arr;
+            }
             $data['count'] = count($phone_number_show);
+            if ($data['count'] > $rest) {
+                $this->error('您目前的余额只能发送'.$rest.'个号码');
+            }
             $data['create_uid'] = Yii::$app->user->identity->uid;
             $data['create_name'] = Yii::$app->user->identity->username;
             /* 格式化extend值，为空或数组序列化 */
@@ -176,9 +241,9 @@ class MessageController extends BaseController
                 $this->error('操作错误');
             }
         }
-        $data['balance'] = Yii::$app->user->identity->balance;
-        $data['coefficient'] = Yii::$app->user->identity->coefficient;
-        $data['rest'] = floor($data['balance']/$data['coefficient']);
+        $data['balance'] = $balance;
+        $data['coefficient'] = $coefficient;
+        $data['rest'] = $rest;
         /* 获取模型默认数据 */
         $model->loadDefaultValues();
         /* 渲染模板 */

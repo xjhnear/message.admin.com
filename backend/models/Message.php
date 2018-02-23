@@ -16,7 +16,8 @@ class Message extends \common\modelsgii\MessageList
     {
         return [
             [['phonenumbers', 'content'], 'required'],
-            [['create_time', 'send_time', 'check_time', 'status', 'count', 'create_uid', 'check_uid'], 'integer'],
+            [['create_time', 'check_time', 'status', 'count', 'create_uid', 'check_uid'], 'integer'],
+            [['send_time'], 'safe'],
             [['phonenumbers', 'phonenumbers_json', 'content', 'content_json', 'message_code', 'create_name', 'check_name'], 'string']
         ];
     }

@@ -99,6 +99,9 @@ $columns = [
             <?php echo $this->render('_search_detail', ['model' => $searchModel]); ?> <!-- 条件搜索-->
         </div>
         <div class="table-container">
+            发送成功 <b><?=$dataCount['success'] ?></b> 条 | 发送失败 <b><?=$dataCount['fail'] ?></b> 条 | 发送中 <b><?=$dataCount['wait'] ?></b> 条
+        </div>
+        <div class="table-container">
             <form class="ids">
             <?= GridView::widget([
                 'dataProvider' => $dataProvider, // 列表数据

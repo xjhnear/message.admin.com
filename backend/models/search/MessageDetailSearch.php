@@ -107,4 +107,23 @@ class MessageDetailSearch extends MessageDetail
 
         return $dataProvider;
     }
+
+    public function getWaitCount($message_id)
+    {
+        $count = MessageDetail::find()->andFilterWhere(['message_id' => $message_id,'status' => 5])->count();
+        return $count;
+    }
+
+    public function getSuccessCount($message_id)
+    {
+        $count = MessageDetail::find()->andFilterWhere(['message_id' => $message_id,'status' => 3])->count();
+        return $count;
+    }
+
+    public function getfailCount($message_id)
+    {
+        $count = MessageDetail::find()->andFilterWhere(['message_id' => $message_id,'status' => 4])->count();
+        return $count;
+    }
+
 }
