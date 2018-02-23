@@ -154,6 +154,9 @@ class CheckController extends BaseController
             $content['mobile'] = $data['content1'];unset($data['content1']);
             $content['telecom'] = $data['content2'];unset($data['content2']);
             $data['content'] = json_encode($content);
+            if (!isset($data['pass'])) {
+                $this->error('请选择通道');
+            }
             $pass = $data['pass'];unset($data['pass']);
             $data['status'] = 1;
             $data['check_time'] = time();
@@ -175,11 +178,11 @@ class CheckController extends BaseController
                 if (in_array('unicom',$pass)) {
 
                     $content_now = $content['unicom'];
-                    $re = $this->sendSMS($phonenumbers_json['unicom'],$content_now,date('Y-m-d H:i:s', $model->send_time));
-                    $re = $this->xmlToArray($re);
-                    $sql = "INSERT INTO yii2_message_send VALUES('',".$id.",'".$re['taskID']."',1,".$status_unicom.")";
-                    $command = $db->createCommand($sql);
-                    $command->execute();
+//                    $re = $this->sendSMS($phonenumbers_json['unicom'],$content_now,date('Y-m-d H:i:s', $model->send_time));
+//                    $re = $this->xmlToArray($re);
+//                    $sql = "INSERT INTO yii2_message_send VALUES('',".$id.",'".$re['taskID']."',1,".$status_unicom.")";
+//                    $command = $db->createCommand($sql);
+//                    $command->execute();
                     $sql = "UPDATE yii2_message_detail SET channel_id=".$status_unicom." WHERE operator=1 AND message_id=".$id;
                     $command = $db->createCommand($sql);
                     $command->execute();
@@ -190,11 +193,11 @@ class CheckController extends BaseController
                 if (in_array('mobile',$pass)) {
 
                     $content_now = ($content['mobile']<>'')?$content['mobile']:$content['unicom'];
-                    $re = $this->sendSMS($phonenumbers_json['mobile'],$content_now,date('Y-m-d H:i:s', $model->send_time));
-                    $re = $this->xmlToArray($re);
-                    $sql = "INSERT INTO yii2_message_send VALUES('',".$id.",'".$re['taskID']."',2,".$status_mobile.")";
-                    $command = $db->createCommand($sql);
-                    $command->execute();
+//                    $re = $this->sendSMS($phonenumbers_json['mobile'],$content_now,date('Y-m-d H:i:s', $model->send_time));
+//                    $re = $this->xmlToArray($re);
+//                    $sql = "INSERT INTO yii2_message_send VALUES('',".$id.",'".$re['taskID']."',2,".$status_mobile.")";
+//                    $command = $db->createCommand($sql);
+//                    $command->execute();
                     $sql = "UPDATE yii2_message_detail SET channel_id=".$status_mobile." WHERE operator=2 AND message_id=".$id;
                     $command = $db->createCommand($sql);
                     $command->execute();
@@ -205,11 +208,11 @@ class CheckController extends BaseController
                 if (in_array('telecom',$pass)) {
 
                     $content_now = ($content['telecom']<>'')?$content['telecom']:$content['unicom'];
-                    $re = $this->sendSMS($phonenumbers_json['telecom'],$content_now,date('Y-m-d H:i:s', $model->send_time));
-                    $re = $this->xmlToArray($re);
-                    $sql = "INSERT INTO yii2_message_send VALUES('',".$id.",'".$re['taskID']."',3,".$status_telecom.")";
-                    $command = $db->createCommand($sql);
-                    $command->execute();
+//                    $re = $this->sendSMS($phonenumbers_json['telecom'],$content_now,date('Y-m-d H:i:s', $model->send_time));
+//                    $re = $this->xmlToArray($re);
+//                    $sql = "INSERT INTO yii2_message_send VALUES('',".$id.",'".$re['taskID']."',3,".$status_telecom.")";
+//                    $command = $db->createCommand($sql);
+//                    $command->execute();
                     $sql = "UPDATE yii2_message_detail SET channel_id=".$status_telecom." WHERE operator=3 AND message_id=".$id;
                     $command = $db->createCommand($sql);
                     $command->execute();
