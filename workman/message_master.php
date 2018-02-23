@@ -20,24 +20,12 @@ $task->onWorkerStart = function($task)
     $time_interval = 5;
     Timer::add($time_interval, function()  
     {
-		$all_tables_1 = RedisDb::instance('redis')->get('isp_1391743');
-		print_r($all_tables_1);exit;
-
-		$minute = date('i');
-		$hour = date('H');
-		$day = date('d');
-		$month = date('m');
-		$dayofweek = date('w');
-		$date_now_arr = array($minute,$hour,$day,$month,$dayofweek);
-		//echo $minute.",".$hour.",".$day.",".$month.",".$dayofweek."\n";  
 		$now_time = time();
 		$now_date = date('Y-m-d');
 		$db= new MysqlConnection('127.0.0.1', '3306', 'root', 'near','message_www');
-		$all_tables_1=$db->select(array('message_id','message_code'))->from('yii2_message_list')->where('status = 1')->query();
+		$all_tables=$db->select(array('message_id','message_code'))->from('yii2_message_list')->where('status = 1')->query();
 
-		print_r($all_tables_1);exit;
-		$all_tables_2=$db->select(array('id','crontab'))->from('timing')->where('status = 1')->where('isdel = 0')->where('cooldown < '.$now_time)->where('end_date > "'.$now_date.'"')->query();
-		$all_tables = array_merge($all_tables_1,$all_tables_2);
+		print_r($all_tables);exit;
 
 		foreach ($all_tables as $item) {
 			$can_send = true;
