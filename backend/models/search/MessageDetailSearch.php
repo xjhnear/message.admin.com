@@ -24,7 +24,7 @@ class MessageDetailSearch extends MessageDetail
     {
         return [
             [['message_id', 'send_time', 'return_time', 'status', 'create_uid', 'operator'], 'integer'],
-            [['phonenumber', 'message_code'], 'string']
+            [['phonenumber', 'message_code', 'content'], 'string']
         ];
     }
 

@@ -47,7 +47,7 @@ class MessageList extends \common\core\BaseActiveRecord
         return [
             [['phonenumbers', 'content', 'send_time'], 'required'],
             [['create_time', 'check_time', 'status', 'count', 'create_uid', 'check_uid'], 'integer'],
-            [['phonenumbers', 'phonenumbers_json', 'content', 'message_code', 'create_name', 'check_name'], 'string']
+            [['phonenumbers', 'phonenumbers_json', 'content', 'content_json', 'message_code', 'create_name', 'check_name'], 'string']
         ];
     }
 
@@ -63,6 +63,7 @@ class MessageList extends \common\core\BaseActiveRecord
             'phonenumbers_json' => 'Phonenumbers JSON',
             'count' => 'Count',
             'content' => 'Content',
+            'content_json' => 'Content Json',
             'send_time' => 'Send Time',
             'create_time' => 'Create Time',
             'check_time' => 'Check Time',

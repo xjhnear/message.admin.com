@@ -153,7 +153,8 @@ class CheckController extends BaseController
             $content['unicom'] = $data['content'];
             $content['mobile'] = $data['content1'];unset($data['content1']);
             $content['telecom'] = $data['content2'];unset($data['content2']);
-            $data['content'] = json_encode($content);
+            $data['content'] = $data['content'];
+            $data['content_json'] = json_encode($content);
             if (!isset($data['pass'])) {
                 $this->error('请选择通道');
             }
@@ -183,6 +184,9 @@ class CheckController extends BaseController
 //                    $sql = "INSERT INTO yii2_message_send VALUES('',".$id.",'".$re['taskID']."',1,".$status_unicom.")";
 //                    $command = $db->createCommand($sql);
 //                    $command->execute();
+                    $sql = "UPDATE yii2_message_detail SET content=".$content_now." WHERE operator=1 AND message_id=".$id;
+                    $command = $db->createCommand($sql);
+                    $command->execute();
                     $sql = "UPDATE yii2_message_detail SET channel_id=".$status_unicom." WHERE operator=1 AND message_id=".$id;
                     $command = $db->createCommand($sql);
                     $command->execute();
@@ -198,6 +202,9 @@ class CheckController extends BaseController
 //                    $sql = "INSERT INTO yii2_message_send VALUES('',".$id.",'".$re['taskID']."',2,".$status_mobile.")";
 //                    $command = $db->createCommand($sql);
 //                    $command->execute();
+                    $sql = "UPDATE yii2_message_detail SET content=".$content_now." WHERE operator=2 AND message_id=".$id;
+                    $command = $db->createCommand($sql);
+                    $command->execute();
                     $sql = "UPDATE yii2_message_detail SET channel_id=".$status_mobile." WHERE operator=2 AND message_id=".$id;
                     $command = $db->createCommand($sql);
                     $command->execute();
@@ -213,6 +220,9 @@ class CheckController extends BaseController
 //                    $sql = "INSERT INTO yii2_message_send VALUES('',".$id.",'".$re['taskID']."',3,".$status_telecom.")";
 //                    $command = $db->createCommand($sql);
 //                    $command->execute();
+                    $sql = "UPDATE yii2_message_detail SET content=".$content_now." WHERE operator=3 AND message_id=".$id;
+                    $command = $db->createCommand($sql);
+                    $command->execute();
                     $sql = "UPDATE yii2_message_detail SET channel_id=".$status_telecom." WHERE operator=3 AND message_id=".$id;
                     $command = $db->createCommand($sql);
                     $command->execute();
@@ -227,8 +237,8 @@ class CheckController extends BaseController
         }
         $model->send_time = date('Y-m-d H:i', $model->send_time);
         $model->phonenumbers_json = array('unicom'=>count($phonenumbers_json['unicom']),'mobile'=>count($phonenumbers_json['mobile']),'telecom'=>count($phonenumbers_json['telecom']));
-        $content = json_decode($model->content, true);
-        $model->content = $content;
+        $content_json = json_decode($model->content_json, true);
+        $model->content = $content_json;
 //        print_r($model->phonenumbers_json);exit;
         /* 渲染模板 */
         return $this->render('edit', [

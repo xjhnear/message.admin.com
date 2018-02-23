@@ -48,6 +48,11 @@ $columns = [
         },
     ],
     [
+        'header' => '短信内容',
+        'value' => 'content',
+        'options' => ['width' => '150px;'],
+    ],
+    [
         'header' => '发送时间',
         'value' => 'send_time',
         'format' => ['date', 'php:Y-m-d H:i:s'],

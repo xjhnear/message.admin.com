@@ -41,6 +41,11 @@ $columns = [
         'options' => ['width' => '150px;'],
     ],
     [
+        'header' => '短信内容',
+        'value' => 'content',
+        'options' => ['width' => '150px;'],
+    ],
+    [
         'header' => '数量',
         'value' => 'count',
         'options' => ['width' => '50px;']
