@@ -17,7 +17,7 @@ $task->count = 1;
 $task->onWorkerStart = function($task)  
 {  
     // 每30秒执行一次 支持小数，可以精确到0.001，即精确到毫秒级别
-    $time_interval = 5;
+    $time_interval = 10;
     Timer::add($time_interval, function()  
     {
 		$now_time = time();
@@ -25,39 +25,26 @@ $task->onWorkerStart = function($task)
 		$db= new MysqlConnection('127.0.0.1', '3306', 'root', 'near','message_www');
 		$all_tables=$db->select(array('message_id','message_code'))->from('yii2_message_list')->where('status = 1')->query();
 
-		print_r($all_tables);exit;
-
 		foreach ($all_tables as $item) {
-			$can_send = true;
-			$crontab_arr = explode(' ',$item['crontab']);
-			foreach ($crontab_arr as $k=>$v) {
-				$v = explode(',',$v);
-				if(!in_array('*',$v) && !in_array($date_now_arr[$k],$v)) {
-					$can_send = false;
-				}
-			}
-			if ($can_send) {
-				$url = 'http://192.168.20.104:8220/api/web/autodata/timing_send';
-				$data = array(
-					'access-token'=>'admin',
-					'id'=>$item['id']
-				);
-				$query_str = http_build_query($data);
-				$info = parse_url($url);
-				$fp = fsockopen($info["host"], $info["port"], $errno, $errstr, 3);
-				//$head = "GET ".$info['path']."?".$info["query"]." HTTP/1.0\r\n";
-				$head = "GET ".$info['path']."?".$query_str." HTTP/1.0\r\n";
-				$head .= "Host: ".$info['host']."\r\n";
-				$head .= "\r\n";
-				fputs($fp, $head);
-				fclose($fp);
+			$url = 'http://47.100.101.44:5057/system/sms';
+			$data = array(
+				'access-token'=>'admin',
+				'message_id'=>$item['message_id']
+			);
+			$query_str = http_build_query($data);
+			$info = parse_url($url);
+			$fp = fsockopen($info["host"], $info["port"], $errno, $errstr, 3);
+			//$head = "GET ".$info['path']."?".$info["query"]." HTTP/1.0\r\n";
+			$head = "GET ".$info['path']."?".$query_str." HTTP/1.0\r\n";
+			$head .= "Host: ".$info['host']."\r\n";
+			$head .= "\r\n";
+			fputs($fp, $head);
+			fclose($fp);
 //				while (!feof($fp))
 //				{
 //					$line = fread($fp,4096);
 //					echo $line;
 //				}
-			}
-			echo $can_send;
 		}
     });  
 };  
