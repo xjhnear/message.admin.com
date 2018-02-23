@@ -174,6 +174,7 @@ if (data.phone_count.all > $('#rest').val()) {
 $("#rest_error").show();
 $("#sub").attr("disabled", true);
 } else {
+$("#rest_error").hide();
 $("#sub").attr("disabled", false);
 }
 $('form')[0].reset();

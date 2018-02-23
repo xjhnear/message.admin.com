@@ -7,6 +7,7 @@ use backend\models\Message;
 use backend\models\search\MessageSearch;
 use backend\models\MessageDetail;
 use backend\models\search\MessageDetailSearch;
+use backend\models\Admin;
 use common\helpers\ArrayHelper;
 use common\helpers\FuncHelper;
 use yii\web\NotFoundHttpException;
@@ -110,6 +111,11 @@ class MessageController extends BaseController
             }
             /* 表单数据加载、验证、数据库操作 */
             if ($r = $this->saveRow($model, $data)) {
+                $model_a =  Admin::findOne(Yii::$app->user->identity->uid);
+                $cost = $data['count'] * $model_a['coefficient'];
+                $data['balance'] = $model_a['balance'] - $cost;
+                $this->saveRow($model_a, $data);
+
                 $model_d = new MessageDetail();
                 foreach($phonenumbers_arr['unicom'] as $phonenumber)
                 {
