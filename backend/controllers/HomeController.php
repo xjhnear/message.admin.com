@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use Yii;
+use backend\models\MessageSend;
 
 /**
  * 后台首页控制器
@@ -12,7 +13,11 @@ class HomeController extends BaseController
 {
     public function actionIndex()
     {
-        return $this->render('index');
+        $dataProvider['balance'] = Yii::$app->user->identity->balance;
+
+        return $this->render('index', [
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
 }

@@ -591,7 +591,8 @@ class CheckController extends BaseController
         }
         $post_data = substr($o,0,-1);
 
-        return $this->request_post($url, $post_data);
+//        return $this->request_post($url, $post_data);
+        return false;
     }
 
     protected function statusApi($to,$text,$time)
@@ -616,7 +617,8 @@ class CheckController extends BaseController
         }
         $post_data = substr($o,0,-1);
 
-        return $this->request_post($url, $post_data);
+//        return $this->request_post($url, $post_data);
+        return false;
     }
 
     protected function request_post($url = '', $param = '') {
