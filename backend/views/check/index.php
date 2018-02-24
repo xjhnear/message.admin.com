@@ -77,10 +77,12 @@ $columns = [
         'options' => ['width' => '100px;'],
         'buttons' => [
             'view' => function ($url, $model, $key) {
-                return Html::a('<i class="fa fa-eye"></i>', ['edit', 'id'=>$key], [
-                    'title' => Yii::t('app', '详细信息'),
-                    'class' => 'btn btn-xs blue'
-                ]);
+                if ($model['status'] == 0) {
+                    return Html::a('<i class="fa fa-eye"></i> 审核', ['edit', 'id'=>$key], [
+                        'title' => Yii::t('app', '详细信息'),
+                        'class' => 'btn btn-xs blue'
+                    ]);
+                }
             },
         ],
         'headerOptions' => [],

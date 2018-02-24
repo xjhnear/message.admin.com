@@ -8,6 +8,7 @@ use backend\models\Message;
 use backend\models\search\MessageCheckSearch;
 use backend\models\MessageDetail;
 use backend\models\search\MessageDetailCheckSearch;
+use backend\models\Channel;
 use common\helpers\ArrayHelper;
 use common\helpers\FuncHelper;
 use yii\web\NotFoundHttpException;
@@ -144,6 +145,7 @@ class CheckController extends BaseController
         $model = $this->findModel($id);
         $phonenumbers_json = json_decode($model->phonenumbers_json, true);
         $model_admin = Admin::findIdentity($model->create_uid);
+        $model_channel = Channel::getChannelList();
         if (Yii::$app->request->isPost) {
             $data = Yii::$app->request->post('Message');//var_dump($data);exit();
             $status_unicom = $data['status_unicom'];unset($data['status_unicom']);
@@ -193,6 +195,10 @@ class CheckController extends BaseController
                     $sql = "UPDATE yii2_message_detail SET status=1 WHERE operator=1 AND message_id=".$id;
                     $command = $db->createCommand($sql);
                     $command->execute();
+                } else {
+                    $sql = "UPDATE yii2_message_detail SET status=2 WHERE operator=1 AND message_id=".$id;
+                    $command = $db->createCommand($sql);
+                    $command->execute();
                 }
                 if (in_array('mobile',$pass)) {
 
@@ -209,6 +215,10 @@ class CheckController extends BaseController
                     $command = $db->createCommand($sql);
                     $command->execute();
                     $sql = "UPDATE yii2_message_detail SET status=1 WHERE operator=2 AND message_id=".$id;
+                    $command = $db->createCommand($sql);
+                    $command->execute();
+                } else {
+                    $sql = "UPDATE yii2_message_detail SET status=2 WHERE operator=2 AND message_id=".$id;
                     $command = $db->createCommand($sql);
                     $command->execute();
                 }
@@ -229,6 +239,10 @@ class CheckController extends BaseController
                     $sql = "UPDATE yii2_message_detail SET status=1 WHERE operator=3 AND message_id=".$id;
                     $command = $db->createCommand($sql);
                     $command->execute();
+                } else {
+                    $sql = "UPDATE yii2_message_detail SET status=2 WHERE operator=3 AND message_id=".$id;
+                    $command = $db->createCommand($sql);
+                    $command->execute();
                 }
                 $this->success('操作成功', $this->getForward());
             } else {
@@ -244,6 +258,7 @@ class CheckController extends BaseController
         return $this->render('edit', [
             'model' => $model,
             'model_admin' => $model_admin,
+            'model_channel' => $model_channel,
         ]);
     }
 

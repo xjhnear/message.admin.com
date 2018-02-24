@@ -28,6 +28,15 @@ class Channel extends \common\modelsgii\Channel
         ];
     }
 
+    public static function getChannelList()
+    {
+        $out_arr = array();
+        $out_arr['unicom'] = static::findAll(['operator' => 1, 'status' => 1, 'is_del' => 0]);
+        $out_arr['mobile'] = static::findAll(['operator' => 2, 'status' => 1, 'is_del' => 0]);
+        $out_arr['telecom'] = static::findAll(['operator' => 3, 'status' => 1, 'is_del' => 0]);
+        return $out_arr;
+    }
+
     /**
      * @inheritdoc
      */
