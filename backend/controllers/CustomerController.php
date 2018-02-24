@@ -136,7 +136,7 @@ class CustomerController extends BaseController
                 $attributes = array();
                 $attributes['uid'] = $uid;
                 $attributes['change_count'] = $change_count;
-                $attributes['change_count'] = 1;
+                $attributes['change_type'] = 1;
                 $attributes['balance'] = $balance;
                 $attributes['remark'] = '充值';
                 $attributes['op_uid'] = Yii::$app->user->identity->uid;
