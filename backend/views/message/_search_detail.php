@@ -24,7 +24,7 @@ use yii\widgets\ActiveForm;
     <?=$form->field($model, 'operator')->dropDownList([''=>'全部',1 => '联通',2 => '移动',3 => '电信',4 => '其他'],['class'=>'form-control'])->label('运营商'); ?>
     </div>
     <div class="col-md-2">
-    <?=$form->field($model, 'status')->dropDownList([''=>'全部',0 => '待审核',1 => '审核通过',2 => '审核拒绝',3 => '发送成功',4 => '发送失败'],['class'=>'form-control'])->label('状态'); ?>
+    <?=$form->field($model, 'status')->dropDownList([''=>'全部',0 => '待审核',1 => '审核通过',2 => '审核拒绝',3 => '发送成功',4 => '发送失败',5 => '发送中'],['class'=>'form-control'])->label('状态'); ?>
     </div>
     <input type="hidden" name="pid" value="<?=Yii::$app->request->getQueryParam('pid') ?>">
     <div class="col-md-2">

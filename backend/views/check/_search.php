@@ -20,8 +20,14 @@ use yii\widgets\ActiveForm;
     <div class="col-md-2">
     <?= $form->field($model, 'message_code')->textInput()->label('批次号') ?>
     </div>
-    <div class="col-md-2">
-    <?=$form->field($model, 'status')->dropDownList([''=>'全部',0 => '待审核',1 => '审核通过',2 => '审核拒绝',3 => '发送成功',4 => '发送失败'],['class'=>'form-control'])->label('状态'); ?>
+    <div class="col-md-5">
+        <?= Html::activeHiddenInput($model,'status') ?>
+        <div class="btn-group btn-group-devided" style="margin-top: 24px;">
+            <?=Html::a('待审核 <i class="fa"></i>',['check/index?MessageCheckSearch[status]=0'],['class'=>'btn blue'])?>
+            <?=Html::a('审核通过 <i class="fa"></i>',['check/index?MessageCheckSearch[status]=1'],['class'=>'btn blue'])?>
+            <?=Html::a('审核拒绝 <i class="fa"></i>',['check/index?MessageCheckSearch[status]=2'],['class'=>'btn blue'])?>
+            <?=Html::a('全部 <i class="fa"></i>',['check/index'],['class'=>'btn blue'])?>
+        </div>
     </div>
 
     <div class="col-md-2">

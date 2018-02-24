@@ -94,6 +94,9 @@ $this->beginPage();
                             <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                                 <img alt="" class="img-circle" src="<?=Yii::getAlias('@web/static/images/avatar2.jpg')?>" />
                                 <span class="username username-hide-on-mobile"> <?=Yii::$app->user->identity->username?> </span>
+                                <?php if(Yii::$app->user->identity->role == 1) { ?>
+                                <span class="username username-hide-on-mobile" style="padding-left: 5px;padding-right: 5px;"> 余额 <b <?php if(Yii::$app->user->identity->balance <= 100){?> style="color: #e7505a" <?php }else{ ?> style="color: #3598dc"<?php } ?>><?=Yii::$app->user->identity->balance?></b> 元 </span>
+                                <?php } ?>
                                 <i class="fa fa-angle-down"></i>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-default">

@@ -13,7 +13,10 @@ $this->params['title_sub'] = '';
 ?>
 
 <div class="note note-info">
-    <h4> 欢迎使用短信系统！ </h4>
+    <h4> 欢迎使用短信系统！</h4>
+    <?php if(Yii::$app->user->identity->role == 1) { ?>
+    您的账户尚有余额：<b <?php if($dataProvider['balance'] <= 100){?> style="color: #e7505a" <?php }else{ ?> style="color: #3598dc"<?php } ?>><?=$dataProvider['balance']?></b> 元
+    <?php } ?>
 </div>
 
 <div class="row">
@@ -70,20 +73,21 @@ $this->params['title_sub'] = '';
 </div>
 <div class="clearfix"></div>
 
+<?php if(Yii::$app->user->identity->role == 1) { ?>
 <div class="row-fluid margin-bottom-30">
     <div class="span6">
         <blockquote class="hero">
-            <p></p>
+            <p>您已超过95%的用户</p>
             <!--<small>Bob Nilson</small>-->
         </blockquote>
     </div>
 </div>
-
+<?php } ?>
 
 <!-- 定义数据块 -->
 <?php $this->beginBlock('test'); ?>
 jQuery(document).ready(function() {
-    highlight_subnav('home/index'); //子导航高亮
+highlight_subnav('home/index'); //子导航高亮
 });
 <?php $this->endBlock() ?>
 <!-- 将数据块 注入到视图中的某个位置 -->
