@@ -82,7 +82,7 @@ $columns = [
         </div>
         <div class="actions">
             <div class="btn-group btn-group-devided">
-                <?=Html::a('清空搜索 <i class="fa fa-times"></i>',['message/index'],['class'=>'btn green','style'=>'margin-right:10px;'])?>
+                <?=Html::a('清空搜索 <i class="fa fa-times"></i>',['check/index'],['class'=>'btn green','style'=>'margin-right:10px;'])?>
             </div>
             <div class="btn-group">
                 <button class="btn blue btn-sm dropdown-toggle" type="button" data-toggle="dropdown">

@@ -74,6 +74,7 @@ class AccountController extends BaseController
         /* 获取模型默认数据 */
         $model->loadDefaultValues();
         /* 渲染模板 */
+        $model->status = 1;
         return $this->render('edit', [
             'model' => $model,
         ]);

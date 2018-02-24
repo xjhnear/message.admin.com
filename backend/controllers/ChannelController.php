@@ -3,14 +3,14 @@
 namespace backend\controllers;
 
 use Yii;
-use backend\models\Admin;
-use backend\models\search\CustomerSearch;
+use backend\models\Channel;
+use backend\models\search\ChannelSearch;
 
 /**
  * 后台用户控制器
  * @author longfei <phphome@qq.com>
  */
-class CustomerController extends BaseController
+class ChannelController extends BaseController
 {
     /**
      * ---------------------------------------
@@ -32,7 +32,7 @@ class CustomerController extends BaseController
         /* 添加当前位置到cookie供后续操作调用 */
         $this->setForward();
 
-        $searchModel = new CustomerSearch();
+        $searchModel = new ChannelSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -48,25 +48,12 @@ class CustomerController extends BaseController
     public function actionAdd()
     {
 
-        $model = new Admin();
+        $model = new Channel();
 
         if (Yii::$app->request->isPost) {
             /* 表单验证 */
-            $data = Yii::$app->request->post('Admin');
-            $data['reg_time'] = time();
-            $data['reg_ip'] = ip2long(Yii::$app->request->getUserIP());
-            $data['last_login_time'] = 0;
-            $data['last_login_ip'] = ip2long('127.0.0.1');
-            $data['update_time'] = 0;
-            $data['role'] = 1;
-            /* 表单数据加载和验证，具体验证规则在模型rule中配置 */
-            /* 密码单独验证，否则setPassword后密码肯定符合rule */
-            if (empty($data['password']) || strlen($data['password']) < 6) {
-                $this->error('密码为空或小于6字符');
-            }
+            $data = Yii::$app->request->post('Channel');
             $model->setAttributes($data);
-            $model->generateAuthKey();
-            $model->setPassword($data['password']);
             /* 保存用户数据到数据库 */
             if ($model->save()) {
                 $this->success('操作成功', $this->getForward());
@@ -75,6 +62,7 @@ class CustomerController extends BaseController
             }
         }
         $model->status = 1;
+        $model->operator = 1;
         return $this->render('edit', [
             'model' => $model,
         ]);
@@ -87,19 +75,11 @@ class CustomerController extends BaseController
      */
     public function actionEdit($uid)
     {
-        $model = Admin::findOne($uid);
+        $model = Channel::findOne($uid);
 
         if (Yii::$app->request->isPost) {
             /* 表单验证 */
-            $data = Yii::$app->request->post('Admin');
-            $data['update_time'] = time();
-            /* 如果设置密码则重置密码，否则不修改密码 */
-            if (!empty($data['password'])) {
-                $model->generateAuthKey();
-                $model->setPassword($data['password']);
-            }
-            unset($data['password']);
-
+            $data = Yii::$app->request->post('Channel');
             $model->setAttributes($data);
             /* 保存用户数据到数据库 */
             if ($model->save()) {
@@ -109,34 +89,7 @@ class CustomerController extends BaseController
             }
         }
 
-        $model->password = '';
         return $this->render('edit', [
-            'model' => $model,
-        ]);
-    }
-
-    public function actionRecharge($uid)
-    {
-        $model = Admin::findOne($uid);
-
-        if (Yii::$app->request->isPost) {
-            /* 表单验证 */
-            $data = Yii::$app->request->post('Recharge');
-            $balance = $model->balance;
-            $balance += $data['balance'];
-            $data['balance'] = $balance;
-            unset($data['count']);
-
-            $model->setAttributes($data);
-            /* 保存用户数据到数据库 */
-            if ($model->save()) {
-                $this->success('操作成功', $this->getForward());
-            } else {
-                $this->error('操作错误');
-            }
-        }
-
-        return $this->render('recharge', [
             'model' => $model,
         ]);
     }
@@ -149,7 +102,7 @@ class CustomerController extends BaseController
     public function actionDelete()
     {
         $uid = Yii::$app->request->param('id', 0);
-        $model = Admin::findOne($uid);
+        $model = Channel::findOne($uid);
         $data['is_del'] = 1;
         $model->setAttributes($data);
         if ($model->save()) {

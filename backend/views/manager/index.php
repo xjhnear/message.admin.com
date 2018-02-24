@@ -83,7 +83,7 @@ $columns = [
         <div class="actions">
             <div class="btn-group btn-group-devided">
                 <?=Html::a('添加 <i class="fa fa-plus"></i>',['add'],['class'=>'btn green'])?>
-                <?=Html::a('清空搜索 <i class="fa fa-times"></i>',['account/index'],['class'=>'btn green','style'=>'margin-right:10px;'])?>
+                <?=Html::a('清空搜索 <i class="fa fa-times"></i>',['manager/index'],['class'=>'btn green','style'=>'margin-right:10px;'])?>
             </div>
             <div class="btn-group">
                 <button class="btn blue btn-sm dropdown-toggle" type="button" data-toggle="dropdown">

@@ -74,7 +74,7 @@ class CheckmanController extends BaseController
                 $this->error('操作错误');
             }
         }
-
+        $model->status = 1;
         return $this->render('edit', [
             'model' => $model,
         ]);

@@ -9,7 +9,7 @@ use yii\grid\GridView;
 
 /* ===========================以下为本页配置信息================================= */
 /* 页面基本属性 */
-$this->title = '商户管理';
+$this->title = '通道管理';
 $this->params['title_sub'] = '';  // 在\yii\base\View中有$params这个可以在视图模板中共享的参数
 
 /* 先要注册表格所须的资源 */
@@ -18,27 +18,29 @@ $this->params['title_sub'] = '';  // 在\yii\base\View中有$params这个可以�
 $columns = [
     [
         'class' => \common\core\CheckboxColumn::className(),
-        'name'  => 'uid',
+        'name'  => 'channel_id',
         'options' => ['width' => '20px;'],
         'checkboxOptions' => function ($model, $key, $index, $column) {
             return ['value' => $key,'label'=>'<span></span>','labelOptions'=>['class' =>'mt-checkbox mt-checkbox-outline','style'=>'padding-left:19px;']];
         }
     ],
     [
-        'header' => '用户名',
-        'value' => 'username',
+        'header' => '通道名称',
+        'value' => 'name',
         'options' => ['width' => '50px;']
     ],
     [
-        'header' => '手机',
-        'value' => 'mobile',
+        'header' => '账号',
+        'value' => 'account',
         'options' => ['width' => '50px;']
     ],
     [
-        'label' => '注册时间',
-        'value' => 'reg_time',
-        'options' => ['width' => '150px;'],
-        'format' =>  ['date', 'php:Y-m-d H:i:s']
+        'header' => '运营商',
+        'value' => 'operator',
+        'options' => ['width' => '80px;'],
+        'content' => function($model){
+            return Yii::$app->params['operator_status'][$model['operator']];
+        },
     ],
     [
         'header' => '状态',
@@ -53,15 +55,9 @@ $columns = [
     [
         'class' => 'yii\grid\ActionColumn',
         'header' => '操作',
-        'template' => '{recharge} {edit} {delete}',
+        'template' => '{edit} {delete}',
         'options' => ['width' => '100px;'],
         'buttons' => [
-            'recharge' => function ($url, $model, $key) {
-                return Html::a('<i class="fa fa-diamond"></i> 充值', ['recharge','uid'=>$key], [
-                    'title' => Yii::t('app', '充值'),
-                    'class' => 'btn btn-xs blue'
-                ]);
-            },
             'edit' => function ($url, $model, $key) {
                 return Html::a('<i class="fa fa-edit"></i> 更新', ['edit','uid'=>$key], [
                     'title' => Yii::t('app', '更新'),
@@ -84,12 +80,12 @@ $columns = [
     <div class="portlet-title">
         <div class="caption">
             <i class="icon-settings font-dark"></i>
-            <span class="caption-subject font-dark sbold uppercase">短信列表</span>
+            <span class="caption-subject font-dark sbold uppercase">通道列表</span>
         </div>
         <div class="actions">
             <div class="btn-group btn-group-devided">
                 <?=Html::a('添加 <i class="fa fa-plus"></i>',['add'],['class'=>'btn green'])?>
-                <?=Html::a('清空搜索 <i class="fa fa-times"></i>',['customer/index'],['class'=>'btn green','style'=>'margin-right:10px;'])?>
+                <?=Html::a('清空搜索 <i class="fa fa-times"></i>',['channel/index'],['class'=>'btn green','style'=>'margin-right:10px;'])?>
             </div>
             <div class="btn-group">
                 <button class="btn blue btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
@@ -143,7 +139,7 @@ $columns = [
 <!-- 定义数据块 -->
 <?php $this->beginBlock('test'); ?>
 jQuery(document).ready(function() {
-    highlight_subnav('customer/index'); //子导航高亮
+    highlight_subnav('channel/index'); //子导航高亮
 });
 <?php $this->endBlock() ?>
 <!-- 将数据块 注入到视图中的某个位置 -->

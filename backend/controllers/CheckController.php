@@ -5,9 +5,9 @@ namespace backend\controllers;
 use Yii;
 use backend\models\Admin;
 use backend\models\Message;
-use backend\models\search\MessageSearch;
+use backend\models\search\MessageCheckSearch;
 use backend\models\MessageDetail;
-use backend\models\search\MessageDetailSearch;
+use backend\models\search\MessageDetailCheckSearch;
 use common\helpers\ArrayHelper;
 use common\helpers\FuncHelper;
 use yii\web\NotFoundHttpException;
@@ -35,7 +35,7 @@ class CheckController extends BaseController
 
         $params = Yii::$app->request->getQueryParams();
 
-        $searchModel = new MessageSearch();
+        $searchModel = new MessageCheckSearch();
         $dataProvider = $searchModel->search($params); //var_dump($dataProvider->query->all());exit();
 
         /* 导出excel */
@@ -57,7 +57,7 @@ class CheckController extends BaseController
 
         $params = Yii::$app->request->getQueryParams();
 
-        $searchModel = new MessageDetailSearch();
+        $searchModel = new MessageDetailCheckSearch();
         $dataProvider = $searchModel->search($params); //var_dump($dataProvider->query->all());exit();
 
         /* 导出excel */
