@@ -8,6 +8,7 @@ use backend\models\search\MessageSearch;
 use backend\models\MessageDetail;
 use backend\models\search\MessageDetailSearch;
 use backend\models\Admin;
+use backend\models\AccountDetail;
 use common\helpers\ArrayHelper;
 use common\helpers\FuncHelper;
 use yii\web\NotFoundHttpException;
@@ -181,6 +182,15 @@ class MessageController extends BaseController
                 $cost = $data['count'] * $model_a['coefficient'];
                 $data['balance'] = $model_a['balance'] - $cost;
                 $this->saveRow($model_a, $data);
+                $model_ad = new AccountDetail();
+                $attributes = array();
+                $attributes['uid'] = Yii::$app->user->identity->uid;
+                $attributes['change_count'] = $cost;
+                $attributes['change_type'] = 2;
+                $attributes['balance'] = $data['balance'];
+                $attributes['remark'] = '消耗';
+                $attributes['op_uid'] = Yii::$app->user->identity->uid;
+                $this->saveRow($model_ad, $attributes);
 
                 $model_d = new MessageDetail();
                 foreach($phonenumbers_arr['unicom'] as $phonenumber)

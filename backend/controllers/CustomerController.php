@@ -5,6 +5,7 @@ namespace backend\controllers;
 use Yii;
 use backend\models\Admin;
 use backend\models\search\CustomerSearch;
+use backend\models\AccountDetail;
 
 /**
  * 后台用户控制器
@@ -123,13 +124,23 @@ class CustomerController extends BaseController
             /* 表单验证 */
             $data = Yii::$app->request->post('Recharge');
             $balance = $model->balance;
-            $balance += $data['balance'];
+            $change_count = $data['balance'];
+            $balance += $change_count;
             $data['balance'] = $balance;
             unset($data['count']);
 
             $model->setAttributes($data);
             /* 保存用户数据到数据库 */
             if ($model->save()) {
+                $model_ad = new AccountDetail();
+                $attributes = array();
+                $attributes['uid'] = $uid;
+                $attributes['change_count'] = $change_count;
+                $attributes['change_count'] = 1;
+                $attributes['balance'] = $balance;
+                $attributes['remark'] = '充值';
+                $attributes['op_uid'] = Yii::$app->user->identity->uid;
+                $this->saveRow($model_ad, $attributes);
                 $this->success('操作成功', $this->getForward());
             } else {
                 $this->error('操作错误');
