@@ -45,7 +45,7 @@ class MessageSend extends \common\core\BaseActiveRecord
     public function rules()
     {
         return [
-            [['message_id', 'message_did', 'task_id', 'operator', 'channel_id', 'status', 'return_time'], 'integer'],
+            [['message_id', 'message_did', 'task_id', 'operator', 'channel_id', 'status', 'return_time', 'create_time', 'uid'], 'integer'],
             [['phonenumber', 'errorcode', 'extno'], 'string']
         ];
     }
@@ -67,6 +67,8 @@ class MessageSend extends \common\core\BaseActiveRecord
             'return_time' => 'Return Time',
             'errorcode' => 'Errorcode',
             'extno' => 'Extno',
+            'create_time' => 'Create Time',
+            'uid' => 'UID',
         ];
     }
 }

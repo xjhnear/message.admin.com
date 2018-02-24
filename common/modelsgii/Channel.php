@@ -30,9 +30,9 @@ class Channel extends \common\core\BaseActiveRecord
     public function rules()
     {
         return [
-            [['account', 'password', 'operator'], 'required'],
+            [['account', 'password', 'operator', 'url'], 'required'],
             [['userid', 'operator', 'status', 'is_del'], 'integer'],
-            [['account', 'password', 'name'], 'string']
+            [['account', 'password', 'name', 'url'], 'string']
         ];
     }
 
@@ -47,6 +47,7 @@ class Channel extends \common\core\BaseActiveRecord
             'userid' => 'Userid',
             'account' => 'Account',
             'password' => 'Password',
+            'url' => 'Url',
             'operator' => 'Operator',
             'status' => 'Status',
             'is_del' => 'Is Del',

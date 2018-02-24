@@ -43,6 +43,8 @@ $this->params['title_sub'] = '';  // 在\yii\base\View中有$params这个可以�
 
         <?=$form->field($model, 'password')->textInput(['class' => 'form-control c-md-3'])->label('密码')->hint('')?>
 
+        <?=$form->field($model, 'url')->textInput(['class' => 'form-control c-md-3'])->label('URL')->hint('')?>
+
         <?= $form->field($model, 'operator')->radioList(['1'=>'联通','2'=>'移动','3'=>'电信'])->label('运营商') ?>
 
         <?= $form->field($model, 'status')->radioList(['1'=>'正常','0'=>'隐藏'])->label('通道状态') ?>

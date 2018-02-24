@@ -20,7 +20,7 @@ class ChannelSearch extends Channel
     {
         return [
             [['userid', 'operator', 'status', 'is_del'], 'integer'],
-            [['account', 'password', 'name'], 'string']
+            [['account', 'password', 'name', 'url'], 'string']
         ];
     }
 
