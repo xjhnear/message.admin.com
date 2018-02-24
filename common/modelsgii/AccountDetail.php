@@ -36,7 +36,7 @@ class AccountDetail extends \common\core\BaseActiveRecord
      */
     public static function tableName()
     {
-        return '{{%message_detail}}';
+        return '{{%account_detail}}';
     }
 
     /**
