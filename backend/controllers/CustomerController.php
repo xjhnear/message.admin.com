@@ -70,7 +70,8 @@ class CustomerController extends BaseController
             $model->generateAuthKey();
             $model->setPassword($data['password']);
             /* 保存用户数据到数据库 */
-            print_r($model->save());exit;
+            $model->save();
+            print_r($model->getId());exit;
             if ($r = $model->save()) {
                 $model_au = new AuthAssignment();
                 $attributes = array();
