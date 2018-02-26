@@ -69,7 +69,11 @@ class CustomerController extends BaseController
             $model->generateAuthKey();
             $model->setPassword($data['password']);
             /* 保存用户数据到数据库 */
-            if ($model->save()) {
+            if ($r = $model->save()) {
+                $auth = Yii::$app->authManager;
+                $auth->revokeAll($r->uid);
+                $role = $auth->getRole('商户');
+                $auth->assign($role, $r->uid);
                 $this->success('操作成功', $this->getForward());
             } else {
                 $this->error('操作错误');
