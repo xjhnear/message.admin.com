@@ -69,10 +69,10 @@ class CheckmanController extends BaseController
             $model->generateAuthKey();
             $model->setPassword($data['password']);
             /* 保存用户数据到数据库 */
-            if ($r = $model->save()) {
+            if ($model->save()) {
                 $model_au = new AuthAssignment();
                 $attributes = array();
-                $attributes['user_id'] = $r->uid;
+                $attributes['user_id'] = $model->getId();
                 $attributes['item_name'] = '审核员';
                 $this->saveRow($model_au, $attributes);
                 $this->success('操作成功', $this->getForward());

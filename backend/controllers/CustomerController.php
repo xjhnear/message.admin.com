@@ -70,12 +70,10 @@ class CustomerController extends BaseController
             $model->generateAuthKey();
             $model->setPassword($data['password']);
             /* 保存用户数据到数据库 */
-            $model->save();
-            print_r($model->getId());exit;
-            if ($r = $model->save()) {
+            if ($model->save()) {
                 $model_au = new AuthAssignment();
                 $attributes = array();
-                $attributes['user_id'] = $r->uid;
+                $attributes['user_id'] = $model->getId();
                 $attributes['item_name'] = '商户';
                 $this->saveRow($model_au, $attributes);
                 $this->success('操作成功', $this->getForward());
