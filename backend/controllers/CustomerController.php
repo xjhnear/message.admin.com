@@ -71,7 +71,7 @@ class CustomerController extends BaseController
             /* 保存用户数据到数据库 */
             if ($r = $model->save()) {
                 $auth = Yii::$app->authManager;
-                $auth->revokeAll($r->uid);
+//                $auth->revokeAll($r->uid);
                 $role = $auth->getRole('商户');
                 $auth->assign($role, $r->uid);
                 $this->success('操作成功', $this->getForward());
