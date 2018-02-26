@@ -6,6 +6,7 @@ use Yii;
 use backend\models\Admin;
 use backend\models\search\CustomerSearch;
 use backend\models\AccountDetail;
+use backend\models\AuthAssignment;
 
 /**
  * 后台用户控制器
@@ -70,10 +71,11 @@ class CustomerController extends BaseController
             $model->setPassword($data['password']);
             /* 保存用户数据到数据库 */
             if ($r = $model->save()) {
-                $auth = Yii::$app->authManager;
-//                $auth->revokeAll($r->uid);
-                $role = $auth->getRole('商户');
-                $auth->assign($role, $r->uid);
+                $model_au = new AuthAssignment();
+                $attributes = array();
+                $attributes['user_id'] = $r->uid;
+                $attributes['item_name'] = '商户';
+                $this->saveRow($model_au, $attributes);
                 $this->success('操作成功', $this->getForward());
             } else {
                 $this->error('操作错误');

@@ -5,6 +5,7 @@ namespace backend\controllers;
 use Yii;
 use backend\models\Admin;
 use backend\models\search\ManagerSearch;
+use backend\models\AuthAssignment;
 
 /**
  * 后台用户控制器
@@ -69,10 +70,11 @@ class ManagerController extends BaseController
             $model->setPassword($data['password']);
             /* 保存用户数据到数据库 */
             if ($r = $model->save()) {
-                $auth = Yii::$app->authManager;
-//                $auth->revokeAll($r->uid);
-                $role = $auth->getRole('administrator');
-                $auth->assign($role, $r->uid);
+                $model_au = new AuthAssignment();
+                $attributes = array();
+                $attributes['user_id'] = $r->uid;
+                $attributes['item_name'] = 'administrator';
+                $this->saveRow($model_au, $attributes);
                 $this->success('操作成功', $this->getForward());
             } else {
                 $this->error('操作错误');
