@@ -33,7 +33,7 @@ class LoginController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'error', 'logout'],
+                        'actions' => ['login', 'error', 'logout', 'captcha'],
                         'allow' => true,
                     ],
                 ],
@@ -49,6 +49,19 @@ class LoginController extends Controller
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
+            ],
+            //验证码action
+            'captcha' => [
+                'class' => 'yii\captcha\CaptchaAction',
+                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
+                'backColor'=>0x000000,//背景颜色
+                'maxLength' => 5, //最大显示个数
+                'minLength' => 4,//最少显示个数
+                'padding' => 3,//间距
+                'height'=>34,//高度
+                'width' => 90,  //宽度
+                'foreColor'=>0xffffff,     //字体颜色
+                'offset'=>4        //设置字符偏移量 有效果
             ],
         ];
     }

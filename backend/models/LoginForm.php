@@ -3,6 +3,7 @@ namespace backend\models;
 
 use Yii;
 use common\core\BaseModel;
+use yii\captcha\Captcha;
 
 /**
  * Login form
@@ -12,6 +13,7 @@ class LoginForm extends BaseModel
     public $username;
     public $password;
     public $rememberMe = true;
+    public $verifyCode;
 
     /**
      * @var Admin
@@ -26,14 +28,28 @@ class LoginForm extends BaseModel
     {
         return [
             // username and password are both required
-            [['username', 'password'], 'required'],
+            ['username', 'required','message' => '用户名不能为空'],
+            ['password', 'required','message' => '密码不能为空'],
+            ['verifyCode', 'required','message' => '验证码不能为空'],
             // password is validated by validatePassword()
-            ['password', 'validatePassword'],
+            ['password', 'validatePassword','message' => '密码不正确！'],
             // rememberMe must be a boolean value
             ['rememberMe', 'boolean'],
+
+            ['verifyCode', 'captcha','captchaAction'=>'/login/captcha','message'=>'验证码不正确！'],
         ];
     }
 
+     /*
+     * * @return array customized attribute labels
+     */
+    public function attributeLabels()
+     {
+          return [
+                    // 'verifyCode' => 'Verification Code',
+                    'verifyCode' => '',//在官网的教程里是加上了英文字母，我这里先给去掉了,这里去 掉会不会产生影响因为我还没做接收验证，只做了验证码显示的功能，你们可以自己测试下
+             ];
+     }
     /**
      * Validates the password.
      * This method serves as the inline validation for password.
