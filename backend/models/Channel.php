@@ -23,7 +23,7 @@ class Channel extends \common\modelsgii\Channel
     {
         return [
             [['account', 'password', 'operator', 'url'], 'required'],
-            [['userid', 'operator', 'status', 'is_del'], 'integer'],
+            [['userid', 'operator', 'status', 'is_del', 'type'], 'integer'],
             [['account', 'password', 'name', 'url'], 'string']
         ];
     }

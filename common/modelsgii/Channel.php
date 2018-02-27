@@ -31,7 +31,7 @@ class Channel extends \common\core\BaseActiveRecord
     {
         return [
             [['account', 'password', 'operator', 'url'], 'required'],
-            [['userid', 'operator', 'status', 'is_del'], 'integer'],
+            [['userid', 'operator', 'status', 'is_del', 'type'], 'integer'],
             [['account', 'password', 'name', 'url'], 'string']
         ];
     }
@@ -51,6 +51,7 @@ class Channel extends \common\core\BaseActiveRecord
             'operator' => 'Operator',
             'status' => 'Status',
             'is_del' => 'Is Del',
+            'type' => 'Type',
         ];
     }
 }
