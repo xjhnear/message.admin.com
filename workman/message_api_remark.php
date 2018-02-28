@@ -38,29 +38,36 @@ $task->onWorkerStart = function($task)
                 }
                 switch ($operator) {
                     case "联通":
+                        $operator_code = 1;
                         $phone_number_arr['unicom'][] = $item_phonenumber;
                         break;
                     case "移动":
+                        $operator_code = 2;
                         $phone_number_arr['mobile'][] = $item_phonenumber;
                         break;
                     case "电信":
+                        $operator_code = 3;
                         $phone_number_arr['telecom'][] = $item_phonenumber;
                         break;
                     case "虚拟/联通":
+                        $operator_code = 1;
                         $phone_number_arr['unicom'][] = $item_phonenumber;
                         break;
                     case "虚拟/移动":
+                        $operator_code = 2;
                         $phone_number_arr['mobile'][] = $item_phonenumber;
                         break;
                     case "虚拟/电信":
+                        $operator_code = 3;
                         $phone_number_arr['telecom'][] = $item_phonenumber;
                         break;
                     default:
+                        $operator_code = 4;
                         $phone_number_arr['other'][] = $item_phonenumber;
                         break;
                 }
                 $phone_number_show = array_merge($phone_number_arr['unicom'],$phone_number_arr['mobile'],$phone_number_arr['telecom'],$phone_number_arr['other']);
-                $tmpstr = "'". $item_phonenumber ."','". $item['message_id'] ."','". $item['message_code'] ."','". $item['content'] ."','". $item['send_time'] ."','". $operator ."','". $item['create_uid'] ."'";
+                $tmpstr = "'". $item_phonenumber ."','". $item['message_id'] ."','". $item['message_code'] ."','". $item['content'] ."','". $item['send_time'] ."','". $operator_code ."','". $item['create_uid'] ."'";
                 $sql .= "(".$tmpstr."),";
             }
             $phonenumbers_json = json_encode($phone_number_arr);
