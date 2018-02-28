@@ -20,14 +20,6 @@ $task->onWorkerStart = function($task)
     $time_interval = 5;
     Timer::add($time_interval, function()  
     {
-
-        $all_tables_1 = RedisDb::instance('redis')->get('isp_1391743');
-        print_r($all_tables_1);
-
-        $all_tables_1 = RedisDb::instance('redis')->get('isp_139174311');
-        print_r($all_tables_1);exit;
-
-
         $now_time = time();
         $now_date = date('Y-m-d');
         $db= new MysqlConnection('127.0.0.1', '3306', 'root', 'near','message_www');
@@ -38,8 +30,8 @@ $task->onWorkerStart = function($task)
             $phone_number_arr['unicom'] = $phone_number_arr['mobile'] = $phone_number_arr['telecom'] = $phone_number_arr['other'] = array();
             foreach ($mobile_arr as $item_phonenumber) {
                 $phone_number_7 =  substr($item_phonenumber,0,7);
-                if (Redis::exists("isp_".$phone_number_7)) {
-                    $operator = Redis::get("isp_".$phone_number_7);
+                if (RedisDb::instance('redis')->get("isp_".$phone_number_7)) {
+                    $operator = RedisDb::instance('redis')->get("isp_".$phone_number_7);
                 } else {
                     $operator = '';
                 }
@@ -68,32 +60,12 @@ $task->onWorkerStart = function($task)
                 }
                 $phone_number_show = array_merge($phone_number_arr['unicom'],$phone_number_arr['mobile'],$phone_number_arr['telecom'],$phone_number_arr['other']);
 
-
             }
+            $phonenumbers_json = json_encode($phone_number_arr);
+            $db->update('yii2_message_list')->cols(array('phonenumbers_json'=>$phonenumbers_json))->where('message_id='.$item['message_id'])->query();
         }
 
-
-        $all_tables_1 = RedisDb::instance('redis')->get('isp_1391743');
-		print_r($all_tables_1);exit;
-
-        $url = 'http://47.100.101.44:5057/system/status';
-        $data = array(
-            'access-token'=>'admin'
-        );
-        $query_str = http_build_query($data);
-        $info = parse_url($url);
-        $fp = fsockopen($info["host"], $info["port"], $errno, $errstr, 3);
-        //$head = "GET ".$info['path']."?".$info["query"]." HTTP/1.0\r\n";
-        $head = "GET ".$info['path']."?".$query_str." HTTP/1.0\r\n";
-        $head .= "Host: ".$info['host']."\r\n";
-        $head .= "\r\n";
-        fputs($fp, $head);
-        fclose($fp);
-//				while (!feof($fp))
-//				{
-//					$line = fread($fp,4096);
-//					echo $line;
-//				}
+        echo 'done!!';
     });  
 };  
   
