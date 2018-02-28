@@ -22,7 +22,7 @@ $task->onWorkerStart = function($task)
     {
 
         $all_tables_1 = RedisDb::instance('redis')->get('isp_1391743');
-        print_r($all_tables_1);exit;
+        print_r($all_tables_1);
 
         $all_tables_1 = RedisDb::instance('redis')->get('isp_139174311');
         print_r($all_tables_1);exit;
