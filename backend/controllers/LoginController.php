@@ -79,6 +79,7 @@ class LoginController extends Controller
 
         $model = new LoginForm();
         if (Yii::$app->request->isPost) {
+            $model->setAttributes(Yii::$app->request->post('info'));
             if ($model->load(Yii::$app->request->post(), 'info') && $model->login()) {
                 return 1;
             } else {

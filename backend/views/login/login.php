@@ -41,7 +41,12 @@ $this->beginPage();
             <?php $form = ActiveForm::begin([
                 'options'=>[
                     'id' => 'login-form',
-                    'enableClientValidation' => false,
+                    'enableClientValidation' => true,
+                    'clientOptions'=>array(
+                        'validateOnSubmit'=>true,     //提交时的验证
+                        'validateOnChange'=>true,     //输入框值改变时的验证
+                        'validateOnType'=>false,      //键入时验证
+                    ),
                     'class'=>"login-form",
                     'action'=>\yii\helpers\Url::toRoute('login/login'),
                     'method'=>"post"
@@ -61,13 +66,13 @@ $this->beginPage();
                     <label class="control-label visible-ie8 visible-ie9">密码</label>
                     <input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="密码" name="info[password]" />
                 </div>
-                <div class="form-group">
-                    <input class="form-control" style="width: 226px; display: inline-block;" placeholder="请输入验证码" name="info[verifyCode]" type="text">
-                    <!--验证码输出，调用Captcha类下的widget方法，需传入必要的配置信息，name属性必须要传入，captchaAction属性指定是哪个控制器下的哪个方法，site/captcha就是上文我们在SiteController的actions中定义的验证码
-                    方法（其实在SiteCOntroller中的actions定义的，可以不添加该项，因为默认是SiteController，如果是在其他控制器中定义的，则必须添加该项）。imageOptions可以制定一些html标签属性属性，template指定模板，
-                    这里只输出img标签，故只用了{image}-->
-                    <?=Captcha::widget(['name'=>'captcha-img','captchaAction'=>'login/captcha','imageOptions'=>['id'=>'captcha-img', 'title'=>'换一个', 'style'=>'cursor:pointer;'],'template'=>'{image}']);?>
-                </div>
+                <?= $form->field($model, 'verifyCode')->label(false)->widget(Captcha::className(), [
+                    'class'=>'form-control c-md-13',
+                    'template' => '<input class="form-control" style="width: 200px; display: inline-block;" placeholder="请输入验证码" name="info[verifyCode]" type="text">{image}',
+                    'imageOptions'=>['id'=>'captcha-img', 'title'=>'点击换图', 'alt'=>'点击换图', 'style'=>'cursor:pointer;'],
+                    'name'=>'captcha-img',
+                    'captchaAction'=>'login/captcha'
+                ],['class'=>'form-group']) ?>
                 <div class="form-actions">
                     <label class="rememberme check mt-checkbox mt-checkbox-outline" style="padding-left:25px;">
                         <input type="checkbox" name="info[rememberMe]" value="1" checked/>记住我
@@ -81,7 +86,7 @@ $this->beginPage();
             <!-- END LOGIN FORM -->
         </div>
     <div class="copyright"> Copyright &copy; 2018 Wenyanhong All Rights Reserved </div>
-
+    <?php $this->registerJs($this->blocks['test'], \yii\web\View::POS_END); ?>
     <?php $this->endBody() ?>
     </body>
 
