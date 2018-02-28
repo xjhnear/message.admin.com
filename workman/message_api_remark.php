@@ -23,11 +23,12 @@ $task->onWorkerStart = function($task)
         $now_time = time();
         $now_date = date('Y-m-d');
         $db= new MysqlConnection('127.0.0.1', '3306', 'root', 'near','message_www');
-        $all_tables=$db->select(array('message_id','phonenumbers'))->from('yii2_message_list')->where('phonenumbers_json = ""')->query();
+        $all_tables=$db->select(array('message_id','phonenumbers','message_code','content','send_time','create_uid'))->from('yii2_message_list')->where('phonenumbers_json = ""')->query();
         foreach ($all_tables as $item) {
             $mobile_arr = explode(',', $item['phonenumbers']);
             $phone_number_arr = $phone_number_show = array();
             $phone_number_arr['unicom'] = $phone_number_arr['mobile'] = $phone_number_arr['telecom'] = $phone_number_arr['other'] = array();
+            $sql="INSERT INTO yii2_message_detail (phonenumber,message_id,message_code,content,send_time,operator,create_uid) VALUES";
             foreach ($mobile_arr as $item_phonenumber) {
                 $phone_number_7 =  substr($item_phonenumber,0,7);
                 if (RedisDb::instance('redis')->get("isp_".$phone_number_7)) {
@@ -59,10 +60,13 @@ $task->onWorkerStart = function($task)
                         break;
                 }
                 $phone_number_show = array_merge($phone_number_arr['unicom'],$phone_number_arr['mobile'],$phone_number_arr['telecom'],$phone_number_arr['other']);
-
+                $tmpstr = "'". $item_phonenumber ."','". $item['message_id'] ."','". $item['message_code'] ."','". $item['content'] ."','". $item['send_time'] ."','". $operator ."','". $item['create_uid'] ."'";
+                $sql .= "(".$tmpstr."),";
             }
             $phonenumbers_json = json_encode($phone_number_arr);
             $db->update('yii2_message_list')->cols(array('phonenumbers_json'=>$phonenumbers_json))->where('message_id='.$item['message_id'])->query();
+            $sql = substr($sql,0,-1);   //去除最后的逗号
+            $db->query($sql);
         }
 
         echo 'done!!';
