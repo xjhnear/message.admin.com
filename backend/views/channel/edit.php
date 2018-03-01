@@ -47,6 +47,8 @@ $this->params['title_sub'] = '';  // 在\yii\base\View中有$params这个可以�
 
         <?= $form->field($model, 'operator')->radioList(['1'=>'联通','2'=>'移动','3'=>'电信'])->label('运营商') ?>
 
+        <?= $form->field($model, 'type')->radioList(['1'=>'普通版','2'=>'签名版'])->label('通道类别') ?>
+
         <?= $form->field($model, 'status')->radioList(['1'=>'正常','0'=>'隐藏'])->label('通道状态') ?>
         
         <div class="form-actions">

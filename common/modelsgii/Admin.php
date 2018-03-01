@@ -40,8 +40,9 @@ class Admin extends \common\core\BaseActiveRecord
             [['reg_time', 'reg_ip', 'last_login_time', 'last_login_ip', 'update_time', 'status', 'is_del', 'role', 'balance'], 'integer'],
             [['username'], 'string', 'max' => 16],
             [['password'], 'string', 'max' => 60],
-            [['salt', 'email', 'coefficient'], 'string', 'max' => 32],
+            [['salt', 'email'], 'string', 'max' => 32],
             [['company', 'address', 'remark'], 'string'],
+            [['coefficient'], 'double'],
             [['mobile'], 'string', 'max' => 15],
             [['username'], 'unique'],
             [['email'], 'unique']
