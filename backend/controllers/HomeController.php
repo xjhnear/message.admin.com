@@ -14,6 +14,7 @@ class HomeController extends BaseController
     public function actionIndex()
     {
         $dataProvider['balance'] = Yii::$app->user->identity->balance;
+        $dataProvider['coefficient'] = Yii::$app->user->identity->coefficient;
 
         $message_send = new MessageSendSearch();
         if (Yii::$app->user->identity->role == 1) {

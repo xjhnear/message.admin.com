@@ -15,7 +15,7 @@ $this->params['title_sub'] = '';
 <div class="note note-info">
     <h4> 欢迎使用短信系统！</h4>
     <?php if(Yii::$app->user->identity->role == 1) { ?>
-    您的账户尚有余额：<b <?php if($dataProvider['balance'] <= 100){?> style="color: #e7505a" <?php }else{ ?> style="color: #3598dc"<?php } ?>><?=$dataProvider['balance']?></b> 元
+    您的账户尚有余额：<b <?php if(($dataProvider['balance']/$dataProvider['coefficient']) <= 100){?> style="color: #e7505a" <?php }else{ ?> style="color: #3598dc"<?php } ?>><?=($dataProvider['balance']/$dataProvider['coefficient'])?></b> 条
     <?php } ?>
 </div>
 
