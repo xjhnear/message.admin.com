@@ -50,8 +50,10 @@ $this->beginPage();
             <div class="page-header-inner ">
                 <!-- BEGIN LOGO -->
                 <div class="page-logo">
-                    <a href="<?=Yii::getAlias('@web')?>">
-                        <img src="<?=Yii::getAlias('@web/static/images/logo.png')?>" alt="logo" class="logo-default" /> </a>
+                    <a href="<?=Yii::getAlias('@web')?>" style="margin-top: 10px;">
+                        <span style="color: red;font-weight: 400;font-size: 16px;">提都短信营销</span>
+<!--                        <img src="--><?//=Yii::getAlias('@web/static/images/logo.png')?><!--" alt="logo" class="logo-default" />-->
+                    </a>
                     <div class="menu-toggler sidebar-toggler">
                         <span></span>
                     </div>
