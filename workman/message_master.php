@@ -17,7 +17,7 @@ $task->count = 1;
 $task->onWorkerStart = function($task)  
 {  
     // 每30秒执行一次 支持小数，可以精确到0.001，即精确到毫秒级别
-    $time_interval = 60;
+    $time_interval = 5;
     Timer::add($time_interval, function()  
     {
 		$now_time = time();
@@ -46,6 +46,7 @@ $task->onWorkerStart = function($task)
 //					echo $line;
 //				}
 		}
+		echo 'done!!';
     });  
 };  
   

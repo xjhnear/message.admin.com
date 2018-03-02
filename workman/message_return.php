@@ -38,6 +38,7 @@ $task->onWorkerStart = function($task)
 //					$line = fread($fp,4096);
 //					echo $line;
 //				}
+        echo 'done!!';
     });  
 };  
   
