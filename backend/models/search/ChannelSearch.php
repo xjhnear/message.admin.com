@@ -19,8 +19,8 @@ class ChannelSearch extends Channel
     public function rules()
     {
         return [
-            [['userid', 'operator', 'status', 'is_del', 'type'], 'integer'],
-            [['account', 'password', 'name', 'url'], 'string']
+            [['operator', 'status', 'is_del', 'type'], 'integer'],
+            [['userid', 'account', 'password', 'name', 'url'], 'string']
         ];
     }
 

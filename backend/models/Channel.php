@@ -22,8 +22,8 @@ class Channel extends \common\modelsgii\Channel
     public function rules()
     {
         return [
-            [['account', 'password', 'operator', 'url'], 'required'],
-            [['userid', 'operator', 'status', 'is_del', 'type'], 'integer'],
+            [['userid', 'account', 'password', 'operator', 'url'], 'required'],
+            [['operator', 'status', 'is_del', 'type'], 'integer'],
             [['account', 'password', 'name', 'url'], 'string']
         ];
     }
