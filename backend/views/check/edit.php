@@ -41,7 +41,7 @@ $this->params['title_sub'] = '';  // 在\yii\base\View中有$params这个可以�
         </div>
 
         <div class="form-group field-message-content">
-            <div><label class="" for="message-content" style="width: 200px;">账户余额</label><span class="help-inline"></span> <span><?=$model_admin->balance ?></span> 元  （<span><?=floor($model_admin->balance/$model_admin->coefficient) ?></span> 条）</div><span class="help-block"></span>
+            <div><label class="" for="message-content" style="width: 200px;">账户余额</label><span class="help-inline"></span> <span><?=$model_admin->balance ?></span> 条 </div><span class="help-block"></span>
         </div>
 
         <div class="form-group field-message-content">

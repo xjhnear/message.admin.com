@@ -88,7 +88,7 @@ class MessageController extends BaseController
         $model = $this->findModel(0);
         $balance = Yii::$app->user->identity->balance;
         $coefficient = Yii::$app->user->identity->coefficient;
-        $rest = floor($balance/$coefficient);
+        $rest = $balance;
         if (Yii::$app->request->isPost) {
 
             $data = Yii::$app->request->post('Message');
@@ -179,7 +179,7 @@ class MessageController extends BaseController
             /* 表单数据加载、验证、数据库操作 */
             if ($r = $this->saveRow($model, $data)) {
                 $model_a =  Admin::findOne(Yii::$app->user->identity->uid);
-                $cost = $data['count'] * $model_a['coefficient'];
+                $cost = $data['count'];
                 $data['balance'] = $model_a['balance'] - $cost;
                 Yii::$app->user->identity->balance = $data['balance'];
                 $this->saveRow($model_a, $data);

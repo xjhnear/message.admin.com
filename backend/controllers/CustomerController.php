@@ -130,7 +130,7 @@ class CustomerController extends BaseController
             /* 表单验证 */
             $data = Yii::$app->request->post('Recharge');
             $balance = $model->balance;
-            $change_count = $data['balance'];
+            $change_count = $data['count'];
             $balance += $change_count;
             $data['balance'] = $balance;
             unset($data['count']);

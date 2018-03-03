@@ -204,7 +204,7 @@ class CheckController extends BaseController
                         $command->execute();
 
 //                        $model_a =  Admin::findOne($create_uid);
-//                        $cost = count($phonenumbers_json['unicom']) * $model_a['coefficient'];
+//                        $cost = count($phonenumbers_json['unicom']);
 //                        $data['balance'] = $model_a['balance'] + $cost;
 //                        Yii::$app->user->identity->balance = $data['balance'];
 //                        $this->saveRow($model_a, $data);
@@ -244,7 +244,7 @@ class CheckController extends BaseController
                         $command->execute();
 
 //                        $model_a =  Admin::findOne($create_uid);
-//                        $cost = count($phonenumbers_json['mobile']) * $model_a['coefficient'];
+//                        $cost = count($phonenumbers_json['mobile']);
 //                        $data['balance'] = $model_a['balance'] + $cost;
 //                        Yii::$app->user->identity->balance = $data['balance'];
 //                        $this->saveRow($model_a, $data);
@@ -284,7 +284,7 @@ class CheckController extends BaseController
                         $command->execute();
 
 //                        $model_a =  Admin::findOne($create_uid);
-//                        $cost = count($phonenumbers_json['telecom']) * $model_a['coefficient'];
+//                        $cost = count($phonenumbers_json['telecom']);
 //                        $data['balance'] = $model_a['balance'] + $cost;
 //                        Yii::$app->user->identity->balance = $data['balance'];
 //                        $this->saveRow($model_a, $data);
@@ -336,7 +336,7 @@ class CheckController extends BaseController
             $command->execute();
 
 //            $model_a =  Admin::findOne($create_uid);
-//            $cost = $count * $model_a['coefficient'];
+//            $cost = $count;
 //            $data['balance'] = $model_a['balance'] + $cost;
 //            Yii::$app->user->identity->balance = $data['balance'];
 //            $this->saveRow($model_a, $data);
