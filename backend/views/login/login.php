@@ -15,7 +15,7 @@ $this->beginPage();
 
     <head>
         <meta charset="utf-8" />
-        <title>登录 | 短信审核平台</title>
+        <title>登录 | 提都营销平台</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1" name="viewport" />
         <meta content="" name="description" />
@@ -52,7 +52,7 @@ $this->beginPage();
                     'method'=>"post"
                 ]
             ]); ?>
-                <h3 class="form-title font-green">短信审核平台</h3>
+                <h3 class="form-title font-green">提都营销平台</h3>
                 <div class="alert alert-danger display-hide">
                     <button class="close" data-close="alert"></button>
                     <span> 登录失败 </span>
