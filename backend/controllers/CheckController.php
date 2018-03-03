@@ -206,6 +206,7 @@ class CheckController extends BaseController
 //                        $model_a =  Admin::findOne($create_uid);
 //                        $cost = count($phonenumbers_json['unicom']) * $model_a['coefficient'];
 //                        $data['balance'] = $model_a['balance'] + $cost;
+//                        Yii::$app->user->identity->balance = $data['balance'];
 //                        $this->saveRow($model_a, $data);
 //
 //                        $model_ad = new AccountDetail();
@@ -245,6 +246,7 @@ class CheckController extends BaseController
 //                        $model_a =  Admin::findOne($create_uid);
 //                        $cost = count($phonenumbers_json['mobile']) * $model_a['coefficient'];
 //                        $data['balance'] = $model_a['balance'] + $cost;
+//                        Yii::$app->user->identity->balance = $data['balance'];
 //                        $this->saveRow($model_a, $data);
 //
 //                        $model_ad = new AccountDetail();
@@ -284,6 +286,7 @@ class CheckController extends BaseController
 //                        $model_a =  Admin::findOne($create_uid);
 //                        $cost = count($phonenumbers_json['telecom']) * $model_a['coefficient'];
 //                        $data['balance'] = $model_a['balance'] + $cost;
+//                        Yii::$app->user->identity->balance = $data['balance'];
 //                        $this->saveRow($model_a, $data);
 //
 //                        $model_ad = new AccountDetail();
@@ -335,6 +338,7 @@ class CheckController extends BaseController
 //            $model_a =  Admin::findOne($create_uid);
 //            $cost = $count * $model_a['coefficient'];
 //            $data['balance'] = $model_a['balance'] + $cost;
+//            Yii::$app->user->identity->balance = $data['balance'];
 //            $this->saveRow($model_a, $data);
 //
 //            $model_ad = new AccountDetail();

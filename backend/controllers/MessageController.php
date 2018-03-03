@@ -181,6 +181,7 @@ class MessageController extends BaseController
                 $model_a =  Admin::findOne(Yii::$app->user->identity->uid);
                 $cost = $data['count'] * $model_a['coefficient'];
                 $data['balance'] = $model_a['balance'] - $cost;
+                Yii::$app->user->identity->balance = $data['balance'];
                 $this->saveRow($model_a, $data);
                 $model_ad = new AccountDetail();
                 $attributes = array();
