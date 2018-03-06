@@ -44,6 +44,13 @@ $this->params['title_sub'] = '';  // 在\yii\base\View中有$params这个可以�
             <input type="hidden" name="balance" value="<?=$model->balance ?>">
         </div>
 
+        <div class="form-group field-admin-status">
+            <div><label class="" for="admin-status">充值类型</label></div>
+            <input type="hidden" name="Recharge[type]" value="">
+            <label class="mt-radio mt-radio-outline" style="padding-right:20px;margin-bottom:5px;"><input type="radio" name="Recharge[type]" value="1" checked=""><span></span> 充值</label>
+            <label class="mt-radio mt-radio-outline" style="padding-right:20px;margin-bottom:5px;"><input type="radio" name="Recharge[type]" value="0"><span></span> 返还</label><span class="help-block"></span>
+        </div>
+
         <div class="form-group field-admin-username required has-success">
             <div><label class="" for="admin-username">充值金额</label></div>
             <div class="left"><input type="text" id="recharge-balance" class="form-control c-md-3" name="Recharge[balance]" value="" onkeyup="checkBalance(this)" aria-invalid="false"></div><span class="help-block"></span>

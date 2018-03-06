@@ -50,7 +50,8 @@ $this->params['title_sub'] = '';  // 在\yii\base\View中有$params这个可以�
             </div>
             <div style="width: 75%;float: left;">
                 <div><label class="" for="message-content">短信内容</label><span class="help-inline"></span></div><textarea id="message-content" class="form-control c-md-7" name="Message[content]" rows="5" onkeyup="checkLen(this)"><?=$model->content ?></textarea><span class="help-block"></span>
-                <div class="help-inline">您已经输入 <span id="count">0</span> 个文字</div>
+                <div class="help-inline">您已经输入 <span id="count">0</span> 个文字 <b id="message_error" style="display: none;color: #e7505a;padding-left: 21px;"> * 超过70个字将作为两条短信发送</b><b id="message_error_1" style="display: none;color: #e7505a;padding-left: 21px;"> * 超过130个字将作为三条短信发送</b></div>
+                <input type="hidden" id="message_count" name="Message[message_count]" value="0">
             </div>
         </div>
         <div class="form-group field-message-content">
@@ -115,6 +116,17 @@ function checkLen(obj)
 {
 var curr = obj.value.length;
 document.getElementById("count").innerHTML = curr.toString();
+$('#message_count').val(curr);
+if (curr>130) {
+    $("#message_error_1").show();
+    $("#message_error").hide();
+} else if (curr>70) {
+    $("#message_error_1").hide();
+    $("#message_error").show();
+} else {
+    $("#message_error_1").hide();
+    $("#message_error").hide();
+}
 }
 function checkLen1(obj)
 {

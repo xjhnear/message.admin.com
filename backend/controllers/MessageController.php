@@ -99,6 +99,15 @@ class MessageController extends BaseController
                 $data['send_time'] = time();
             }
             $content = array();
+            $message_count = $data['message_count'];unset($data['message_count']);
+            $power = 1;
+            if ($data['message_count'] > 130) {
+                $power = 3;
+            } elseif ($data['message_count'] > 70) {
+                $power = 2;
+            } else {
+                $power = 1;
+            }
             $content['unicom'] = $data['content'];
             $content['mobile'] = $data['content1'];unset($data['content1']);
             $content['telecom'] = $data['content2'];unset($data['content2']);
