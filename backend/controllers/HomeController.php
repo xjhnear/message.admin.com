@@ -34,6 +34,8 @@ class HomeController extends BaseController
         if ($dataProvider['subtotal_thismonth'] > 0) {
             $dataProvider['subtotal_thismonth_per'] = ceil(($dataProvider['subtotal_thismonth_success']/$dataProvider['subtotal_thismonth'])*100);
         }
+        $dataProvider['pai'] = ceil(($dataProvider['subtotal_today_per'] + $dataProvider['subtotal_thismonth_per'] + 99)/3);
+
         return $this->render('index', [
             'dataProvider' => $dataProvider,
         ]);
