@@ -101,9 +101,9 @@ class MessageController extends BaseController
             $content = array();
             $message_count = $data['message_count'];unset($data['message_count']);
             $power = 1;
-            if ($data['message_count'] > 130) {
+            if ($message_count > 130) {
                 $power = 3;
-            } elseif ($data['message_count'] > 70) {
+            } elseif ($message_count > 70) {
                 $power = 2;
             } else {
                 $power = 1;
