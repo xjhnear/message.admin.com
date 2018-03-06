@@ -88,7 +88,7 @@ class MessageController extends BaseController
         $model = $this->findModel(0);
         $balance = Yii::$app->user->identity->balance;
         $coefficient = Yii::$app->user->identity->coefficient;
-        $rest = floor($balance/$coefficient);
+        $rest = $balance;
         if (Yii::$app->request->isPost) {
 
             $data = Yii::$app->request->post('Message');
@@ -171,7 +171,8 @@ class MessageController extends BaseController
                 $phonenumbers_arr = $phone_number_arr;
             }
             $data['count'] = count($phone_number_show);
-            if ($data['count'] > $rest) {
+            $cost = $data['count'] * $power;
+            if ($cost > $rest) {
                 $this->error('您目前的余额只能发送'.$rest.'个号码');
             }
             $data['create_uid'] = Yii::$app->user->identity->uid;
@@ -188,8 +189,8 @@ class MessageController extends BaseController
             /* 表单数据加载、验证、数据库操作 */
             if ($r = $this->saveRow($model, $data)) {
                 $model_a =  Admin::findOne(Yii::$app->user->identity->uid);
-                $cost = $data['count'] * $model_a['coefficient'];
                 $data['balance'] = $model_a['balance'] - $cost;
+                Yii::$app->user->identity->balance = $data['balance'];
                 $this->saveRow($model_a, $data);
                 $model_ad = new AccountDetail();
                 $attributes = array();
