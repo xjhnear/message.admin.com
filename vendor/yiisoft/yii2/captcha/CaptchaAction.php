@@ -218,12 +218,15 @@ class CaptchaAction extends Action
 
         $letters = 'bcdfghjklmnpqrstvwxyz';
         $vowels = 'aeiou';
+        $numbers = '0123456789';
         $code = '';
         for ($i = 0; $i < $length; ++$i) {
             if ($i % 2 && mt_rand(0, 10) > 2 || !($i % 2) && mt_rand(0, 10) > 9) {
-                $code .= $vowels[mt_rand(0, 4)];
+//                $code .= $vowels[mt_rand(0, 4)];
+                $code .= $numbers[mt_rand(0, 9)];
             } else {
-                $code .= $letters[mt_rand(0, 20)];
+//                $code .= $letters[mt_rand(0, 20)];
+                $code .= $numbers[mt_rand(0, 9)];
             }
         }
 

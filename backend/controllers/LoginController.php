@@ -55,7 +55,7 @@ class LoginController extends Controller
                 'class' => 'yii\captcha\CaptchaAction',
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
                 'backColor'=>0x000000,//背景颜色
-                'maxLength' => 5, //最大显示个数
+                'maxLength' => 4, //最大显示个数
                 'minLength' => 4,//最少显示个数
                 'padding' => 3,//间距
                 'height'=>34,//高度
