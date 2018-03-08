@@ -15,7 +15,7 @@ use backend\assets\AppAsset;
 
 /* ===========================以下为本页配置信息================================= */
 /* 页面基本属性 */
-$this->title = '手动返还';
+$this->title = '自动返还';
 $this->params['title_sub'] = '';  // 在\yii\base\View中有$params这个可以在视图模板中共享的参数
 
 ?>
@@ -24,7 +24,7 @@ $this->params['title_sub'] = '';  // 在\yii\base\View中有$params这个可以�
     <div class="portlet-title">
         <div class="caption font-red-sunglo">
             <i class="icon-settings font-red-sunglo"></i>
-            <span class="caption-subject bold uppercase"> 手动返还</span>
+            <span class="caption-subject bold uppercase"> 自动返还设置</span>
         </div>
     </div>
     <div class="portlet-body form">
@@ -36,32 +36,15 @@ $this->params['title_sub'] = '';  // 在\yii\base\View中有$params这个可以�
             ]
         ]); ?>
 
-        <div class="form-group field-message-phonenumbers">
-            <div><label class="" for="message-phonenumbers">返还详细信息</label><span class="help-inline"></span></div><span class="help-block"></span>
-            <table class="table table-striped table-bordered table-hover table-checkable order-column dataTable no-footer">
-                <colgroup>
-                    <col width="100px;">
-                    <col width="150px;">
-                    <col width="100px;">
-                    <col width="300px;">
-                </colgroup>
-                <tbody>
-                <?php if(count($model) > 0) { ?>
-
-                <tr>
-                    <td style="vertical-align: middle;"><label class="mt-checkbox mt-checkbox-outline" style="margin-top: 7px;"><input type="checkbox" name="Message[pass][]" value="unicom" checked="checked"> <span></span></label></td>
-                    <td style="vertical-align: middle;">联通</td>
-                    <td style="vertical-align: middle;"><span><?=$model->phonenumbers_json['unicom'] ?></span> 条</td>
-                </tr>
-                <?php }else{ ?>
-                <tr><td colspan="3"><div class="empty">没有找到数据。</div></td></tr>
-                <?php } ?>
-                </tbody>
-            </table>
+        <div class="form-group field-channel-status">
+            <div><label class="" for="channel-status">开启状态</label></div>
+            <input type="hidden" name="Return[value]" value="">
+            <label class="mt-radio mt-radio-outline" style="padding-right:20px;margin-bottom:5px;"><input type="radio" name="Return[value]" value="1" <?php if($model['value'] == 1) { ?>checked=""<?php } ?>><span></span> 开启</label>
+            <label class="mt-radio mt-radio-outline" style="padding-right:20px;margin-bottom:5px;"><input type="radio" name="Return[value]" value="0" <?php if($model['value'] == 0) { ?>checked=""<?php } ?>><span></span> 关闭</label><span class="help-block"></span>
         </div>
 
         <div class="form-actions">
-            <?= Html::submitButton('<i class="icon-ok"></i> 执行返还', ['class' => 'btn blue ajax-post','target-form'=>'form-aaa']) ?>
+            <?= Html::submitButton('<i class="icon-ok"></i> 保存', ['id' => 'sub','class' => 'btn blue ajax-post','target-form'=>'form-aaa']) ?>
         </div>
 
         <?php ActiveForm::end(); ?>
@@ -81,7 +64,7 @@ AppAsset::addScript($this,'static/js/ajaxfileupload.js');
 
 $(function() {
 /* 子导航高亮 */
-highlight_subnav('return/index');
+highlight_subnav('return/config');
 });
 
 <?php $this->endBlock() ?>
