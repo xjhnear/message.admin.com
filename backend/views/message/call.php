@@ -9,7 +9,7 @@ use yii\grid\GridView;
 
 /* ===========================以下为本页配置信息================================= */
 /* 页面基本属性 */
-$this->title = '短信管理';
+$this->title = '回复管理';
 $this->params['title_sub'] = '';  // 在\yii\base\View中有$params这个可以在视图模板中共享的参数
 
 /* 先要注册表格所须的资源 */
@@ -25,50 +25,31 @@ $columns = [
         }
     ],
     [
-        'header' => 'ID',
-        'value' => 'message_did',
-        'options' => ['width' => '50px;']
-    ],
-    [
-        'header' => '批次号',
-        'value' => 'message_code',
-        'options' => ['width' => '50px;'],
-        'filter' => Html::input('text', 'MessageDetailSearch[message_code]', $searchModel->message_code, ['class'=>'form-control'])
-    ],
-    [
         'header' => '手机号',
         'value' => 'phonenumber',
         'options' => ['width' => '50px;'],
-        'filter' => Html::input('text', 'MessageDetailSearch[phonenumber]', $searchModel->phonenumber, ['class'=>'form-control'])
     ],
     [
-        'header' => '运营商',
-        'value' => 'operator',
-        'options' => ['width' => '80px;'],
-        'content' => function($model){
-            return Yii::$app->params['operator_status'][$model['operator']];
-        },
+        'header' => '发送批次号',
+        'value' => 'task_id',
+        'options' => ['width' => '50px;'],
     ],
     [
-        'header' => '短信内容',
+        'header' => '回复内容',
         'value' => 'content',
         'options' => ['width' => '150px;'],
     ],
     [
-        'header' => '发送时间',
-        'value' => 'send_time',
+        'header' => '回复时间',
+        'value' => 'return_time',
         'format' => ['date', 'php:Y-m-d H:i:s'],
         'options' => ['width' => '150px;'],
     ],
     [
-        'label' => '状态',
-        'attribute' => 'status',
-        'options' => ['width' => '80px;'],
-        'content' => function($model){
-            return Yii::$app->params['send_status'][$model['status']];
-        },
-        'filter' => Html::activeDropDownList($searchModel, 'status', [0 => '待审核',1 => '审核通过',2 => '审核拒绝',3 => '发送成功',4 => '发送失败'], ['prompt'=>'全部','class'=>'form-control']),
-
+        'header' => '创建时间',
+        'value' => 'create_time',
+        'format' => ['date', 'php:Y-m-d H:i:s'],
+        'options' => ['width' => '150px;'],
     ],
 ];
 
@@ -78,18 +59,18 @@ $columns = [
     <div class="portlet-title">
         <div class="caption">
             <i class="icon-settings font-dark"></i>
-            <span class="caption-subject font-dark sbold uppercase">详细信息</span>
+            <span class="caption-subject font-dark sbold uppercase">回复列表</span>
         </div>
         <div class="actions">
             <div class="btn-group btn-group-devided">
-                <?=Html::a('清空搜索 <i class="fa fa-times"></i>',['check/index'],['class'=>'btn green','style'=>'margin-right:10px;'])?>
+                <?=Html::a('清空搜索 <i class="fa fa-times"></i>',['message/call'],['class'=>'btn green','style'=>'margin-right:10px;'])?>
             </div>
         </div>
     </div>
     <div class="portlet-body">
         <?php \yii\widgets\Pjax::begin(['options'=>['id'=>'pjax-container']]); ?>
         <div>
-            <?php //echo $this->render('_search', ['model' => $searchModel]); ?> <!-- 条件搜索-->
+            <?php echo $this->render('_search_call', ['model' => $searchModel]); ?> <!-- 条件搜索-->
         </div>
         <div class="table-container">
             <form class="ids">
@@ -125,7 +106,7 @@ $columns = [
 <!-- 定义数据块 -->
 <?php $this->beginBlock('test'); ?>
 jQuery(document).ready(function() {
-    highlight_subnav('message/index'); //子导航高亮
+    highlight_subnav('message/call'); //子导航高亮
 });
 <?php $this->endBlock() ?>
 <!-- 将数据块 注入到视图中的某个位置 -->
