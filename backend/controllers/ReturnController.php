@@ -36,11 +36,11 @@ FROM yii2_message_send WHERE create_time<".$end." AND `status`=0) b
 ON a.message_id = b.message_id";
         $command = $db->createCommand($sql);
         $message_id = $command->queryAll();
-        $model_arr = array();
+        $model = array();
         if ($message_id) {
             foreach ($message_id[0] as $item) {
-                $item_arr = array();
-                $sql_count="select count(*) as num,create_uid,content from yii2_message_detail where status=5 and message_id =".$item." group by content,create_uid";
+                $item_model = array();
+                $sql_count="select count(*) as num,create_uid,content,message_code,send_time from yii2_message_detail where status=5 and message_id =".$item." group by content,create_uid,message_code,send_time";
                 $command = $db->createCommand($sql_count);
                 $item_count = $command->queryAll();
                 $balance = $create_uid = 0;
@@ -55,49 +55,62 @@ ON a.message_id = b.message_id";
                         $power = 1;
                     }
                     $create_uid = $item_c['create_uid'];
+                    $message_code = $item_c['message_code'];
+                    $send_time = date('Y-m-d H:i:s', $item_c['send_time']);
                     $balance += $item_c['num'] * $power;
                 }
-                $item_arr['message_id'] = $item;
-                $item_arr['create_uid'] = $create_uid;
-                $item_arr['balance'] = $balance;
-                $model_arr[] = $item_arr;
+                $item_model['message_id'] = $item;
+                $item_model['create_uid'] = $create_uid;
+                $item_model['message_code'] = $message_code;
+                $item_model['send_time'] = $send_time;
+                $item_model['balance'] = $balance;
+                $model[] = $item_model;
             }
         }
         if (Yii::$app->request->isPost) {
-            $data = Yii::$app->request->post('Return');//var_dump($data);exit();
-
-            $sql = "UPDATE yii2_config SET `value`=".$data['value']." WHERE name='AUTO_TIMEOUT_API'";
-            $command = $db->createCommand($sql);
-            $r = $command->execute();
-
-            /* 表单数据加载、验证、数据库操作 */
-            if ($r) {
-                $this->success('操作成功');
+            $data = Yii::$app->request->post('Config');
+            if ($data['model_json']) {
+                $json_arr = json_decode($data['model_json'],true);
+                foreach ($json_arr as $item_json) {
+                    $sql_config='update yii2_message_detail set status=4, errmsg="超时" where status=5 and message_id ='.$item_json['message_id'];
+                    $command = $db->createCommand($sql_config);
+                    $r = $command->execute();
+                    $sql_config='update yii2_admin set balance=balance+'.$item_json['balance'].' where uid ='.$item_json['create_uid'];
+                    $command = $db->createCommand($sql_config);
+                    $r = $command->execute();
+                    $sql_config='select balance from yii2_admin where uid ='.$item_json['create_uid'];
+                    $command = $db->createCommand($sql_config);
+                    $balance_now = $command->queryOne();
+                    $sql_config='INSERT INTO yii2_account_detail (uid,change_count,change_type,balance,remark,op_uid,create_time) VALUES ("'.$item_json['create_uid'].'","'.$item_json['balance'].'","1","'.$balance_now['balance'].'","返还","0","'.time().'")';
+                    $command = $db->createCommand($sql_config);
+                    $r = $command->execute();
+                    if ($r) {
+                        $this->success('操作成功');
+                    } else {
+                        $this->error('操作错误');
+                    }
+                }
             } else {
                 $this->error('操作错误');
             }
         }
-        /* 渲染模板 */
         return $this->render('index', [
-            'model' => $model_arr,
+            'model' => $model,
+            'model_json' => json_encode($model),
         ]);
     }
-
 
     public function actionConfig()
     {
         $db = Yii::$app->db;
-        $sql = "select `value` from yii2_config where `name`='AUTO_TIMEOUT_API'";
-        $command = $db->createCommand($sql);
+        $sql_config="select `value` from yii2_config where `name`='AUTO_TIMEOUT_API'";
+        $command = $db->createCommand($sql_config);
         $item_config = $command->queryOne();
-
         if (Yii::$app->request->isPost) {
-            $data = Yii::$app->request->post('Return');//var_dump($data);exit();
-
-            $sql = "UPDATE yii2_config SET `value`=".$data['value']." WHERE name='AUTO_TIMEOUT_API'";
-            $command = $db->createCommand($sql);
+            $data = Yii::$app->request->post('Config');
+            $sql_config="update yii2_config set `value` = ".$data['value']." where `name`='AUTO_TIMEOUT_API'";
+            $command = $db->createCommand($sql_config);
             $r = $command->execute();
-
             /* 表单数据加载、验证、数据库操作 */
             if ($r) {
                 $this->success('操作成功');
@@ -105,11 +118,9 @@ ON a.message_id = b.message_id";
                 $this->error('操作错误');
             }
         }
-        /* 渲染模板 */
         return $this->render('config', [
             'model' => $item_config,
         ]);
     }
-
 
 }

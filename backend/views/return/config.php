@@ -24,7 +24,7 @@ $this->params['title_sub'] = '';  // 在\yii\base\View中有$params这个可以�
     <div class="portlet-title">
         <div class="caption font-red-sunglo">
             <i class="icon-settings font-red-sunglo"></i>
-            <span class="caption-subject bold uppercase"> 自动返还设置</span>
+            <span class="caption-subject bold uppercase"> 返还设置</span>
         </div>
     </div>
     <div class="portlet-body form">
@@ -36,11 +36,11 @@ $this->params['title_sub'] = '';  // 在\yii\base\View中有$params这个可以�
             ]
         ]); ?>
 
-        <div class="form-group field-channel-status">
-            <div><label class="" for="channel-status">开启状态</label></div>
-            <input type="hidden" name="Return[value]" value="">
-            <label class="mt-radio mt-radio-outline" style="padding-right:20px;margin-bottom:5px;"><input type="radio" name="Return[value]" value="1" <?php if($model['value'] == 1) { ?>checked=""<?php } ?>><span></span> 开启</label>
-            <label class="mt-radio mt-radio-outline" style="padding-right:20px;margin-bottom:5px;"><input type="radio" name="Return[value]" value="0" <?php if($model['value'] == 0) { ?>checked=""<?php } ?>><span></span> 关闭</label><span class="help-block"></span>
+        <div class="form-group field-admin-status">
+            <div><label class="" for="admin-status">开关设置</label></div>
+            <input type="hidden" name="Config[value]" value="">
+            <label class="mt-radio mt-radio-outline" style="padding-right:20px;margin-bottom:5px;"><input type="radio" name="Config[value]" value="1" <?php if($model['value'] == 1) { ?>checked=""<?php } ?>><span></span> 开启</label>
+            <label class="mt-radio mt-radio-outline" style="padding-right:20px;margin-bottom:5px;"><input type="radio" name="Config[value]" value="0" <?php if($model['value'] == 0) { ?>checked=""<?php } ?>><span></span> 关闭</label><span class="help-block"></span>
         </div>
 
         <div class="form-actions">
@@ -66,6 +66,14 @@ $(function() {
 /* 子导航高亮 */
 highlight_subnav('return/config');
 });
+function sures()
+{
+if(confirm('确定继续？'))
+{
+return true;
+}else{
+return false;
+}
 
 <?php $this->endBlock() ?>
 <!-- 将数据块 注入到视图中的某个位置 -->

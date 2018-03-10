@@ -7,6 +7,8 @@ use backend\models\Message;
 use backend\models\search\MessageSearch;
 use backend\models\MessageDetail;
 use backend\models\search\MessageDetailSearch;
+use backend\models\MessageCall;
+use backend\models\search\MessageCallSearch;
 use backend\models\Admin;
 use backend\models\AccountDetail;
 use common\helpers\ArrayHelper;
@@ -75,6 +77,28 @@ class MessageController extends BaseController
             'dataProvider' => $dataProvider,
             'searchModel' => $searchModel,
             'dataCount' => $count_arr,
+        ]);
+    }
+
+    public function actionCall()
+    {
+        /* 添加当前位置到cookie供后续跳转调用 */
+        $this->setForward();//phpinfo();
+
+        $params = Yii::$app->request->getQueryParams();
+
+        $searchModel = new MessageCallSearch();
+        $dataProvider = $searchModel->search($params); //var_dump($dataProvider->query->all());exit();
+
+        /* 导出excel */
+        if (isset($params['action']) && $params['action'] == 'export') {
+            $this->export($dataProvider->query->all());
+            return false;
+        }
+
+        return $this->render('detail', [
+            'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
         ]);
     }
 

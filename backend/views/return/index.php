@@ -24,7 +24,7 @@ $this->params['title_sub'] = '';  // 在\yii\base\View中有$params这个可以�
     <div class="portlet-title">
         <div class="caption font-red-sunglo">
             <i class="icon-settings font-red-sunglo"></i>
-            <span class="caption-subject bold uppercase"> 手动返还</span>
+            <span class="caption-subject bold uppercase"> 返还设置</span>
         </div>
     </div>
     <div class="portlet-body form">
@@ -37,31 +37,38 @@ $this->params['title_sub'] = '';  // 在\yii\base\View中有$params这个可以�
         ]); ?>
 
         <div class="form-group field-message-phonenumbers">
-            <div><label class="" for="message-phonenumbers">返还详细信息</label><span class="help-inline"></span></div><span class="help-block"></span>
+            <div><label class="" for="message-phonenumbers">返还信息</label><span class="help-inline"></span></div><span class="help-block"></span>
+            <input type="hidden" name="Config[model_json]" value='<?=$model_json ?>'>
             <table class="table table-striped table-bordered table-hover table-checkable order-column dataTable no-footer">
                 <colgroup>
                     <col width="100px;">
                     <col width="150px;">
                     <col width="100px;">
-                    <col width="300px;">
+                    <col width="150px;">
                 </colgroup>
+                <thead>
+                <tr><th>ID</th><th>批次号</th><th>用户ID</th><th>待返还数量</th><th>发送时间</th></tr>
+                </thead>
                 <tbody>
-                <?php if(count($model) > 0) { ?>
-
-                <tr>
-                    <td style="vertical-align: middle;"><label class="mt-checkbox mt-checkbox-outline" style="margin-top: 7px;"><input type="checkbox" name="Message[pass][]" value="unicom" checked="checked"> <span></span></label></td>
-                    <td style="vertical-align: middle;">联通</td>
-                    <td style="vertical-align: middle;"><span><?=$model->phonenumbers_json['unicom'] ?></span> 条</td>
-                </tr>
+                <?php if(count($model)> 0) { ?>
+                <?php foreach ($model as $item) { ?>
+                    <tr>
+                        <td style="vertical-align: middle;"><?=$item['message_id'] ?></td>
+                        <td style="vertical-align: middle;"><?=$item['message_code'] ?></td>
+                        <td style="vertical-align: middle;"><?=$item['create_uid'] ?></td>
+                        <td style="vertical-align: middle;"><?=$item['balance'] ?></td>
+                        <td style="vertical-align: middle;"><?=$item['send_time'] ?></td>
+                    </tr>
+                <?php } ?>
                 <?php }else{ ?>
-                <tr><td colspan="3"><div class="empty">没有找到数据。</div></td></tr>
+                    <tr><td colspan="5"><div class="empty">没有找到数据。</div></td></tr>
                 <?php } ?>
                 </tbody>
             </table>
         </div>
 
         <div class="form-actions">
-            <?= Html::submitButton('<i class="icon-ok"></i> 执行返还', ['class' => 'btn blue ajax-post','target-form'=>'form-aaa']) ?>
+            <?= Html::submitButton('<i class="icon-ok"></i> 确认返还', ['id' => 'sub','class' => 'btn blue ajax-post','target-form'=>'form-aaa']) ?>
         </div>
 
         <?php ActiveForm::end(); ?>
@@ -82,6 +89,15 @@ AppAsset::addScript($this,'static/js/ajaxfileupload.js');
 $(function() {
 /* 子导航高亮 */
 highlight_subnav('return/index');
+
+$('#sub').click(function(){
+if(confirm('确认返还？'))
+{
+return true;
+}else{
+return false;
+}
+});
 });
 
 <?php $this->endBlock() ?>
