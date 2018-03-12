@@ -38,9 +38,9 @@ ON a.message_id = b.message_id";
         $message_id = $command->queryAll();
         $model = array();
         if ($message_id) {
-            foreach ($message_id[0] as $item) {
+            foreach ($message_id as $item) {
                 $item_model = array();
-                $sql_count="select count(*) as num,create_uid,content,message_code,send_time from yii2_message_detail where status=5 and message_id =".$item." group by content,create_uid,message_code,send_time";
+                $sql_count="select count(*) as num,create_uid,content,message_code,send_time from yii2_message_detail where status=5 and message_id =".$item['message_id']." group by content,create_uid,message_code,send_time";
                 $command = $db->createCommand($sql_count);
                 $item_count = $command->queryAll();
                 $balance = $create_uid = 0;
@@ -59,7 +59,7 @@ ON a.message_id = b.message_id";
                     $send_time = date('Y-m-d H:i:s', $item_c['send_time']);
                     $balance += $item_c['num'] * $power;
                 }
-                $item_model['message_id'] = $item;
+                $item_model['message_id'] = $item['message_id'];
                 $item_model['create_uid'] = $create_uid;
                 $item_model['message_code'] = $message_code;
                 $item_model['send_time'] = $send_time;
