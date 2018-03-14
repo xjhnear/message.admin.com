@@ -96,7 +96,7 @@ class MessageController extends BaseController
             return false;
         }
 
-        return $this->render('detail', [
+        return $this->render('call', [
             'dataProvider' => $dataProvider,
             'searchModel' => $searchModel,
         ]);
