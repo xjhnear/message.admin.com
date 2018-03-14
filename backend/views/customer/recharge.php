@@ -48,7 +48,8 @@ $this->params['title_sub'] = '';  // 在\yii\base\View中有$params这个可以�
             <div><label class="" for="admin-status">充值类型</label></div>
             <input type="hidden" name="Recharge[type]" value="">
             <label class="mt-radio mt-radio-outline" style="padding-right:20px;margin-bottom:5px;"><input type="radio" name="Recharge[type]" class="rtype" value="1" checked=""><span></span> 充值</label>
-            <label class="mt-radio mt-radio-outline" style="padding-right:20px;margin-bottom:5px;"><input type="radio" name="Recharge[type]" class="rtype" value="0"><span></span> 返还</label><span class="help-block"></span>
+            <label class="mt-radio mt-radio-outline" style="padding-right:20px;margin-bottom:5px;"><input type="radio" name="Recharge[type]" class="rtype" value="0"><span></span> 返还</label>
+            <label class="mt-radio mt-radio-outline" style="padding-right:20px;margin-bottom:5px;"><input type="radio" name="Recharge[type]" class="rtype" value="2"><span></span> 扣除</label><span class="help-block"></span>
         </div>
 
         <div class="form-group field-admin-username required has-success">
@@ -87,6 +88,8 @@ $(function() {
     $(".rtype").on('click',function(){
     if($(this).val() == 1){
     $("#recharge-userremark").val('预充值');
+    }else if($(this).val() == 2){
+    $("#recharge-userremark").val('扣除');
     }else{
     $("#recharge-userremark").val('失败返还');
     }

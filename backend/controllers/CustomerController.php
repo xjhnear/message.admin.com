@@ -133,7 +133,11 @@ class CustomerController extends BaseController
             $type = $data['type'];unset($data['type']);
             $userremark = $data['userremark'];unset($data['userremark']);
             $change_count = $data['count'];
-            $balance += $change_count;
+            if ($type == 2) {
+                $balance -= $change_count;
+            } else {
+                $balance += $change_count;
+            }
             $data['balance'] = $balance;
             unset($data['count']);
 
@@ -144,13 +148,17 @@ class CustomerController extends BaseController
                 $attributes = array();
                 $attributes['uid'] = $uid;
                 $attributes['change_count'] = $change_count;
-                $attributes['change_type'] = 1;
                 $attributes['balance'] = $balance;
                 Yii::$app->user->identity->balance = $balance;
                 if ($type == 1) {
                     $attributes['remark'] = '充值';
+                    $attributes['change_type'] = 1;
+                } elseif ($type == 2) {
+                    $attributes['remark'] = '扣除';
+                    $attributes['change_type'] = 2;
                 } else {
                     $attributes['remark'] = '返还';
+                    $attributes['change_type'] = 1;
                 }
                 $attributes['userremark'] = $userremark;
                 $attributes['op_uid'] = Yii::$app->user->identity->uid;
