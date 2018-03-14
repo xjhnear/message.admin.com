@@ -29,7 +29,7 @@ class ReturnController extends BaseController
         $end = mktime(0,0,0,date("m"),date("d")-3,date("Y"));
         $sql="SELECT a.message_id  FROM
 (SELECT DISTINCT message_id
-FROM yii2_message_detail WHERE `status`=5) a
+FROM yii2_message_detail WHERE `status`=4) a
 INNER JOIN
 (SELECT DISTINCT message_id
 FROM yii2_message_send WHERE create_time<".$end." AND `status`=0) b
@@ -40,7 +40,7 @@ ON a.message_id = b.message_id";
         if ($message_id) {
             foreach ($message_id as $item) {
                 $item_model = array();
-                $sql_count="select count(*) as num,create_uid,content,message_code,send_time from yii2_message_detail where status=5 and message_id =".$item['message_id']." group by content,create_uid,message_code,send_time";
+                $sql_count="select count(*) as num,create_uid,content,message_code,send_time from yii2_message_detail where status=4 and message_id =".$item['message_id']." group by content,create_uid,message_code,send_time";
                 $command = $db->createCommand($sql_count);
                 $item_count = $command->queryAll();
                 $balance = $create_uid = 0;
@@ -72,9 +72,9 @@ ON a.message_id = b.message_id";
             if ($data['model_json']) {
                 $json_arr = json_decode($data['model_json'],true);
                 foreach ($json_arr as $item_json) {
-                    $sql_config='update yii2_message_detail set status=4, errmsg="超时" where status=5 and message_id ='.$item_json['message_id'];
-                    $command = $db->createCommand($sql_config);
-                    $r = $command->execute();
+//                    $sql_config='update yii2_message_detail set status=4, errmsg="超时" where status=5 and message_id ='.$item_json['message_id'];
+//                    $command = $db->createCommand($sql_config);
+//                    $r = $command->execute();
                     $sql_config='update yii2_admin set balance=balance+'.$item_json['balance'].' where uid ='.$item_json['create_uid'];
                     $command = $db->createCommand($sql_config);
                     $r = $command->execute();

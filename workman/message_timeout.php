@@ -20,7 +20,7 @@ $task->onWorkerStart = function($task)
     $time_interval = 600;
     Timer::add($time_interval, function()  
     {
-        $url = 'http://47.100.101.44:5057/system/timeout';
+        $url = 'http://47.100.111.70:5057/system/timeout';
         $data = array(
             'access-token'=>'admin'
         );

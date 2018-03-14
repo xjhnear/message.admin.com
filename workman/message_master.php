@@ -22,11 +22,11 @@ $task->onWorkerStart = function($task)
     {
 		$now_time = time();
 		$now_date = date('Y-m-d');
-		$db= new MysqlConnection('127.0.0.1', '3306', 'root', 'near','message_www');
+		$db= new MysqlConnection('127.0.0.1', '3306', 'root', 'root123A!','message_www');
 		$all_tables=$db->select(array('message_id','message_code'))->from('yii2_message_list')->where('status = 1')->query();
 
 		foreach ($all_tables as $item) {
-			$url = 'http://47.100.101.44:5057/system/sms';
+			$url = 'http://47.100.111.70:5057/system/sms';
 			$data = array(
 				'access-token'=>'admin',
 				'message_id'=>$item['message_id']

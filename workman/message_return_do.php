@@ -17,10 +17,10 @@ $task->count = 1;
 $task->onWorkerStart = function($task)  
 {  
     // 每30秒执行一次 支持小数，可以精确到0.001，即精确到毫秒级别
-    $time_interval = 20;
+    $time_interval = 300;
     Timer::add($time_interval, function()  
     {
-        $url = 'http://47.100.111.70:5057/system/getstatus';
+        $url = 'http://47.100.111.70:5057/system/dostatus';
         $data = array(
             'access-token'=>'admin'
         );

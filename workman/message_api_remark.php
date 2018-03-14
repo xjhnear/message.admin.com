@@ -22,7 +22,7 @@ $task->onWorkerStart = function($task)
     {
         $now_time = time();
         $now_date = date('Y-m-d');
-        $db= new MysqlConnection('127.0.0.1', '3306', 'root', 'near','message_www');
+        $db= new MysqlConnection('127.0.0.1', '3306', 'root', 'root123A!','message_www');
         $all_tables=$db->select(array('message_id','phonenumbers','message_code','content','send_time','create_uid'))->from('yii2_message_list')->where('phonenumbers_json = ""')->query();
         foreach ($all_tables as $item) {
             $mobile_arr = explode(',', $item['phonenumbers']);
