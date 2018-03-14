@@ -131,6 +131,7 @@ class CustomerController extends BaseController
             $data = Yii::$app->request->post('Recharge');
             $balance = $model->balance;
             $type = $data['type'];unset($data['type']);
+            $userremark = $data['userremark'];unset($data['userremark']);
             $change_count = $data['count'];
             $balance += $change_count;
             $data['balance'] = $balance;
@@ -151,6 +152,7 @@ class CustomerController extends BaseController
                 } else {
                     $attributes['remark'] = '返还';
                 }
+                $attributes['userremark'] = $userremark;
                 $attributes['op_uid'] = Yii::$app->user->identity->uid;
                 $this->saveRow($model_ad, $attributes);
                 $this->success('操作成功', $this->getForward());

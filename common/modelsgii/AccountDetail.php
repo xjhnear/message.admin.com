@@ -47,7 +47,7 @@ class AccountDetail extends \common\core\BaseActiveRecord
         return [
             [['uid', 'change_count', 'balance', 'op_uid'], 'required'],
             [['uid', 'change_count', 'balance', 'op_uid', 'create_time', 'change_type'], 'integer'],
-            [['remark'], 'string']
+            [['remark', 'userremark'], 'string']
         ];
     }
 
@@ -63,6 +63,7 @@ class AccountDetail extends \common\core\BaseActiveRecord
             'change_type' => 'Change Type',
             'balance' => 'Balance',
             'remark' => 'Remark',
+            'userremark' => 'UserRemark',
             'create_time' => 'Create Time',
             'op_uid' => 'OP UID',
         ];

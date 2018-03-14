@@ -47,18 +47,23 @@ $this->params['title_sub'] = '';  // 在\yii\base\View中有$params这个可以�
         <div class="form-group field-admin-status">
             <div><label class="" for="admin-status">充值类型</label></div>
             <input type="hidden" name="Recharge[type]" value="">
-            <label class="mt-radio mt-radio-outline" style="padding-right:20px;margin-bottom:5px;"><input type="radio" name="Recharge[type]" value="1" checked=""><span></span> 充值</label>
-            <label class="mt-radio mt-radio-outline" style="padding-right:20px;margin-bottom:5px;"><input type="radio" name="Recharge[type]" value="0"><span></span> 返还</label><span class="help-block"></span>
+            <label class="mt-radio mt-radio-outline" style="padding-right:20px;margin-bottom:5px;"><input type="radio" name="Recharge[type]" class="rtype" value="1" checked=""><span></span> 充值</label>
+            <label class="mt-radio mt-radio-outline" style="padding-right:20px;margin-bottom:5px;"><input type="radio" name="Recharge[type]" class="rtype" value="0"><span></span> 返还</label><span class="help-block"></span>
         </div>
 
         <div class="form-group field-admin-username required has-success">
             <div><label class="" for="admin-username">充值金额</label></div>
-            <div class="left"><input type="text" id="recharge-balance" class="form-control c-md-3" name="Recharge[balance]" value="" onkeyup="checkBalance(this)" aria-invalid="false"></div><span class="help-block"></span>
+            <div class="left"><input type="text" id="recharge-balance" class="form-control c-md-3" name="Recharge[balance]" value="" onkeyup="value=value.replace(/[^\d]/g,'');checkBalance(this)" aria-invalid="false"></div><span class="help-block"></span>
         </div>
 
         <div class="form-group field-admin-username required has-success">
             <div><label class="" for="admin-username">充值短信条数</label></div>
-            <div class="left"><input type="text" id="recharge-count" class="form-control c-md-3" name="Recharge[count]" value="" onkeyup="checkCount(this)" aria-invalid="false"></div><span class="help-block"></span>
+            <div class="left"><input type="text" id="recharge-count" class="form-control c-md-3" name="Recharge[count]" value="" onkeyup="value=value.replace(/[^\d]/g,'');checkCount(this)" aria-invalid="false"></div><span class="help-block"></span>
+        </div>
+
+        <div class="form-group field-admin-username required has-success">
+            <div><label class="" for="admin-username">备注</label></div>
+            <div class="left"><input type="text" id="recharge-userremark" class="form-control c-md-3" name="Recharge[userremark]" value="预充值" aria-invalid="false"></div><span class="help-block"></span>
         </div>
 
         <div class="form-actions">
@@ -78,6 +83,15 @@ $this->params['title_sub'] = '';  // 在\yii\base\View中有$params这个可以�
 $(function() {
     /* 子导航高亮 */
     highlight_subnav('customer/index');
+
+    $(".rtype").on('click',function(){
+    if($(this).val() == 1){
+    $("#recharge-userremark").val('预充值');
+    }else{
+    $("#recharge-userremark").val('失败返还');
+    }
+    })
+
 });
 
 function checkBalance(obj)
