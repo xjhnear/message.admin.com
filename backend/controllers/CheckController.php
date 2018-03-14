@@ -213,21 +213,21 @@ class CheckController extends BaseController
                         } else {
                             $power = 1;
                         }
-                        $model_a =  Admin::findOne($create_uid);
-                        $cost = count($phonenumbers_json['unicom']) * $power;
-                        $data['balance'] = $model_a['balance'] + $cost;
-                        Yii::$app->user->identity->balance = $data['balance'];
-                        $this->saveRow($model_a, $data);
-
-                        $model_ad = new AccountDetail();
-                        $attributes = array();
-                        $attributes['uid'] = $create_uid;
-                        $attributes['change_count'] = $cost;
-                        $attributes['change_type'] = 1;
-                        $attributes['balance'] = $data['balance'];
-                        $attributes['remark'] = '返还';
-                        $attributes['op_uid'] = Yii::$app->user->identity->uid;
-                        $this->saveRow($model_ad, $attributes);
+//                        $model_a =  Admin::findOne($create_uid);
+//                        $cost = count($phonenumbers_json['unicom']) * $power;
+//                        $data['balance'] = $model_a['balance'] + $cost;
+//                        Yii::$app->user->identity->balance = $data['balance'];
+//                        $this->saveRow($model_a, $data);
+//
+//                        $model_ad = new AccountDetail();
+//                        $attributes = array();
+//                        $attributes['uid'] = $create_uid;
+//                        $attributes['change_count'] = $cost;
+//                        $attributes['change_type'] = 1;
+//                        $attributes['balance'] = $data['balance'];
+//                        $attributes['remark'] = '返还';
+//                        $attributes['op_uid'] = Yii::$app->user->identity->uid;
+//                        $this->saveRow($model_ad, $attributes);
                     }
                 }
                 if (count($phonenumbers_json['mobile']) > 0) {
@@ -263,21 +263,21 @@ class CheckController extends BaseController
                         } else {
                             $power = 1;
                         }
-                        $model_a =  Admin::findOne($create_uid);
-                        $cost = count($phonenumbers_json['mobile']) * $power;
-                        $data['balance'] = $model_a['balance'] + $cost;
-                        Yii::$app->user->identity->balance = $data['balance'];
-                        $this->saveRow($model_a, $data);
-
-                        $model_ad = new AccountDetail();
-                        $attributes = array();
-                        $attributes['uid'] = $create_uid;
-                        $attributes['change_count'] = $cost;
-                        $attributes['change_type'] = 1;
-                        $attributes['balance'] = $data['balance'];
-                        $attributes['remark'] = '返还';
-                        $attributes['op_uid'] = Yii::$app->user->identity->uid;
-                        $this->saveRow($model_ad, $attributes);
+//                        $model_a =  Admin::findOne($create_uid);
+//                        $cost = count($phonenumbers_json['mobile']) * $power;
+//                        $data['balance'] = $model_a['balance'] + $cost;
+//                        Yii::$app->user->identity->balance = $data['balance'];
+//                        $this->saveRow($model_a, $data);
+//
+//                        $model_ad = new AccountDetail();
+//                        $attributes = array();
+//                        $attributes['uid'] = $create_uid;
+//                        $attributes['change_count'] = $cost;
+//                        $attributes['change_type'] = 1;
+//                        $attributes['balance'] = $data['balance'];
+//                        $attributes['remark'] = '返还';
+//                        $attributes['op_uid'] = Yii::$app->user->identity->uid;
+//                        $this->saveRow($model_ad, $attributes);
                     }
                 }
                 if (count($phonenumbers_json['telecom']) > 0) {
@@ -313,21 +313,21 @@ class CheckController extends BaseController
                         } else {
                             $power = 1;
                         }
-                        $model_a =  Admin::findOne($create_uid);
-                        $cost = count($phonenumbers_json['telecom']) * $power;
-                        $data['balance'] = $model_a['balance'] + $cost;
-                        Yii::$app->user->identity->balance = $data['balance'];
-                        $this->saveRow($model_a, $data);
-
-                        $model_ad = new AccountDetail();
-                        $attributes = array();
-                        $attributes['uid'] = $create_uid;
-                        $attributes['change_count'] = $cost;
-                        $attributes['change_type'] = 1;
-                        $attributes['balance'] = $data['balance'];
-                        $attributes['remark'] = '返还';
-                        $attributes['op_uid'] = Yii::$app->user->identity->uid;
-                        $this->saveRow($model_ad, $attributes);
+//                        $model_a =  Admin::findOne($create_uid);
+//                        $cost = count($phonenumbers_json['telecom']) * $power;
+//                        $data['balance'] = $model_a['balance'] + $cost;
+//                        Yii::$app->user->identity->balance = $data['balance'];
+//                        $this->saveRow($model_a, $data);
+//
+//                        $model_ad = new AccountDetail();
+//                        $attributes = array();
+//                        $attributes['uid'] = $create_uid;
+//                        $attributes['change_count'] = $cost;
+//                        $attributes['change_type'] = 1;
+//                        $attributes['balance'] = $data['balance'];
+//                        $attributes['remark'] = '返还';
+//                        $attributes['op_uid'] = Yii::$app->user->identity->uid;
+//                        $this->saveRow($model_ad, $attributes);
                     }
                 }
                 $this->success('操作成功', $this->getForward());
