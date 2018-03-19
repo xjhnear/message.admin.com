@@ -41,18 +41,22 @@ $this->params['title_sub'] = '';  // 在\yii\base\View中有$params这个可以�
             <input type="hidden" name="Config[model_json]" value='<?=$model_json ?>'>
             <table class="table table-striped table-bordered table-hover table-checkable order-column dataTable no-footer">
                 <colgroup>
+                    <col width="20px;">
                     <col width="100px;">
                     <col width="150px;">
                     <col width="100px;">
                     <col width="150px;">
                 </colgroup>
                 <thead>
-                <tr><th>ID</th><th>批次号</th><th>用户ID</th><th>待返还数量</th><th>发送时间</th></tr>
+                <tr>
+                    <th><label class="mt-checkbox mt-checkbox-outline" style="padding-left:19px;"><input type="checkbox" class="select-on-check-all" name="id_all" value="1"><span></span></label></th>
+                    <th>ID</th><th>批次号</th><th>用户ID</th><th>待返还数量</th><th>发送时间</th></tr>
                 </thead>
                 <tbody>
                 <?php if(count($model)> 0) { ?>
                 <?php foreach ($model as $item) { ?>
                     <tr>
+                        <td><label class="mt-checkbox mt-checkbox-outline" style="padding-left:19px;"><input type="checkbox" name="id[]" value="<?=$item['message_id'] ?>"> <span></span></label></td>
                         <td style="vertical-align: middle;"><?=$item['message_id'] ?></td>
                         <td style="vertical-align: middle;"><?=$item['message_code'] ?></td>
                         <td style="vertical-align: middle;"><?=$item['create_uid'] ?></td>
@@ -61,7 +65,7 @@ $this->params['title_sub'] = '';  // 在\yii\base\View中有$params这个可以�
                     </tr>
                 <?php } ?>
                 <?php }else{ ?>
-                    <tr><td colspan="5"><div class="empty">没有找到数据。</div></td></tr>
+                    <tr><td colspan="6"><div class="empty">没有找到数据。</div></td></tr>
                 <?php } ?>
                 </tbody>
             </table>
