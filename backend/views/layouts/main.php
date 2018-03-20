@@ -102,7 +102,7 @@ $this->beginPage();
                                 <i class="fa fa-angle-down"></i>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-default">
-                                <li><a href="#"><i class="icon-lock"></i> 修改密码 </a></li>
+                                <li><a href="user/updatePassword"><i class="icon-lock"></i> 修改密码 </a></li>
                                 <li><a href="<?=Url::toRoute('login/logout')?>"><i class="icon-key"></i> 注销 </a></li>
                             </ul>
                         </li>

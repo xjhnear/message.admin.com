@@ -45,34 +45,40 @@ $this->params['title_sub'] = '';  // 在\yii\base\View中有$params这个可以�
                     <col width="100px;">
                     <col width="150px;">
                     <col width="100px;">
+                    <col width="100px;">
                     <col width="150px;">
                 </colgroup>
                 <thead>
                 <tr>
-                    <th><label class="mt-checkbox mt-checkbox-outline" style="padding-left:19px;"><input type="checkbox" class="select-on-check-all" name="id_all" value="1"><span></span></label></th>
-                    <th>ID</th><th>批次号</th><th>用户ID</th><th>待返还数量</th><th>发送时间</th></tr>
+                    <th></th>
+                    <th>ID</th><th>批次号</th><th>用户ID</th><th>待返还数量</th><th>发送时间</th><th>操作</th></tr>
                 </thead>
                 <tbody>
                 <?php if(count($model)> 0) { ?>
                 <?php foreach ($model as $item) { ?>
                     <tr>
-                        <td><label class="mt-checkbox mt-checkbox-outline" style="padding-left:19px;"><input type="checkbox" name="id[]" value="<?=$item['message_id'] ?>"> <span></span></label></td>
+                        <td><label class="mt-checkbox mt-checkbox-outline" style="padding-left:19px;"><input type="checkbox" name="ids" value="<?=$item['message_id'] ?>"> <span></span></label></td>
                         <td style="vertical-align: middle;"><?=$item['message_id'] ?></td>
                         <td style="vertical-align: middle;"><?=$item['message_code'] ?></td>
                         <td style="vertical-align: middle;"><?=$item['create_uid'] ?></td>
                         <td style="vertical-align: middle;"><?=$item['balance'] ?></td>
                         <td style="vertical-align: middle;"><?=$item['send_time'] ?></td>
+                        <td style="vertical-align: middle;">
+                        <?= Html::button('返还', ['class' => 'btn blue','onclick'=>'JavaScript:doOk('.$item['message_id'].')']) ?>
+                        <?= Html::button('已返还', ['class' => 'btn red','onclick'=>'JavaScript:doReject('.$item['message_id'].')']) ?>
+                        </td>
                     </tr>
                 <?php } ?>
                 <?php }else{ ?>
-                    <tr><td colspan="6"><div class="empty">没有找到数据。</div></td></tr>
+                    <tr><td colspan="7"><div class="empty">没有找到数据。</div></td></tr>
                 <?php } ?>
                 </tbody>
             </table>
         </div>
 
         <div class="form-actions">
-            <?= Html::submitButton('<i class="icon-ok"></i> 确认返还', ['id' => 'sub','class' => 'btn blue ajax-post','target-form'=>'form-aaa']) ?>
+            <?= Html::button('批量返还', ['class' => 'btn blue','onclick'=>'JavaScript:doOkall()']) ?>
+            <?= Html::button('批量已返还', ['class' => 'btn red','onclick'=>'JavaScript:doRejectall()']) ?>
         </div>
 
         <?php ActiveForm::end(); ?>
@@ -94,15 +100,55 @@ $(function() {
 /* 子导航高亮 */
 highlight_subnav('return/index');
 
-$('#sub').click(function(){
+});
+
+function doOk(id)
+{
 if(confirm('确认返还？'))
 {
+window.location.href='/return/ok?id='+id;
 return true;
 }else{
 return false;
 }
-});
-});
+}
+function doReject(id)
+{
+if(confirm('确认已返还？'))
+{
+window.location.href='/return/reject?id='+id;
+return true;
+}else{
+return false;
+}
+}
+
+function doOkall()
+{
+ids =  $("input:checkbox[name='ids']:checked").map(function(index,elem) {
+return $(elem).val();
+}).get().join(',');
+if(confirm('确认返还？'))
+{
+window.location.href='/return/okall?ids='+ids;
+return true;
+}else{
+return false;
+}
+}
+function doRejectall()
+{
+ids =  $("input:checkbox[name='ids']:checked").map(function(index,elem) {
+return $(elem).val();
+}).get().join(',');
+if(confirm('确认已返还？'))
+{
+window.location.href='/return/rejectall?ids='+ids;
+return true;
+}else{
+return false;
+}
+}
 
 <?php $this->endBlock() ?>
 <!-- 将数据块 注入到视图中的某个位置 -->
