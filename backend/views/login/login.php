@@ -85,7 +85,7 @@ $this->beginPage();
 <!--            </form>-->
             <!-- END LOGIN FORM -->
         </div>
-    <div class="copyright"> Copyright &copy; 2018 Wenyanhong All Rights Reserved </div>
+    <div class="copyright"> Copyright &copy; 2018 BaiGe SMS All Rights Reserved </div>
     <?php $this->registerJs($this->blocks['test'], \yii\web\View::POS_END); ?>
     <?php $this->endBody() ?>
     </body>

@@ -206,7 +206,7 @@ $this->beginPage();
         <!-- BEGIN FOOTER -->
         <div class="page-footer">
             <div class="page-footer-inner">
-                Copyright &copy; 2018 Wenyanhong All Rights Reserved
+                Copyright &copy; 2018 BaiGe SMS All Rights Reserved
             </div>
             <div class="scroll-to-top">
                 <i class="icon-arrow-up"></i>
