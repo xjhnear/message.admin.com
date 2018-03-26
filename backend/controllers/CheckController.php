@@ -375,6 +375,7 @@ class CheckController extends BaseController
             } else {
                 $power = 1;
             }
+            $data = array();
             $model_a =  Admin::findOne($create_uid);
             $cost = $count * $power;
             $data['balance'] = $model_a['balance'] + $cost;
