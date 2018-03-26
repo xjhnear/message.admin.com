@@ -61,6 +61,10 @@ ON a.message_id = b.message_id";
                 }
                 $item_model['message_id'] = $item['message_id'];
                 $item_model['create_uid'] = $create_uid;
+                $sql_config='select username from yii2_admin where uid ='.$create_uid;
+                $command = $db->createCommand($sql_config);
+                $balance_now = $command->queryOne();
+                $item_model['create_name'] = $balance_now['username'];
                 $item_model['message_code'] = $message_code;
                 $item_model['send_time'] = $send_time;
                 $item_model['balance'] = $balance;
