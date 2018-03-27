@@ -176,43 +176,41 @@ class CheckController extends BaseController
                     $data['extend'] = '';
                 }
             }
-            /* 表单数据加载、验证、数据库操作 */
-            if ($this->saveRow($model, $data)) {
 
-                $db = Yii::$app->db;
-                if (count($phonenumbers_json['unicom']) > 0) {
-                    if (in_array('unicom',$pass)) {
+            $db = Yii::$app->db;
+            if (count($phonenumbers_json['unicom']) > 0) {
+                if (in_array('unicom',$pass)) {
 
-                        $content_now = $content['unicom'];
+                    $content_now = $content['unicom'];
 //                    $re = $this->sendSMS($phonenumbers_json['unicom'],$content_now,date('Y-m-d H:i:s', $model->send_time));
 //                    $re = $this->xmlToArray($re);
 //                    $sql = "INSERT INTO yii2_message_send VALUES('',".$id.",'".$re['taskID']."',1,".$status_unicom.")";
 //                    $command = $db->createCommand($sql);
 //                    $command->execute();
-                        $sql = "UPDATE yii2_message_detail SET content='".$content_now."' WHERE operator=1 AND message_id=".$id;
-                        $command = $db->createCommand($sql);
-                        $command->execute();
-                        $sql = "UPDATE yii2_message_detail SET channel_id=".$status_unicom." WHERE operator=1 AND message_id=".$id;
-                        $command = $db->createCommand($sql);
-                        $command->execute();
-                        $sql = "UPDATE yii2_message_detail SET status=1 WHERE operator=1 AND message_id=".$id;
-                        $command = $db->createCommand($sql);
-                        $command->execute();
-                    } else {
-                        $sql = "UPDATE yii2_message_detail SET status=2 WHERE operator=1 AND message_id=".$id;
-                        $command = $db->createCommand($sql);
-                        $command->execute();
+                    $sql = "UPDATE yii2_message_detail SET content='".$content_now."' WHERE operator=1 AND message_id=".$id;
+                    $command = $db->createCommand($sql);
+                    $command->execute();
+                    $sql = "UPDATE yii2_message_detail SET channel_id=".$status_unicom." WHERE operator=1 AND message_id=".$id;
+                    $command = $db->createCommand($sql);
+                    $command->execute();
+                    $sql = "UPDATE yii2_message_detail SET status=1 WHERE operator=1 AND message_id=".$id;
+                    $command = $db->createCommand($sql);
+                    $command->execute();
+                } else {
+                    $sql = "UPDATE yii2_message_detail SET status=2 WHERE operator=1 AND message_id=".$id;
+                    $command = $db->createCommand($sql);
+                    $command->execute();
 
-                        $content_now = $content['unicom'];
-                        $message_count = mb_strlen($content_now);
+                    $content_now = $content['unicom'];
+                    $message_count = mb_strlen($content_now);
+                    $power = 1;
+                    if ($message_count > 130) {
+                        $power = 3;
+                    } elseif ($message_count > 70) {
+                        $power = 2;
+                    } else {
                         $power = 1;
-                        if ($message_count > 130) {
-                            $power = 3;
-                        } elseif ($message_count > 70) {
-                            $power = 2;
-                        } else {
-                            $power = 1;
-                        }
+                    }
 //                        $model_a =  Admin::findOne($create_uid);
 //                        $cost = count($phonenumbers_json['unicom']) * $power;
 //                        $data['balance'] = $model_a['balance'] + $cost;
@@ -228,41 +226,41 @@ class CheckController extends BaseController
 //                        $attributes['remark'] = '返还';
 //                        $attributes['op_uid'] = Yii::$app->user->identity->uid;
 //                        $this->saveRow($model_ad, $attributes);
-                    }
                 }
-                if (count($phonenumbers_json['mobile']) > 0) {
-                    if (in_array('mobile',$pass)) {
+            }
+            if (count($phonenumbers_json['mobile']) > 0) {
+                if (in_array('mobile',$pass)) {
 
-                        $content_now = ($content['mobile']<>'')?$content['mobile']:$content['unicom'];
+                    $content_now = ($content['mobile']<>'')?$content['mobile']:$content['unicom'];
 //                    $re = $this->sendSMS($phonenumbers_json['mobile'],$content_now,date('Y-m-d H:i:s', $model->send_time));
 //                    $re = $this->xmlToArray($re);
 //                    $sql = "INSERT INTO yii2_message_send VALUES('',".$id.",'".$re['taskID']."',2,".$status_mobile.")";
 //                    $command = $db->createCommand($sql);
 //                    $command->execute();
-                        $sql = "UPDATE yii2_message_detail SET content='".$content_now."' WHERE operator=2 AND message_id=".$id;
-                        $command = $db->createCommand($sql);
-                        $command->execute();
-                        $sql = "UPDATE yii2_message_detail SET channel_id=".$status_mobile." WHERE operator=2 AND message_id=".$id;
-                        $command = $db->createCommand($sql);
-                        $command->execute();
-                        $sql = "UPDATE yii2_message_detail SET status=1 WHERE operator=2 AND message_id=".$id;
-                        $command = $db->createCommand($sql);
-                        $command->execute();
-                    } else {
-                        $sql = "UPDATE yii2_message_detail SET status=2 WHERE operator=2 AND message_id=".$id;
-                        $command = $db->createCommand($sql);
-                        $command->execute();
+                    $sql = "UPDATE yii2_message_detail SET content='".$content_now."' WHERE operator=2 AND message_id=".$id;
+                    $command = $db->createCommand($sql);
+                    $command->execute();
+                    $sql = "UPDATE yii2_message_detail SET channel_id=".$status_mobile." WHERE operator=2 AND message_id=".$id;
+                    $command = $db->createCommand($sql);
+                    $command->execute();
+                    $sql = "UPDATE yii2_message_detail SET status=1 WHERE operator=2 AND message_id=".$id;
+                    $command = $db->createCommand($sql);
+                    $command->execute();
+                } else {
+                    $sql = "UPDATE yii2_message_detail SET status=2 WHERE operator=2 AND message_id=".$id;
+                    $command = $db->createCommand($sql);
+                    $command->execute();
 
-                        $content_now = ($content['mobile']<>'')?$content['mobile']:$content['unicom'];
-                        $message_count = mb_strlen($content_now);
+                    $content_now = ($content['mobile']<>'')?$content['mobile']:$content['unicom'];
+                    $message_count = mb_strlen($content_now);
+                    $power = 1;
+                    if ($message_count > 130) {
+                        $power = 3;
+                    } elseif ($message_count > 70) {
+                        $power = 2;
+                    } else {
                         $power = 1;
-                        if ($message_count > 130) {
-                            $power = 3;
-                        } elseif ($message_count > 70) {
-                            $power = 2;
-                        } else {
-                            $power = 1;
-                        }
+                    }
 //                        $model_a =  Admin::findOne($create_uid);
 //                        $cost = count($phonenumbers_json['mobile']) * $power;
 //                        $data['balance'] = $model_a['balance'] + $cost;
@@ -278,41 +276,41 @@ class CheckController extends BaseController
 //                        $attributes['remark'] = '返还';
 //                        $attributes['op_uid'] = Yii::$app->user->identity->uid;
 //                        $this->saveRow($model_ad, $attributes);
-                    }
                 }
-                if (count($phonenumbers_json['telecom']) > 0) {
-                    if (in_array('telecom',$pass)) {
+            }
+            if (count($phonenumbers_json['telecom']) > 0) {
+                if (in_array('telecom',$pass)) {
 
-                        $content_now = ($content['telecom']<>'')?$content['telecom']:$content['unicom'];
+                    $content_now = ($content['telecom']<>'')?$content['telecom']:$content['unicom'];
 //                    $re = $this->sendSMS($phonenumbers_json['telecom'],$content_now,date('Y-m-d H:i:s', $model->send_time));
 //                    $re = $this->xmlToArray($re);
 //                    $sql = "INSERT INTO yii2_message_send VALUES('',".$id.",'".$re['taskID']."',3,".$status_telecom.")";
 //                    $command = $db->createCommand($sql);
 //                    $command->execute();
-                        $sql = "UPDATE yii2_message_detail SET content='".$content_now."' WHERE operator=3 AND message_id=".$id;
-                        $command = $db->createCommand($sql);
-                        $command->execute();
-                        $sql = "UPDATE yii2_message_detail SET channel_id=".$status_telecom." WHERE operator=3 AND message_id=".$id;
-                        $command = $db->createCommand($sql);
-                        $command->execute();
-                        $sql = "UPDATE yii2_message_detail SET status=1 WHERE operator=3 AND message_id=".$id;
-                        $command = $db->createCommand($sql);
-                        $command->execute();
-                    } else {
-                        $sql = "UPDATE yii2_message_detail SET status=2 WHERE operator=3 AND message_id=".$id;
-                        $command = $db->createCommand($sql);
-                        $command->execute();
+                    $sql = "UPDATE yii2_message_detail SET content='".$content_now."' WHERE operator=3 AND message_id=".$id;
+                    $command = $db->createCommand($sql);
+                    $command->execute();
+                    $sql = "UPDATE yii2_message_detail SET channel_id=".$status_telecom." WHERE operator=3 AND message_id=".$id;
+                    $command = $db->createCommand($sql);
+                    $command->execute();
+                    $sql = "UPDATE yii2_message_detail SET status=1 WHERE operator=3 AND message_id=".$id;
+                    $command = $db->createCommand($sql);
+                    $command->execute();
+                } else {
+                    $sql = "UPDATE yii2_message_detail SET status=2 WHERE operator=3 AND message_id=".$id;
+                    $command = $db->createCommand($sql);
+                    $command->execute();
 
-                        $content_now = ($content['telecom']<>'')?$content['telecom']:$content['unicom'];
-                        $message_count = mb_strlen($content_now);
+                    $content_now = ($content['telecom']<>'')?$content['telecom']:$content['unicom'];
+                    $message_count = mb_strlen($content_now);
+                    $power = 1;
+                    if ($message_count > 130) {
+                        $power = 3;
+                    } elseif ($message_count > 70) {
+                        $power = 2;
+                    } else {
                         $power = 1;
-                        if ($message_count > 130) {
-                            $power = 3;
-                        } elseif ($message_count > 70) {
-                            $power = 2;
-                        } else {
-                            $power = 1;
-                        }
+                    }
 //                        $model_a =  Admin::findOne($create_uid);
 //                        $cost = count($phonenumbers_json['telecom']) * $power;
 //                        $data['balance'] = $model_a['balance'] + $cost;
@@ -328,8 +326,11 @@ class CheckController extends BaseController
 //                        $attributes['remark'] = '返还';
 //                        $attributes['op_uid'] = Yii::$app->user->identity->uid;
 //                        $this->saveRow($model_ad, $attributes);
-                    }
                 }
+            }
+
+            /* 表单数据加载、验证、数据库操作 */
+            if ($this->saveRow($model, $data)) {
                 $this->success('操作成功', $this->getForward());
             } else {
                 $this->error('操作错误');
