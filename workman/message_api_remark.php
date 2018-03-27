@@ -73,7 +73,7 @@ $task->onWorkerStart = function($task)
             $phonenumbers_json = json_encode($phone_number_arr);
             $db->update('yii2_message_list')->cols(array('phonenumbers_json'=>$phonenumbers_json))->where('message_id='.$item['message_id'])->query();
             $sql = substr($sql,0,-1);   //去除最后的逗号
-            $db->insert($sql)->query();
+            $db->query($sql);
         }
 
         echo 'done!!';
