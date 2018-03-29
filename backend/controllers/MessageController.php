@@ -212,16 +212,17 @@ class MessageController extends BaseController
             }
             /* 表单数据加载、验证、数据库操作 */
             if ($r = $this->saveRow($model, $data)) {
+                $data_u = array();
                 $model_a =  Admin::findOne(Yii::$app->user->identity->uid);
-                $data['balance'] = $model_a['balance'] - $cost;
+                $data_u['balance'] = $model_a['balance'] - $cost;
                 Yii::$app->user->identity->balance = $data['balance'];
-                $this->saveRow($model_a, $data);
+                $this->saveRow($model_a, $data_u);
                 $model_ad = new AccountDetail();
                 $attributes = array();
                 $attributes['uid'] = Yii::$app->user->identity->uid;
                 $attributes['change_count'] = $cost;
                 $attributes['change_type'] = 2;
-                $attributes['balance'] = $data['balance'];
+                $attributes['balance'] = $data_u['balance'];
                 $attributes['remark'] = '消耗';
                 $attributes['op_uid'] = Yii::$app->user->identity->uid;
                 $this->saveRow($model_ad, $attributes);
@@ -346,6 +347,181 @@ class MessageController extends BaseController
         } else {
             $this->error('删除失败！');
         }
+    }
+
+    /**
+     * ---------------------------------------
+     * 失败重发
+     * ---------------------------------------
+     */
+    public function actionRetry()
+    {
+        $id = Yii::$app->request->get('pid', 0);
+        $model_o = $this->findModel($id);
+
+        $balance = Yii::$app->user->identity->balance;
+        $coefficient = Yii::$app->user->identity->coefficient;
+        $rest = $balance;
+        if ($model_o) {
+            $model = $this->findModel(0);
+            $data = array();
+            $data['message_code'] = 'M'.time();
+            $data['send_time'] = $model_o->send_time;
+            $message_count = mb_strlen($model_o->content);
+            $power = 1;
+            if ($message_count > 130) {
+                $power = 3;
+            } elseif ($message_count > 70) {
+                $power = 2;
+            } else {
+                $power = 1;
+            }
+            $data['content'] = $model_o->content;
+            $data['content_json'] = $model_o->content_json;
+
+            $db = Yii::$app->db;
+            $sql = "SELECT phonenumber FROM yii2_message_detail WHERE message_id=".$id." AND (`status`=2 OR `status`=4)";
+            $command = $db->createCommand($sql);
+            $number_model = $command->queryAll();
+            $phonenumbers = array_column($number_model, 'phonenumber');
+            $phone_number_arr = $phone_number_show = array();
+            $phone_number_arr['unicom'] = $phone_number_arr['mobile'] = $phone_number_arr['telecom'] = $phone_number_arr['other'] = array();
+            foreach ($phonenumbers as $item_phonenumber) {
+                if(self::validateMobile($item_phonenumber)!==true) {
+                    continue;
+                }
+                $phone_number_7 =  substr($item_phonenumber,0,7);
+                $redis = Yii::$app->redis;
+                if ($redis->get("isp_".$phone_number_7)) {
+                    $operator = $redis->get("isp_".$phone_number_7);
+                } else {
+                    $operator = '';
+                }
+                switch ($operator) {
+                    case "联通":
+                        $phone_number_arr['unicom'][] = $item_phonenumber;
+                        break;
+                    case "移动":
+                        $phone_number_arr['mobile'][] = $item_phonenumber;
+                        break;
+                    case "电信":
+                        $phone_number_arr['telecom'][] = $item_phonenumber;
+                        break;
+                    case "虚拟/联通":
+                        $phone_number_arr['unicom'][] = $item_phonenumber;
+                        break;
+                    case "虚拟/移动":
+                        $phone_number_arr['mobile'][] = $item_phonenumber;
+                        break;
+                    case "虚拟/电信":
+                        $phone_number_arr['telecom'][] = $item_phonenumber;
+                        break;
+                    default:
+                        $phone_number_arr['other'][] = $item_phonenumber;
+                        break;
+                }
+                $phone_number_show = array_merge($phone_number_arr['unicom'],$phone_number_arr['mobile'],$phone_number_arr['telecom'],$phone_number_arr['other']);
+            }
+            $data['phonenumbers'] = implode(',',$phone_number_show);
+            $data['phonenumbers_json'] = json_encode($phone_number_arr);
+            $phonenumbers_arr = $phone_number_arr;
+            $data['count'] = count($phone_number_show);
+            $cost = $data['count'] * $power;
+            if ($data['count'] <= 0) {
+                $this->error('没有需要重发的号码');
+            }
+            if ($cost > $rest) {
+                $this->error('您目前的余额只能发送'.$rest.'个号码');
+            }
+            $data['create_uid'] = Yii::$app->user->identity->uid;
+            $data['create_name'] = Yii::$app->user->identity->username;
+            /* 格式化extend值，为空或数组序列化 */
+            if (isset($data['extend'])) {
+                $tmp = FuncHelper::parse_field_attr($data['extend']);
+                if (is_array($tmp)) {
+                    $data['extend'] = serialize($tmp);
+                } else {
+                    $data['extend'] = '';
+                }
+            }
+            /* 表单数据加载、验证、数据库操作 */
+            if ($r = $this->saveRow($model, $data)) {
+                $data_u = array();
+                $model_a =  Admin::findOne(Yii::$app->user->identity->uid);
+                $data_u['balance'] = $model_a['balance'] - $cost;
+                Yii::$app->user->identity->balance = $data['balance'];
+                $this->saveRow($model_a, $data_u);
+                $model_ad = new AccountDetail();
+                $attributes = array();
+                $attributes['uid'] = Yii::$app->user->identity->uid;
+                $attributes['change_count'] = $cost;
+                $attributes['change_type'] = 2;
+                $attributes['balance'] = $data_u['balance'];
+                $attributes['remark'] = '消耗';
+                $attributes['op_uid'] = Yii::$app->user->identity->uid;
+                $this->saveRow($model_ad, $attributes);
+
+                $model_d = new MessageDetail();
+                foreach($phonenumbers_arr['unicom'] as $phonenumber)
+                {
+                    $attributes = array();
+                    $attributes['phonenumber'] = $phonenumber;
+                    $attributes['message_id'] = $r->message_id;
+                    $attributes['message_code'] = $data['message_code'];
+                    $attributes['content'] = $data['content'];
+                    $attributes['send_time'] = $data['send_time'];
+                    $attributes['operator'] = 1;
+                    $attributes['create_uid'] = Yii::$app->user->identity->uid;
+                    $_model_d = clone $model_d;
+                    $this->saveRow($_model_d, $attributes);
+                }
+                foreach($phonenumbers_arr['mobile'] as $phonenumber)
+                {
+                    $attributes = array();
+                    $attributes['phonenumber'] = $phonenumber;
+                    $attributes['message_id'] = $r->message_id;
+                    $attributes['message_code'] = $data['message_code'];
+                    $attributes['content'] = $data['content'];
+                    $attributes['send_time'] = $data['send_time'];
+                    $attributes['operator'] = 2;
+                    $attributes['create_uid'] = Yii::$app->user->identity->uid;
+                    $_model_d = clone $model_d;
+                    $this->saveRow($_model_d, $attributes);
+                }
+                foreach($phonenumbers_arr['telecom'] as $phonenumber)
+                {
+                    $attributes = array();
+                    $attributes['phonenumber'] = $phonenumber;
+                    $attributes['message_id'] = $r->message_id;
+                    $attributes['message_code'] = $data['message_code'];
+                    $attributes['content'] = $data['content'];
+                    $attributes['send_time'] = $data['send_time'];
+                    $attributes['operator'] = 3;
+                    $attributes['create_uid'] = Yii::$app->user->identity->uid;
+                    $_model_d = clone $model_d;
+                    $this->saveRow($_model_d, $attributes);
+                }
+                foreach($phonenumbers_arr['other'] as $phonenumber)
+                {
+                    $attributes = array();
+                    $attributes['phonenumber'] = $phonenumber;
+                    $attributes['message_id'] = $r->message_id;
+                    $attributes['message_code'] = $data['message_code'];
+                    $attributes['content'] = $data['content'];
+                    $attributes['send_time'] = $data['send_time'];
+                    $attributes['operator'] = 4;
+                    $attributes['create_uid'] = Yii::$app->user->identity->uid;
+                    $_model_d = clone $model_d;
+                    $this->saveRow($_model_d, $attributes);
+                }
+
+                $this->success('操作成功', $this->getForward());
+            } else {
+                $this->error('操作错误');
+            }
+        }
+
+        $this->error('操作错误');
     }
 
     /**
