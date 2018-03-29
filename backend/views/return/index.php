@@ -51,7 +51,7 @@ $this->params['title_sub'] = '';  // 在\yii\base\View中有$params这个可以�
                 <thead>
                 <tr>
                     <th></th>
-                    <th>ID</th><th>批次号</th><th>用户ID</th><th>待返还数量</th><th>发送时间</th><th>操作</th></tr>
+                    <th>ID</th><th>批次号</th><th>用户名</th><th>待返还数量</th><th>发送时间</th><th>操作</th></tr>
                 </thead>
                 <tbody>
                 <?php if(count($model)> 0) { ?>
@@ -60,7 +60,7 @@ $this->params['title_sub'] = '';  // 在\yii\base\View中有$params这个可以�
                         <td><label class="mt-checkbox mt-checkbox-outline" style="padding-left:19px;"><input type="checkbox" name="ids" value="<?=$item['message_id'] ?>"> <span></span></label></td>
                         <td style="vertical-align: middle;"><?=$item['message_id'] ?></td>
                         <td style="vertical-align: middle;"><?=$item['message_code'] ?></td>
-                        <td style="vertical-align: middle;"><?=$item['create_uid'] ?></td>
+                        <td style="vertical-align: middle;"><?=$item['create_name'] ?></td>
                         <td style="vertical-align: middle;"><?=$item['balance'] ?></td>
                         <td style="vertical-align: middle;"><?=$item['send_time'] ?></td>
                         <td style="vertical-align: middle;">
