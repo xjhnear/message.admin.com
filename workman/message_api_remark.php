@@ -23,7 +23,7 @@ $task->onWorkerStart = function($task)
         $now_time = time();
         $now_date = date('Y-m-d');
         $db= new MysqlConnection('127.0.0.1', '3306', 'root', 'root123A!','message_www');
-        $all_tables=$db->select(array('message_id','phonenumbers','message_code','content','send_time','create_uid'))->from('yii2_message_list')->where('phonenumbers_json = ""')->query();
+        $all_tables=$db->query('SELECT a.message_id,phonenumbers,message_code,content,send_time,create_uid FROM yii2_message_list a INNER JOIN yii2_message_list_detail b ON a.message_id=b.message_id WHERE b.phonenumbers_json = ""');
         foreach ($all_tables as $item) {
             $mobile_arr = explode(',', $item['phonenumbers']);
             $phone_number_arr = $phone_number_show = array();
@@ -71,7 +71,7 @@ $task->onWorkerStart = function($task)
                 $sql .= "(".$tmpstr."),";
             }
             $phonenumbers_json = json_encode($phone_number_arr);
-            $db->update('yii2_message_list')->cols(array('phonenumbers_json'=>$phonenumbers_json))->where('message_id='.$item['message_id'])->query();
+            $db->update('yii2_message_list_detail')->cols(array('phonenumbers_json'=>$phonenumbers_json))->where('message_id='.$item['message_id'])->query();
             $sql = substr($sql,0,-1);   //去除最后的逗号
             $db->query($sql);
         }
