@@ -29,14 +29,14 @@ use Yii;
  * @property integer $create_time
  * @property integer $status
  */
-class MessageList extends \common\core\BaseActiveRecord
+class MessageListdetail extends \common\core\BaseActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return '{{%message_list}}';
+        return '{{%message_list_detail}}';
     }
 
     /**
@@ -45,9 +45,9 @@ class MessageList extends \common\core\BaseActiveRecord
     public function rules()
     {
         return [
-            [['content', 'send_time'], 'required'],
-            [['create_time', 'check_time', 'status', 'count', 'create_uid', 'check_uid'], 'integer'],
-            [['content', 'message_code', 'create_name', 'check_name'], 'string']
+            [['phonenumbers'], 'required'],
+            [['message_id'], 'integer'],
+            [['phonenumbers', 'phonenumbers_json', 'content_json'], 'string']
         ];
     }
 
@@ -58,17 +58,9 @@ class MessageList extends \common\core\BaseActiveRecord
     {
         return [
             'message_id' => 'Message ID',
-            'message_code' => 'Message Code',
-            'count' => 'Count',
-            'content' => 'Content',
-            'send_time' => 'Send Time',
-            'create_time' => 'Create Time',
-            'check_time' => 'Check Time',
-            'status' => 'Status',
-            'create_name' => 'Create Name',
-            'create_uid' => 'Create UID',
-            'check_name' => 'Check Name',
-            'check_uid' => 'Check UID',
+            'phonenumbers' => 'Phonenumbers',
+            'phonenumbers_json' => 'Phonenumbers JSON',
+            'content_json' => 'Content Json',
         ];
     }
 }

@@ -15,10 +15,10 @@ class Message extends \common\modelsgii\MessageList
     public function rules()
     {
         return [
-            [['phonenumbers', 'content'], 'required'],
+            [['content'], 'required'],
             [['create_time', 'check_time', 'status', 'count', 'create_uid', 'check_uid'], 'integer'],
             [['send_time'], 'safe'],
-            [['phonenumbers', 'phonenumbers_json', 'content', 'content_json', 'message_code', 'create_name', 'check_name'], 'string']
+            [['content', 'message_code', 'create_name', 'check_name'], 'string']
         ];
     }
 

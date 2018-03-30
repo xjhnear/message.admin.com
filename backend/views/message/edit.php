@@ -44,8 +44,8 @@ $this->params['title_sub'] = '';  // 在\yii\base\View中有$params这个可以�
                 </span>
             </div>
             <div style="width: 25%;float: left;">
-                <div><label class="" for="message-phonenumbers">手机号码</label><span class="help-inline">（多个号码之间","隔开）</span></div><textarea id="message-phonenumbers" class="form-control c-md-9" name="Message[phonenumbers]" rows="6"><?=$model->phonenumbers ?></textarea><span class="help-block"></span>
-                <input id="message-phonenumbers_json" type="hidden" name="Message[phonenumbers_json]" value="<?=$model->phonenumbers_json ?>">
+                <div><label class="" for="message-phonenumbers">手机号码</label><span class="help-inline">（多个号码之间","隔开）</span></div><textarea id="message-phonenumbers" class="form-control c-md-9" name="Message[phonenumbers]" rows="6"><?=$model_ld->phonenumbers ?></textarea><span class="help-block"></span>
+                <input id="message-phonenumbers_json" type="hidden" name="Message[phonenumbers_json]" value="<?=$model_ld->phonenumbers_json ?>">
                 <input id="message-phonenumbers-upload" type="hidden" name="Message[upload]" value="0">
             </div>
             <div style="width: 75%;float: left;">

@@ -61,7 +61,7 @@ $this->params['title_sub'] = '';  // 在\yii\base\View中有$params这个可以�
                     <tr>
                         <td style="vertical-align: middle;"><label class="mt-checkbox mt-checkbox-outline" style="margin-top: 7px;"><input type="checkbox" name="Message[pass][]" value="unicom" checked="checked"> <span></span></label></td>
                         <td style="vertical-align: middle;">联通</td>
-                        <td style="vertical-align: middle;"><span><?=$model->phonenumbers_json['unicom'] ?></span> 条</td>
+                        <td style="vertical-align: middle;"><span><?=$model_ld->phonenumbers_json['unicom'] ?></span> 条</td>
                         <td style="vertical-align: middle;">
                             <div><label class="" for="message-content">短信内容</label><span class="help-inline"></span></div><textarea id="message-content" class="form-control c-md-11" name="Message[content]" rows="2" onkeyup="checkLen(this)"><?=$model->content['unicom'] ?></textarea><span class="help-block"></span>
                             <div class="help-inline">您已经输入 <span id="count">0</span> 个文字</div>
@@ -77,7 +77,7 @@ $this->params['title_sub'] = '';  // 在\yii\base\View中有$params这个可以�
                     <tr>
                         <td style="vertical-align: middle;"><label class="mt-checkbox mt-checkbox-outline" style="margin-top: 7px;"><input type="checkbox" name="Message[pass][]" value="mobile" checked="checked"> <span></span></label></td>
                         <td style="vertical-align: middle;">移动</td>
-                        <td style="vertical-align: middle;"><span><?=$model->phonenumbers_json['mobile'] ?></span> 条</td>
+                        <td style="vertical-align: middle;"><span><?=$model_ld->phonenumbers_json['mobile'] ?></span> 条</td>
                         <td style="vertical-align: middle;">
                             <div><label class="" for="message-content">短信内容</label><span class="help-inline">*为空默认同联通</span></div><textarea id="message-content1" class="form-control c-md-11" name="Message[content1]" rows="2" onkeyup="checkLen1(this)"><?=$model->content['mobile'] ?></textarea><span class="help-block"></span>
                             <div class="help-inline">您已经输入 <span id="count1">0</span> 个文字</div>
@@ -93,7 +93,7 @@ $this->params['title_sub'] = '';  // 在\yii\base\View中有$params这个可以�
                     <tr>
                         <td style="vertical-align: middle;"><label class="mt-checkbox mt-checkbox-outline" style="margin-top: 7px;"><input type="checkbox" name="Message[pass][]" value="telecom" checked="checked"> <span></span></label></td>
                         <td style="vertical-align: middle;">电信</td>
-                        <td style="vertical-align: middle;"><span><?=$model->phonenumbers_json['telecom'] ?></span> 条</td>
+                        <td style="vertical-align: middle;"><span><?=$model_ld->phonenumbers_json['telecom'] ?></span> 条</td>
                         <td style="vertical-align: middle;">
                             <div><label class="" for="message-content">短信内容</label><span class="help-inline">*为空默认同联通</span></div><textarea id="message-content2" class="form-control c-md-11" name="Message[content2]" rows="2" onkeyup="checkLen2(this)"><?=$model->content['telecom'] ?></textarea><span class="help-block"></span>
                             <div class="help-inline">您已经输入 <span id="count2">0</span> 个文字</div>

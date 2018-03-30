@@ -6,6 +6,7 @@ use Yii;
 use backend\models\Admin;
 use backend\models\AccountDetail;
 use backend\models\Message;
+use backend\models\MessageListDetail;
 use backend\models\search\MessageCheckSearch;
 use backend\models\MessageDetail;
 use backend\models\search\MessageDetailCheckSearch;
@@ -144,12 +145,14 @@ class CheckController extends BaseController
 
         $id = Yii::$app->request->get('id', 0);
         $model = $this->findModel($id);
-        $phonenumbers_json = json_decode($model->phonenumbers_json, true);
+        $model_ld = MessageListDetail::findOne($id);
+        $phonenumbers_json = json_decode($model_ld->phonenumbers_json, true);
         $create_uid = $model->create_uid;
         $model_admin = Admin::findIdentity($model->create_uid);
         $model_channel = Channel::getChannelList();
         if (Yii::$app->request->isPost) {
             $data = Yii::$app->request->post('Message');//var_dump($data);exit();
+            $data_ld = array();
             $status_unicom = $data['status_unicom'];unset($data['status_unicom']);
             $status_mobile = $data['status_mobile'];unset($data['status_mobile']);
             $status_telecom = $data['status_telecom'];unset($data['status_telecom']);
@@ -158,7 +161,7 @@ class CheckController extends BaseController
             $content['mobile'] = $data['content1'];unset($data['content1']);
             $content['telecom'] = $data['content2'];unset($data['content2']);
             $data['content'] = $data['content'];
-            $data['content_json'] = json_encode($content);
+            $data_ld['content_json'] = json_encode($content);
             if (!isset($data['pass'])) {
                 $this->error('请选择通道');
             }
@@ -331,19 +334,21 @@ class CheckController extends BaseController
 
             /* 表单数据加载、验证、数据库操作 */
             if ($this->saveRow($model, $data)) {
+                $this->saveRow($model_ld, $data_ld);
                 $this->success('操作成功', $this->getForward());
             } else {
                 $this->error('操作错误');
             }
         }
         $model->send_time = date('Y-m-d H:i', $model->send_time);
-        $model->phonenumbers_json = array('unicom'=>count($phonenumbers_json['unicom']),'mobile'=>count($phonenumbers_json['mobile']),'telecom'=>count($phonenumbers_json['telecom']));
-        $content_json = json_decode($model->content_json, true);
+        $model_ld->phonenumbers_json = array('unicom'=>count($phonenumbers_json['unicom']),'mobile'=>count($phonenumbers_json['mobile']),'telecom'=>count($phonenumbers_json['telecom']));
+        $content_json = json_decode($model_ld->content_json, true);
         $model->content = $content_json;
 //        print_r($model->phonenumbers_json);exit;
         /* 渲染模板 */
         return $this->render('edit', [
             'model' => $model,
+            'model_ld' => $model_ld,
             'model_admin' => $model_admin,
             'model_channel' => $model_channel,
         ]);

@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use Yii;
 use backend\models\Message;
+use backend\models\MessageListDetail;
 use backend\models\search\MessageSearch;
 use backend\models\MessageDetail;
 use backend\models\search\MessageDetailSearch;
@@ -110,12 +111,14 @@ class MessageController extends BaseController
     public function actionAdd()
     {
         $model = $this->findModel(0);
+        $model_ld = new MessageListDetail();
         $balance = Yii::$app->user->identity->balance;
         $coefficient = Yii::$app->user->identity->coefficient;
         $rest = $balance;
         if (Yii::$app->request->isPost) {
 
             $data = Yii::$app->request->post('Message');
+            $data_ld = array();
             $data['message_code'] = 'M'.time();
             if ($data['send_time'] && $data['send_time']<>"") {
                 $data['send_time'] = strtotime($data['send_time']);
@@ -136,13 +139,14 @@ class MessageController extends BaseController
             $content['mobile'] = $data['content1'];unset($data['content1']);
             $content['telecom'] = $data['content2'];unset($data['content2']);
             $data['content'] = $content['unicom'];
-            $data['content_json'] = json_encode($content);
+            $data_ld['content_json'] = json_encode($content);
             $is_upload = $data['upload'];unset($data['upload']);
             if ($is_upload == 1) {
                 $phonenumbers = $data['phonenumbers_json'];
                 $phonenumbers_arr = json_decode($phonenumbers, true);
                 $phone_number_show = array_merge($phonenumbers_arr['unicom'],$phonenumbers_arr['mobile'],$phonenumbers_arr['telecom'],$phonenumbers_arr['other']);
-                $data['phonenumbers'] = implode(',',$phone_number_show);
+                $data_ld['phonenumbers'] = implode(',',$phone_number_show);
+                $data_ld['phonenumbers_json'] = '';
             } else {
                 $phonenumbers = $data['phonenumbers'];
                 if (strpos($phonenumbers,",\r\n")) {
@@ -190,8 +194,9 @@ class MessageController extends BaseController
                     }
                     $phone_number_show = array_merge($phone_number_arr['unicom'],$phone_number_arr['mobile'],$phone_number_arr['telecom'],$phone_number_arr['other']);
                 }
-                $data['phonenumbers'] = implode(',',$phone_number_show);
-                $data['phonenumbers_json'] = json_encode($phone_number_arr);
+                $data_ld['phonenumbers'] = implode(',',$phone_number_show);
+                $data_ld['phonenumbers_json'] = '';
+//                $data['phonenumbers_json'] = json_encode($phone_number_arr);
                 $phonenumbers_arr = $phone_number_arr;
             }
             $data['count'] = count($phone_number_show);
@@ -210,12 +215,22 @@ class MessageController extends BaseController
                     $data['extend'] = '';
                 }
             }
+            if (isset($data_ld['extend'])) {
+                $tmp = FuncHelper::parse_field_attr($data_ld['extend']);
+                if (is_array($tmp)) {
+                    $data_ld['extend'] = serialize($tmp);
+                } else {
+                    $data_ld['extend'] = '';
+                }
+            }
             /* 表单数据加载、验证、数据库操作 */
             if ($r = $this->saveRow($model, $data)) {
+                $data_ld['message_id'] = $r->message_id;
+                $this->saveRow($model_ld, $data_ld);
                 $data_u = array();
                 $model_a =  Admin::findOne(Yii::$app->user->identity->uid);
                 $data_u['balance'] = $model_a['balance'] - $cost;
-                Yii::$app->user->identity->balance = $data['balance'];
+                Yii::$app->user->identity->balance = $data_u['balance'];
                 $this->saveRow($model_a, $data_u);
                 $model_ad = new AccountDetail();
                 $attributes = array();
@@ -227,59 +242,59 @@ class MessageController extends BaseController
                 $attributes['op_uid'] = Yii::$app->user->identity->uid;
                 $this->saveRow($model_ad, $attributes);
 
-                $model_d = new MessageDetail();
-                foreach($phonenumbers_arr['unicom'] as $phonenumber)
-                {
-                    $attributes = array();
-                    $attributes['phonenumber'] = $phonenumber;
-                    $attributes['message_id'] = $r->message_id;
-                    $attributes['message_code'] = $data['message_code'];
-                    $attributes['content'] = $data['content'];
-                    $attributes['send_time'] = $data['send_time'];
-                    $attributes['operator'] = 1;
-                    $attributes['create_uid'] = Yii::$app->user->identity->uid;
-                    $_model_d = clone $model_d;
-                    $this->saveRow($_model_d, $attributes);
-                }
-                foreach($phonenumbers_arr['mobile'] as $phonenumber)
-                {
-                    $attributes = array();
-                    $attributes['phonenumber'] = $phonenumber;
-                    $attributes['message_id'] = $r->message_id;
-                    $attributes['message_code'] = $data['message_code'];
-                    $attributes['content'] = $data['content'];
-                    $attributes['send_time'] = $data['send_time'];
-                    $attributes['operator'] = 2;
-                    $attributes['create_uid'] = Yii::$app->user->identity->uid;
-                    $_model_d = clone $model_d;
-                    $this->saveRow($_model_d, $attributes);
-                }
-                foreach($phonenumbers_arr['telecom'] as $phonenumber)
-                {
-                    $attributes = array();
-                    $attributes['phonenumber'] = $phonenumber;
-                    $attributes['message_id'] = $r->message_id;
-                    $attributes['message_code'] = $data['message_code'];
-                    $attributes['content'] = $data['content'];
-                    $attributes['send_time'] = $data['send_time'];
-                    $attributes['operator'] = 3;
-                    $attributes['create_uid'] = Yii::$app->user->identity->uid;
-                    $_model_d = clone $model_d;
-                    $this->saveRow($_model_d, $attributes);
-                }
-                foreach($phonenumbers_arr['other'] as $phonenumber)
-                {
-                    $attributes = array();
-                    $attributes['phonenumber'] = $phonenumber;
-                    $attributes['message_id'] = $r->message_id;
-                    $attributes['message_code'] = $data['message_code'];
-                    $attributes['content'] = $data['content'];
-                    $attributes['send_time'] = $data['send_time'];
-                    $attributes['operator'] = 4;
-                    $attributes['create_uid'] = Yii::$app->user->identity->uid;
-                    $_model_d = clone $model_d;
-                    $this->saveRow($_model_d, $attributes);
-                }
+//                $model_d = new MessageDetail();
+//                foreach($phonenumbers_arr['unicom'] as $phonenumber)
+//                {
+//                    $attributes = array();
+//                    $attributes['phonenumber'] = $phonenumber;
+//                    $attributes['message_id'] = $r->message_id;
+//                    $attributes['message_code'] = $data['message_code'];
+//                    $attributes['content'] = $data['content'];
+//                    $attributes['send_time'] = $data['send_time'];
+//                    $attributes['operator'] = 1;
+//                    $attributes['create_uid'] = Yii::$app->user->identity->uid;
+//                    $_model_d = clone $model_d;
+//                    $this->saveRow($_model_d, $attributes);
+//                }
+//                foreach($phonenumbers_arr['mobile'] as $phonenumber)
+//                {
+//                    $attributes = array();
+//                    $attributes['phonenumber'] = $phonenumber;
+//                    $attributes['message_id'] = $r->message_id;
+//                    $attributes['message_code'] = $data['message_code'];
+//                    $attributes['content'] = $data['content'];
+//                    $attributes['send_time'] = $data['send_time'];
+//                    $attributes['operator'] = 2;
+//                    $attributes['create_uid'] = Yii::$app->user->identity->uid;
+//                    $_model_d = clone $model_d;
+//                    $this->saveRow($_model_d, $attributes);
+//                }
+//                foreach($phonenumbers_arr['telecom'] as $phonenumber)
+//                {
+//                    $attributes = array();
+//                    $attributes['phonenumber'] = $phonenumber;
+//                    $attributes['message_id'] = $r->message_id;
+//                    $attributes['message_code'] = $data['message_code'];
+//                    $attributes['content'] = $data['content'];
+//                    $attributes['send_time'] = $data['send_time'];
+//                    $attributes['operator'] = 3;
+//                    $attributes['create_uid'] = Yii::$app->user->identity->uid;
+//                    $_model_d = clone $model_d;
+//                    $this->saveRow($_model_d, $attributes);
+//                }
+//                foreach($phonenumbers_arr['other'] as $phonenumber)
+//                {
+//                    $attributes = array();
+//                    $attributes['phonenumber'] = $phonenumber;
+//                    $attributes['message_id'] = $r->message_id;
+//                    $attributes['message_code'] = $data['message_code'];
+//                    $attributes['content'] = $data['content'];
+//                    $attributes['send_time'] = $data['send_time'];
+//                    $attributes['operator'] = 4;
+//                    $attributes['create_uid'] = Yii::$app->user->identity->uid;
+//                    $_model_d = clone $model_d;
+//                    $this->saveRow($_model_d, $attributes);
+//                }
 
                 $this->success('操作成功', $this->getForward());
             } else {
@@ -294,6 +309,7 @@ class MessageController extends BaseController
         /* 渲染模板 */
         return $this->render('edit', [
             'model' => $model,
+            'model_ld' => $model_ld,
             'data' => $data,
         ]);
     }
@@ -364,7 +380,8 @@ class MessageController extends BaseController
         $rest = $balance;
         if ($model_o) {
             $model = $this->findModel(0);
-            $data = array();
+            $model_ld = new MessageListDetail();
+            $data = $data_ld = array();
             $data['message_code'] = 'M'.time();
             $data['send_time'] = $model_o->send_time;
             $message_count = mb_strlen($model_o->content);
@@ -377,7 +394,7 @@ class MessageController extends BaseController
                 $power = 1;
             }
             $data['content'] = $model_o->content;
-            $data['content_json'] = $model_o->content_json;
+            $data_ld['content_json'] = $model_o->content_json;
 
             $db = Yii::$app->db;
             $sql = "SELECT phonenumber FROM yii2_message_detail WHERE message_id=".$id." AND (`status`=2 OR `status`=4)";
@@ -422,8 +439,8 @@ class MessageController extends BaseController
                 }
                 $phone_number_show = array_merge($phone_number_arr['unicom'],$phone_number_arr['mobile'],$phone_number_arr['telecom'],$phone_number_arr['other']);
             }
-            $data['phonenumbers'] = implode(',',$phone_number_show);
-            $data['phonenumbers_json'] = json_encode($phone_number_arr);
+            $data_ld['phonenumbers'] = implode(',',$phone_number_show);
+            $data_ld['phonenumbers_json'] = json_encode($phone_number_arr);
             $phonenumbers_arr = $phone_number_arr;
             $data['count'] = count($phone_number_show);
             $cost = $data['count'] * $power;
@@ -444,12 +461,22 @@ class MessageController extends BaseController
                     $data['extend'] = '';
                 }
             }
+            if (isset($data_ld['extend'])) {
+                $tmp = FuncHelper::parse_field_attr($data_ld['extend']);
+                if (is_array($tmp)) {
+                    $data_ld['extend'] = serialize($tmp);
+                } else {
+                    $data_ld['extend'] = '';
+                }
+            }
             /* 表单数据加载、验证、数据库操作 */
             if ($r = $this->saveRow($model, $data)) {
+                $data_ld['message_id'] = $r->message_id;
+                $this->saveRow($model_ld, $data_ld);
                 $data_u = array();
                 $model_a =  Admin::findOne(Yii::$app->user->identity->uid);
                 $data_u['balance'] = $model_a['balance'] - $cost;
-                Yii::$app->user->identity->balance = $data['balance'];
+                Yii::$app->user->identity->balance = $data_u['balance'];
                 $this->saveRow($model_a, $data_u);
                 $model_ad = new AccountDetail();
                 $attributes = array();
@@ -461,59 +488,59 @@ class MessageController extends BaseController
                 $attributes['op_uid'] = Yii::$app->user->identity->uid;
                 $this->saveRow($model_ad, $attributes);
 
-                $model_d = new MessageDetail();
-                foreach($phonenumbers_arr['unicom'] as $phonenumber)
-                {
-                    $attributes = array();
-                    $attributes['phonenumber'] = $phonenumber;
-                    $attributes['message_id'] = $r->message_id;
-                    $attributes['message_code'] = $data['message_code'];
-                    $attributes['content'] = $data['content'];
-                    $attributes['send_time'] = $data['send_time'];
-                    $attributes['operator'] = 1;
-                    $attributes['create_uid'] = Yii::$app->user->identity->uid;
-                    $_model_d = clone $model_d;
-                    $this->saveRow($_model_d, $attributes);
-                }
-                foreach($phonenumbers_arr['mobile'] as $phonenumber)
-                {
-                    $attributes = array();
-                    $attributes['phonenumber'] = $phonenumber;
-                    $attributes['message_id'] = $r->message_id;
-                    $attributes['message_code'] = $data['message_code'];
-                    $attributes['content'] = $data['content'];
-                    $attributes['send_time'] = $data['send_time'];
-                    $attributes['operator'] = 2;
-                    $attributes['create_uid'] = Yii::$app->user->identity->uid;
-                    $_model_d = clone $model_d;
-                    $this->saveRow($_model_d, $attributes);
-                }
-                foreach($phonenumbers_arr['telecom'] as $phonenumber)
-                {
-                    $attributes = array();
-                    $attributes['phonenumber'] = $phonenumber;
-                    $attributes['message_id'] = $r->message_id;
-                    $attributes['message_code'] = $data['message_code'];
-                    $attributes['content'] = $data['content'];
-                    $attributes['send_time'] = $data['send_time'];
-                    $attributes['operator'] = 3;
-                    $attributes['create_uid'] = Yii::$app->user->identity->uid;
-                    $_model_d = clone $model_d;
-                    $this->saveRow($_model_d, $attributes);
-                }
-                foreach($phonenumbers_arr['other'] as $phonenumber)
-                {
-                    $attributes = array();
-                    $attributes['phonenumber'] = $phonenumber;
-                    $attributes['message_id'] = $r->message_id;
-                    $attributes['message_code'] = $data['message_code'];
-                    $attributes['content'] = $data['content'];
-                    $attributes['send_time'] = $data['send_time'];
-                    $attributes['operator'] = 4;
-                    $attributes['create_uid'] = Yii::$app->user->identity->uid;
-                    $_model_d = clone $model_d;
-                    $this->saveRow($_model_d, $attributes);
-                }
+//                $model_d = new MessageDetail();
+//                foreach($phonenumbers_arr['unicom'] as $phonenumber)
+//                {
+//                    $attributes = array();
+//                    $attributes['phonenumber'] = $phonenumber;
+//                    $attributes['message_id'] = $r->message_id;
+//                    $attributes['message_code'] = $data['message_code'];
+//                    $attributes['content'] = $data['content'];
+//                    $attributes['send_time'] = $data['send_time'];
+//                    $attributes['operator'] = 1;
+//                    $attributes['create_uid'] = Yii::$app->user->identity->uid;
+//                    $_model_d = clone $model_d;
+//                    $this->saveRow($_model_d, $attributes);
+//                }
+//                foreach($phonenumbers_arr['mobile'] as $phonenumber)
+//                {
+//                    $attributes = array();
+//                    $attributes['phonenumber'] = $phonenumber;
+//                    $attributes['message_id'] = $r->message_id;
+//                    $attributes['message_code'] = $data['message_code'];
+//                    $attributes['content'] = $data['content'];
+//                    $attributes['send_time'] = $data['send_time'];
+//                    $attributes['operator'] = 2;
+//                    $attributes['create_uid'] = Yii::$app->user->identity->uid;
+//                    $_model_d = clone $model_d;
+//                    $this->saveRow($_model_d, $attributes);
+//                }
+//                foreach($phonenumbers_arr['telecom'] as $phonenumber)
+//                {
+//                    $attributes = array();
+//                    $attributes['phonenumber'] = $phonenumber;
+//                    $attributes['message_id'] = $r->message_id;
+//                    $attributes['message_code'] = $data['message_code'];
+//                    $attributes['content'] = $data['content'];
+//                    $attributes['send_time'] = $data['send_time'];
+//                    $attributes['operator'] = 3;
+//                    $attributes['create_uid'] = Yii::$app->user->identity->uid;
+//                    $_model_d = clone $model_d;
+//                    $this->saveRow($_model_d, $attributes);
+//                }
+//                foreach($phonenumbers_arr['other'] as $phonenumber)
+//                {
+//                    $attributes = array();
+//                    $attributes['phonenumber'] = $phonenumber;
+//                    $attributes['message_id'] = $r->message_id;
+//                    $attributes['message_code'] = $data['message_code'];
+//                    $attributes['content'] = $data['content'];
+//                    $attributes['send_time'] = $data['send_time'];
+//                    $attributes['operator'] = 4;
+//                    $attributes['create_uid'] = Yii::$app->user->identity->uid;
+//                    $_model_d = clone $model_d;
+//                    $this->saveRow($_model_d, $attributes);
+//                }
 
                 $this->success('操作成功', $this->getForward());
             } else {

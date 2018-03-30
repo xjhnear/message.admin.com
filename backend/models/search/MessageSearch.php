@@ -24,7 +24,7 @@ class MessageSearch extends Message
     {
         return [
             [['create_time', 'check_time', 'status', 'count', 'create_uid', 'check_uid'], 'integer'],
-            [['phonenumbers', 'phonenumbers_json', 'content', 'content_json', 'message_code', 'create_name', 'check_name'], 'string']
+            [['content', 'message_code', 'create_name', 'check_name'], 'string']
         ];
     }
 
