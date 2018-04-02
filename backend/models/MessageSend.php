@@ -15,7 +15,7 @@ class MessageSend extends \common\modelsgii\MessageSend
     public function rules()
     {
         return [
-            [['message_id', 'message_did', 'operator', 'channel_id', 'status', 'return_time', 'create_time', 'uid'], 'integer'],
+            [['message_id', 'message_did', 'operator', 'channel_id', 'status', 'return_time', 'create_time', 'uid', 'is_dark'], 'integer'],
             [['phonenumber', 'errorcode', 'extno', 'task_id'], 'string']
         ];
     }
