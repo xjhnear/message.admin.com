@@ -91,6 +91,13 @@ $this->params['title_sub'] = '';  // 在\yii\base\View中有$params这个可以�
             'placeholder' => '单位:元/条'
         ])->label('单价') ?>
 
+        <?= $form->field($model, 'rate_dark')->iconTextInput([
+            'class'=>'form-control c-md-3',
+            'iconPos' => 'left',
+            'iconClass' => 'fa fa-check',
+            'placeholder' => '单位:%'
+        ])->label('发送率') ?>
+
         <?= $form->field($model, 'status')->radioList(['1'=>'正常','0'=>'隐藏'])->label('用户状态') ?>
         
         <div class="form-actions">

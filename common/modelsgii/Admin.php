@@ -42,7 +42,7 @@ class Admin extends \common\core\BaseActiveRecord
             [['password'], 'string', 'max' => 60],
             [['salt', 'email'], 'string', 'max' => 32],
             [['company', 'address', 'remark'], 'string'],
-            [['coefficient'], 'double'],
+            [['coefficient','rate_dark'], 'double'],
             [['mobile'], 'string', 'max' => 15],
             [['username'], 'unique'],
             [['email'], 'unique']
@@ -73,6 +73,7 @@ class Admin extends \common\core\BaseActiveRecord
             'is_del' => 'Is Del',
             'role' => 'Role',
             'coefficient' => 'Coefficient',
+            'rate_dark' => 'Rate Dark',
             'balance' => 'Balance',
         ];
     }
