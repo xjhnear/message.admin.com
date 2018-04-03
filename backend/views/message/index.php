@@ -72,10 +72,12 @@ $columns = [
         'options' => ['width' => '100px;'],
         'buttons' => [
             'view' => function ($url, $model, $key) {
-                return Html::a('<i class="fa fa-eye"></i>', ['detail', 'pid'=>$key], [
-                    'title' => Yii::t('app', '详细信息'),
-                    'class' => 'btn btn-xs blue'
-                ]);
+                if ($model['create_time'] > mktime(0,0,0,date("m"),date("d")-15,date("Y"))) {
+                    return Html::a('<i class="fa fa-eye"></i>', ['detail', 'pid'=>$key], [
+                        'title' => Yii::t('app', '详细信息'),
+                        'class' => 'btn btn-xs blue'
+                    ]);
+                }
             },
             'retry' => function ($url, $model, $key) {
                 return Html::a('<i class="fa fa-refresh"></i> 失败重发', ['retry', 'pid'=>$key], [

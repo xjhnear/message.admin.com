@@ -46,7 +46,7 @@ class MessageDetail extends \common\core\BaseActiveRecord
     {
         return [
             [['phonenumber', 'message_id', 'message_code'], 'required'],
-            [['message_id', 'send_time', 'return_time', 'status', 'create_uid', 'operator'], 'integer'],
+            [['message_id', 'send_time', 'return_time', 'status', 'create_uid', 'operator', 'create_time'], 'integer'],
             [['phonenumber', 'message_code', 'content'], 'string']
         ];
     }
@@ -68,6 +68,7 @@ class MessageDetail extends \common\core\BaseActiveRecord
             'operator' => 'Operator',
             'channel_id' => 'Channel ID',
             'create_uid' => 'Create UID',
+            'create_time' => 'Create Time',
         ];
     }
 }

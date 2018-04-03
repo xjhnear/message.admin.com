@@ -77,7 +77,7 @@ $columns = [
         'options' => ['width' => '100px;'],
         'buttons' => [
             'view' => function ($url, $model, $key) {
-                if ($model['status'] == 0) {
+                if ($model['status'] == 0 && $model['create_time'] > mktime(0,0,0,date("m"),date("d")-15,date("Y"))) {
                     return Html::a('<i class="fa fa-eye"></i> 审核', ['edit', 'id'=>$key], [
                         'title' => Yii::t('app', '详细信息'),
                         'class' => 'btn btn-xs blue'

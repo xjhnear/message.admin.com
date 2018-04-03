@@ -28,7 +28,7 @@ $task->onWorkerStart = function($task)
             $mobile_arr = explode(',', $item['phonenumbers']);
             $phone_number_arr = $phone_number_show = array();
             $phone_number_arr['unicom'] = $phone_number_arr['mobile'] = $phone_number_arr['telecom'] = $phone_number_arr['other'] = array();
-            $sql="INSERT INTO yii2_message_detail (phonenumber,message_id,message_code,content,send_time,operator,create_uid) VALUES";
+            $sql="INSERT INTO yii2_message_detail (phonenumber,message_id,message_code,content,send_time,operator,create_uid,create_time) VALUES";
             foreach ($mobile_arr as $item_phonenumber) {
                 $phone_number_7 =  substr($item_phonenumber,0,7);
                 if (RedisDb::instance('redis')->get("isp_".$phone_number_7)) {
@@ -67,7 +67,7 @@ $task->onWorkerStart = function($task)
                         break;
                 }
                 $phone_number_show = array_merge($phone_number_arr['unicom'],$phone_number_arr['mobile'],$phone_number_arr['telecom'],$phone_number_arr['other']);
-                $tmpstr = "'". $item_phonenumber ."','". $item['message_id'] ."','". $item['message_code'] ."','". $item['content'] ."','". $item['send_time'] ."','". $operator_code ."','". $item['create_uid'] ."'";
+                $tmpstr = "'". $item_phonenumber ."','". $item['message_id'] ."','". $item['message_code'] ."','". $item['content'] ."','". $item['send_time'] ."','". $operator_code ."','". $item['create_uid'] ."','". time() ."'";
                 $sql .= "(".$tmpstr."),";
             }
             $phonenumbers_json = json_encode($phone_number_arr);

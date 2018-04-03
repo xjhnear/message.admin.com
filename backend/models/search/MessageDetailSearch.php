@@ -23,7 +23,7 @@ class MessageDetailSearch extends MessageDetail
     public function rules()
     {
         return [
-            [['message_id', 'send_time', 'return_time', 'status', 'create_uid', 'operator'], 'integer'],
+            [['message_id', 'send_time', 'return_time', 'status', 'create_uid', 'operator', 'create_time'], 'integer'],
             [['phonenumber', 'message_code', 'content'], 'string']
         ];
     }

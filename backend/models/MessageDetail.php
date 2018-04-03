@@ -16,7 +16,7 @@ class MessageDetail extends \common\modelsgii\MessageDetail
     {
         return [
             [['phonenumber', 'message_id', 'message_code'], 'required'],
-            [['message_id', 'send_time', 'return_time', 'status', 'create_uid', 'operator'], 'integer'],
+            [['message_id', 'send_time', 'return_time', 'status', 'create_uid', 'operator', 'create_time'], 'integer'],
             [['phonenumber', 'message_code', 'content'], 'string']
         ];
     }
@@ -28,13 +28,13 @@ class MessageDetail extends \common\modelsgii\MessageDetail
     {
         return [
             /* 在rules验证前，时间自动完成 */
-//            [
-//                'class' => 'yii\behaviors\AttributeBehavior',
-//                'attributes' => [
-//                    static::EVENT_BEFORE_VALIDATE => 'create_time',
-//                ],
-//                'value' => time(),
-//            ],
+            [
+                'class' => 'yii\behaviors\AttributeBehavior',
+                'attributes' => [
+                    static::EVENT_BEFORE_VALIDATE => 'create_time',
+                ],
+                'value' => time(),
+            ],
         ];
     }
 }
