@@ -141,12 +141,50 @@ class MessageDetailSearch extends MessageDetail
         return $count;
     }
 
+
+    public function getTodaySuccessCount($uid=null)
+    {
+        $start = mktime(0,0,0,date("m"),date("d"),date("Y"));
+        $end = mktime(0,0,0,date("m"),date("d")+1,date("Y"));
+        $count_model = MessageDetail::find();
+        $count_model->andFilterWhere(['between', 'create_time', $start, $end]);
+        $count_model->andFilterWhere([
+            'status' => 3,
+        ]);
+        if ($uid) {
+            $count_model->andFilterWhere([
+                'create_uid' => $uid,
+            ]);
+        }
+        $count = $count_model->count();
+        return $count;
+    }
+
     public function getThisMonthCount($uid=null)
     {
         $start = strtotime(date("Y")."-".date("m")."-1");
         $end = strtotime(date("Y")."-".(date("m")+1)."-1");
         $count_model = MessageDetail::find();
         $count_model->andFilterWhere(['between', 'create_time', $start, $end]);
+        if ($uid) {
+            $count_model->andFilterWhere([
+                'create_uid' => $uid,
+            ]);
+        }
+        $count = $count_model->count();
+        return $count;
+    }
+
+
+    public function getThisMonthSuccessCount($uid=null)
+    {
+        $start = strtotime(date("Y")."-".date("m")."-1");
+        $end = strtotime(date("Y")."-".(date("m")+1)."-1");
+        $count_model = MessageDetail::find();
+        $count_model->andFilterWhere(['between', 'create_time', $start, $end]);
+        $count_model->andFilterWhere([
+            'status' => 3,
+        ]);
         if ($uid) {
             $count_model->andFilterWhere([
                 'create_uid' => $uid,

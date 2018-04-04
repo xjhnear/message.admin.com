@@ -25,9 +25,9 @@ class HomeController extends BaseController
             $uid = null;
         }
         $dataProvider['subtotal_today'] = $message_detail->getTodayCount($uid);
-        $dataProvider['subtotal_today_success'] = $message_send->getTodaySuccessCount($uid);
+        $dataProvider['subtotal_today_success'] = $message_detail->getTodaySuccessCount($uid);
         $dataProvider['subtotal_thismonth'] = $message_detail->getThisMonthCount($uid);
-        $dataProvider['subtotal_thismonth_success'] = $message_send->getThisMonthSuccessCount($uid);
+        $dataProvider['subtotal_thismonth_success'] = $message_detail->getThisMonthSuccessCount($uid);
         $dataProvider['subtotal_today_per'] = 0;
         $dataProvider['subtotal_thismonth_per'] = 0;
         if ($dataProvider['subtotal_today'] > 0) {
