@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use Yii;
 use backend\models\search\MessageSendSearch;
+use backend\models\search\MessageDetailSearch;
 
 /**
  * 后台首页控制器
@@ -17,14 +18,15 @@ class HomeController extends BaseController
         $dataProvider['coefficient'] = Yii::$app->user->identity->coefficient;
 
         $message_send = new MessageSendSearch();
+        $message_detail = new MessageDetailSearch();
         if (Yii::$app->user->identity->role == 1) {
             $uid = Yii::$app->user->identity->uid;
         } else {
             $uid = null;
         }
-        $dataProvider['subtotal_today'] = $message_send->getTodayCount($uid);
+        $dataProvider['subtotal_today'] = $message_detail->getTodayCount($uid);
         $dataProvider['subtotal_today_success'] = $message_send->getTodaySuccessCount($uid);
-        $dataProvider['subtotal_thismonth'] = $message_send->getThisMonthCount($uid);
+        $dataProvider['subtotal_thismonth'] = $message_detail->getThisMonthCount($uid);
         $dataProvider['subtotal_thismonth_success'] = $message_send->getThisMonthSuccessCount($uid);
         $dataProvider['subtotal_today_per'] = 0;
         $dataProvider['subtotal_thismonth_per'] = 0;
