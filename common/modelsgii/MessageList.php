@@ -46,7 +46,7 @@ class MessageList extends \common\core\BaseActiveRecord
     {
         return [
             [['content', 'send_time'], 'required'],
-            [['create_time', 'check_time', 'status', 'count', 'create_uid', 'check_uid'], 'integer'],
+            [['create_time', 'check_time', 'status', 'count', 'create_uid', 'check_uid', 'retry_pid', 'is_retry'], 'integer'],
             [['content', 'message_code', 'create_name', 'check_name'], 'string']
         ];
     }
@@ -69,6 +69,8 @@ class MessageList extends \common\core\BaseActiveRecord
             'create_uid' => 'Create UID',
             'check_name' => 'Check Name',
             'check_uid' => 'Check UID',
+            'retry_pid' => 'Retry PID',
+            'is_retry' => 'Is Retry',
         ];
     }
 }

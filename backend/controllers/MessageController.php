@@ -382,6 +382,7 @@ class MessageController extends BaseController
             $model = $this->findModel(0);
             $model_ld = new MessageListDetail();
             $data = $data_ld = array();
+            $data['retry_pid'] = $id;
             $data['message_code'] = 'M'.time();
             $data['send_time'] = $model_o->send_time;
             $message_count = mb_strlen($model_o->content);
@@ -487,6 +488,11 @@ class MessageController extends BaseController
                 $attributes['remark'] = '消耗';
                 $attributes['op_uid'] = Yii::$app->user->identity->uid;
                 $this->saveRow($model_ad, $attributes);
+
+                $db = Yii::$app->db;
+                $sql="update yii2_message_list set is_retry = 1 where message_id=".$id;
+                $command = $db->createCommand($sql);
+                $r = $command->execute();
 
 //                $model_d = new MessageDetail();
 //                foreach($phonenumbers_arr['unicom'] as $phonenumber)

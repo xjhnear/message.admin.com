@@ -26,7 +26,7 @@ class ReturnController extends BaseController
     {
         $db = Yii::$app->db;
         $start = mktime(0,0,0,date("m"),date("d")-4,date("Y"));
-        $end = mktime(0,0,0,date("m"),date("d")-3,date("Y"));
+        $end = mktime(0,0,0,date("m"),date("d")-1,date("Y"));
         $sql="SELECT a.message_id  FROM
 (SELECT DISTINCT message_id
 FROM yii2_message_detail WHERE `status`=4 AND is_return = 0) a

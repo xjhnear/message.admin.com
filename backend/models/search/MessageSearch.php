@@ -23,7 +23,7 @@ class MessageSearch extends Message
     public function rules()
     {
         return [
-            [['create_time', 'check_time', 'status', 'count', 'create_uid', 'check_uid'], 'integer'],
+            [['create_time', 'check_time', 'status', 'count', 'create_uid', 'check_uid', 'retry_pid', 'is_retry'], 'integer'],
             [['content', 'message_code', 'create_name', 'check_name'], 'string']
         ];
     }
