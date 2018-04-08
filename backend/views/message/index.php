@@ -68,7 +68,7 @@ $columns = [
     [
         'class' => 'yii\grid\ActionColumn',
         'header' => '操作',
-        'template' => '{view} ',
+        'template' => '{view} {retry}',
         'options' => ['width' => '100px;'],
         'buttons' => [
             'view' => function ($url, $model, $key) {
