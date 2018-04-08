@@ -374,6 +374,7 @@ class MessageController extends BaseController
     {
         $id = Yii::$app->request->get('pid', 0);
         $model_o = $this->findModel($id);
+        $model_old = MessageListDetail::findOne($id);
 
         $balance = Yii::$app->user->identity->balance;
         $coefficient = Yii::$app->user->identity->coefficient;
@@ -395,7 +396,7 @@ class MessageController extends BaseController
                 $power = 1;
             }
             $data['content'] = $model_o->content;
-            $data_ld['content_json'] = $model_o->content_json;
+            $data_ld['content_json'] = $model_old->content_json;
 
             $db = Yii::$app->db;
             $sql = "SELECT phonenumber FROM yii2_message_detail WHERE message_id=".$id." AND (`status`=2 OR `status`=4)";

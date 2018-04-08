@@ -83,7 +83,8 @@ $columns = [
                 if ($model['is_retry'] == 0) {
                     return Html::a('<i class="fa fa-refresh"></i> 失败重发', ['retry', 'pid'=>$key], [
                         'title' => Yii::t('app', '失败重发'),
-                        'class' => 'btn btn-xs blue'
+                        'class' => 'btn btn-xs blue',
+                        'data-confirm' => '确认失败重发?'
                     ]);
                 }
             },
