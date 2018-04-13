@@ -201,6 +201,9 @@ class MessageController extends BaseController
             }
             $data['count'] = count($phone_number_show);
             $cost = $data['count'] * $power;
+            if ($data['count'] <= 0) {
+                $this->error('请提交合法的手机号码');
+            }
             if ($cost > $rest) {
                 $this->error('您目前的余额只能发送'.$rest.'个号码');
             }
