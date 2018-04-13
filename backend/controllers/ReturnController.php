@@ -144,7 +144,7 @@ FROM yii2_message_detail WHERE `status`=4 AND is_return = 0 AND create_time<".$e
     {
         $id = Yii::$app->request->get('id', 0);
         $db = Yii::$app->db;
-        $sql_config='update yii2_message_detail set is_return=1 where status=4 AND is_return = 0 and message_id ='.$id;
+        $sql_config='update yii2_message_detail set is_return=1 where message_id ='.$id;
         $command = $db->createCommand($sql_config);
         $r = $command->execute();
         /* 表单数据加载、验证、数据库操作 */
@@ -182,7 +182,7 @@ FROM yii2_message_detail WHERE `status`=4 AND is_return = 0 AND create_time<".$e
                 $balance += $item_c['num'] * $power;
             }
 
-            $sql_config='update yii2_message_detail set is_return=1 where status=4 AND is_return = 0 and message_id ='.$id;
+            $sql_config='update yii2_message_detail set is_return=1 where message_id ='.$id;
             $command = $db->createCommand($sql_config);
             $r = $command->execute();
             $sql_config='update yii2_admin set balance=balance+'.$balance.' where uid ='.$create_uid;

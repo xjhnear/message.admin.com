@@ -148,6 +148,7 @@ class CheckController extends BaseController
         $model_ld = MessageListDetail::findOne($id);
         $phonenumbers_json = json_decode($model_ld->phonenumbers_json, true);
         $create_uid = $model->create_uid;
+        $send_time = $model->send_time;
         $model_admin = Admin::findIdentity($model->create_uid);
         $model_channel = Channel::getChannelList();
         if (Yii::$app->request->isPost) {
@@ -164,6 +165,9 @@ class CheckController extends BaseController
             $data_ld['content_json'] = json_encode($content);
             if (!isset($data['pass'])) {
                 $this->error('请选择通道');
+            }
+            if ($send_time < (time()+300)) {
+                $data['$send_time'] = time()+300;
             }
             $pass = $data['pass'];unset($data['pass']);
             $data['status'] = 1;
@@ -190,6 +194,11 @@ class CheckController extends BaseController
 //                    $sql = "INSERT INTO yii2_message_send VALUES('',".$id.",'".$re['taskID']."',1,".$status_unicom.")";
 //                    $command = $db->createCommand($sql);
 //                    $command->execute();
+                    if ($send_time < (time()+300)) {
+                        $sql = "UPDATE yii2_message_detail SET send_time=".(time()+300)." WHERE operator=1 AND message_id=".$id;
+                        $command = $db->createCommand($sql);
+                        $command->execute();
+                    }
                     $sql = "UPDATE yii2_message_detail SET content='".$content_now."' WHERE operator=1 AND message_id=".$id;
                     $command = $db->createCommand($sql);
                     $command->execute();
@@ -240,6 +249,11 @@ class CheckController extends BaseController
 //                    $sql = "INSERT INTO yii2_message_send VALUES('',".$id.",'".$re['taskID']."',2,".$status_mobile.")";
 //                    $command = $db->createCommand($sql);
 //                    $command->execute();
+                    if ($send_time < (time()+300)) {
+                        $sql = "UPDATE yii2_message_detail SET send_time=".(time()+300)." WHERE operator=1 AND message_id=".$id;
+                        $command = $db->createCommand($sql);
+                        $command->execute();
+                    }
                     $sql = "UPDATE yii2_message_detail SET content='".$content_now."' WHERE operator=2 AND message_id=".$id;
                     $command = $db->createCommand($sql);
                     $command->execute();
@@ -290,6 +304,11 @@ class CheckController extends BaseController
 //                    $sql = "INSERT INTO yii2_message_send VALUES('',".$id.",'".$re['taskID']."',3,".$status_telecom.")";
 //                    $command = $db->createCommand($sql);
 //                    $command->execute();
+                    if ($send_time < (time()+300)) {
+                        $sql = "UPDATE yii2_message_detail SET send_time=".(time()+300)." WHERE operator=1 AND message_id=".$id;
+                        $command = $db->createCommand($sql);
+                        $command->execute();
+                    }
                     $sql = "UPDATE yii2_message_detail SET content='".$content_now."' WHERE operator=3 AND message_id=".$id;
                     $command = $db->createCommand($sql);
                     $command->execute();

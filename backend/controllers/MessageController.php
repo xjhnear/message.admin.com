@@ -119,7 +119,7 @@ class MessageController extends BaseController
 
             $data = Yii::$app->request->post('Message');
             $data_ld = array();
-            $data['message_code'] = 'M'.time();
+            $data['message_code'] = 'M'.time() . rand(0,9);
             if ($data['send_time'] && $data['send_time']<>"") {
                 $data['send_time'] = strtotime($data['send_time']);
             } else {
@@ -384,7 +384,7 @@ class MessageController extends BaseController
             $model_ld = new MessageListDetail();
             $data = $data_ld = array();
             $data['retry_pid'] = $id;
-            $data['message_code'] = 'M'.time();
+            $data['message_code'] = 'M'.time() . rand(0,9);
             $data['send_time'] = $model_o->send_time;
             $message_count = mb_strlen($model_o->content);
             $power = 1;
