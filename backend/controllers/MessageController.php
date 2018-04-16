@@ -445,7 +445,8 @@ class MessageController extends BaseController
                 $phone_number_show = array_merge($phone_number_arr['unicom'],$phone_number_arr['mobile'],$phone_number_arr['telecom'],$phone_number_arr['other']);
             }
             $data_ld['phonenumbers'] = implode(',',$phone_number_show);
-            $data_ld['phonenumbers_json'] = json_encode($phone_number_arr);
+            $data_ld['phonenumbers_json'] = '';
+//            $data_ld['phonenumbers_json'] = json_encode($phone_number_arr);
             $phonenumbers_arr = $phone_number_arr;
             $data['count'] = count($phone_number_show);
             $cost = $data['count'] * $power;
