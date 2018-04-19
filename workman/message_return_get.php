@@ -20,7 +20,7 @@ $task->onWorkerStart = function($task)
     $time_interval = 20;
     Timer::add($time_interval, function()  
     {
-        $url = 'http://47.100.111.70:5057/system/getstatus';
+        $url = 'http://47.100.111.70:5053/system/getstatus';
         $data = array(
             'access-token'=>'admin'
         );

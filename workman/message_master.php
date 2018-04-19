@@ -27,7 +27,7 @@ $task->onWorkerStart = function($task)
 
 		foreach ($all_tables as $item) {
 			$db->update('yii2_message_list')->cols(array('status'=>5))->where('message_id='.$item['message_id'])->query();
-			$url = 'http://47.100.111.70:5057/system/sms';
+			$url = 'http://47.100.111.70:5053/system/sms';
 			$data = array(
 				'access-token'=>'admin',
 				'message_id'=>$item['message_id']
