@@ -29,6 +29,7 @@ $task->onWorkerStart = function($task)
             $phone_number_arr = $phone_number_show = array();
             $phone_number_arr['unicom'] = $phone_number_arr['mobile'] = $phone_number_arr['telecom'] = $phone_number_arr['other'] = array();
             $sql="INSERT INTO yii2_message_detail (phonenumber,message_id,message_code,content,send_time,operator,create_uid,create_time) VALUES";
+            $i = 0;
             foreach ($mobile_arr as $item_phonenumber) {
                 $phone_number_7 =  substr($item_phonenumber,0,7);
                 if (RedisDb::instance('redis')->get("isp_".$phone_number_7)) {
@@ -69,6 +70,14 @@ $task->onWorkerStart = function($task)
                 $phone_number_show = array_merge($phone_number_arr['unicom'],$phone_number_arr['mobile'],$phone_number_arr['telecom'],$phone_number_arr['other']);
                 $tmpstr = "'". $item_phonenumber ."','". $item['message_id'] ."','". $item['message_code'] ."','". $item['content'] ."','". $item['send_time'] ."','". $operator_code ."','". $item['create_uid'] ."','". time() ."'";
                 $sql .= "(".$tmpstr."),";
+
+                $i++;
+                if ($i > 50000) {
+                    $sql = substr($sql,0,-1);   //去除最后的逗号
+                    $db->query($sql);
+                    $i = 0;
+                    $sql="INSERT INTO yii2_message_detail (phonenumber,message_id,message_code,content,send_time,operator,create_uid,create_time) VALUES";
+                }
             }
             $phonenumbers_json = json_encode($phone_number_arr);
             $db->update('yii2_message_list_detail')->cols(array('phonenumbers_json'=>$phonenumbers_json))->where('message_id='.$item['message_id'])->query();
